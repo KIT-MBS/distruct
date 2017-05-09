@@ -138,3 +138,5 @@ ENV/
 
 
 # custom settings
+bin/
+.build/
