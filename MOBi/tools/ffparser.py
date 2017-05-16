@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 15 May 2017 15:59:33 CEST
+# Last Modified : Tue 16 May 2017 16:20:54 CEST
 #
 #####################################
 
@@ -80,7 +80,10 @@ def readImpropers(line):
 
 # TODO directives as parameter
 # TODO ignore or select molecule list
-def parseResidueTopology(residueTopologyFile, directives={}):
+# NOTE amber type ffs have n- and c- terminus residues, that are used here
+# NOTE this still saves not needed junk in the force field
+# i.e. for some reason there is urea, some ions etc. in the aminoacids.rtp
+def parseResidueTopology(residueTopologyFile):
     result = {}
 
     # read lines from .rtp file and strip comments
@@ -103,6 +106,8 @@ def parseResidueTopology(residueTopologyFile, directives={}):
         raise
 
     knownDirectives = {'atoms': readAtoms, 'bonds': readBonds, 'exclusions': None, 'angles': readAngles, 'dihedrals': readDihedrals, 'impropers': readImpropers, 'bondedtypes': None}
+
+    # TODO use bondedtypes directive to find default values for function types
 
     buildingBlock = None  # type of AA or NA usually
     context = None  # see knownDirectives
@@ -130,29 +135,87 @@ def parseResidueTopology(residueTopologyFile, directives={}):
     return result
 
 
-def parseForceField(ffParamFile):
+def readBondTypes(line):
+    parts = line.split()
+    i = parts[0]
+    j = parts[1]
+    func = parts[2]
+    b0 = parts[3]
+    return (i, j, func, b0)
 
+
+def readAngleTypes(line):
+    parts = line.split()
+    i = parts[0]
+    j = parts[1]
+    k = parts[2]
+    func = parts[3]
+    th0 = parts[4]
+    return (i, j, k, func, th0)
+
+
+def readDihedralTypes(line):
+    parts = line.split()
+    i = parts[0]
+    j = parts[1]
+    k = parts[2]
+    l = parts[3]
+    func = parts[4]
+    ph0 = parts[5]
+    return (i, j, k, l, func, ph0)
+
+
+def parseForceFieldParams(ffParamFile):
+
+    itpLines = []
+
+    macros = {}
     with open(ffParamFile, 'r') as f:
         for line in f:
+            line = line.strip()
+            if ';' in line:
+                line = line.split(';', 1)[0]
+                pass
+            if '#' in line:
+                # macros
+                parts = line.split(None, 2)
+                if parts[0] == '#define':
+                    macros[parts[1]] = parts[2]
+                    pass
+                # ignore macro for the rest of this function
+                line = line.split('#', 1)[0]
+                print(line)
+                pass
+            if len(line) > 0:
+                itpLines.append(line)
+                pass
             pass
         pass
-    pass
+
+    result = {}
+    knownDirectives = {'bondtypes': readBondTypes, 'constrainttypes': None, 'angletypes': readAngleTypes, 'dihedralTypes': readDihedralTypes}
+    directive = None
+    for line in itpLines:
+        parts = line.split()
+        if parts[0] == '[' and parts[2] == ']':
+            directive = parts[1]
+            if directive in knownDirectives and directive not in result:
+                result[directive] = []
+        else:
+            if directive in knownDirectives:
+                if knownDirectives[directive]:
+                    result[directive].append(knownDirectives[directive](line))
+                    pass
+            pass
+        pass
+    return result, macros
 
 
-# TODO parse force field to a list of residues with a list of atoms, bonds and pseudobonds
-# write xml
-
-# TODO infer angles from bonds and forcefield
-
-# NOTE amber type ffs have n- and c- terminus residues, that are used here
-
-# TODO this still saves not needed junk in the force field
-# i.e. for some reason there is urea, some ions etc. in the aminoacids.rtp
+# TODO infer angles from bonds
 # TODO add list of ignored molecules and/or list of considered molecules (probably better)
-
-
+# TODO write xml
 # TODO rename this
-def ffparse(ffname, path, ignore=[]):
+def ffparse(ffname, path, ignore=[], generateAngles=True, generateDihedrals=False):
     # TODO discover folder structure .rtp .itp and so on (look at pdb2gmx)
     residueTopologies = []
     forceFieldParamFiles = []
@@ -176,7 +239,7 @@ def ffparse(ffname, path, ignore=[]):
 
     ffParams = None
     for forceFieldParamFile in forceFieldParamFiles:
-        ffParams = parseForceField(forceFieldParamFile)
+        ffParams = parseForceFieldParams(forceFieldParamFile)
         pass
 
     print(ffParams)

@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Mon 15 May 2017 13:58:34 CEST
+# Last Modified : Tue 16 May 2017 10:28:00 CEST
 #
 #####################################
 
@@ -72,7 +72,7 @@ def test_readDihedrals():
 
 
 def test_parseResidueTopology():
-    # TODO
+    # TODO data packaging
     fileName = ""
     result = MOBi.tools.parseResidueTopology(fileName)
     # TODO
@@ -80,7 +80,7 @@ def test_parseResidueTopology():
     pass
 
 
-# def test_parseForceField():
+# def test_parseForceFieldParams():
 #     fileName = ""
 #     result = MOBi.tools.parseForceField(fileName)
 #     # TODO
