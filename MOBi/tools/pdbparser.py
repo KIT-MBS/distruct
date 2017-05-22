@@ -9,7 +9,10 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Thu 11 May 2017 16:36:12 CEST
+# Last Modified : Mon 22 May 2017 14:15:26 CEST
 #
 #####################################
-# TODO
+
+from Bio import pdb
+
+# TODO read bonds from somewhere, read angles from somewhere, parse pdb, generate graph, write graph

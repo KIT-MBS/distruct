@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Thu 18 May 2017 18:06:27 CEST
+# Last Modified : Mon 22 May 2017 13:45:39 CEST
 #
 #####################################
 
@@ -23,7 +23,10 @@ data_path = os.environ['MOBi_DATAPATH']
 # (or tries to  and if it does not work, warns and tells user to set it themselves)
 gromacs_topology_path = '/usr/share/gromacs/top/'
 
-AAs = []
-AAts = ['C' + AA for AA in AAs] + ['N' + AA for AA in AAs]
+AAs = ['ALA', 'GLY', 'SER', 'THR', 'LEU', 'ILE', 'VAL', 'ASN', 'GLN', 'ARG', 'HIS', 'TRP', 'PHE', 'TYR', 'GLU', 'ASP', 'LYS', 'PRO', 'CYS', 'MET']
+# TODO put in translation for ff names and other conventions
+# NOTE amber knows HISD, HISE and HISH but not HIS (and calls them HID, HIE and HIP)
+amberAAs = ['ALA', 'GLY', 'SER', 'THR', 'LEU', 'ILE', 'VAL', 'ASN', 'GLN', 'ARG', 'HIP', 'TRP', 'PHE', 'TYR', 'GLU', 'ASP', 'LYS', 'PRO', 'CYS', 'MET']
+amberAAts = ['C' + AA for AA in amberAAs] + ['N' + AA for AA in amberAAs]
 # TODO
 RAs = []

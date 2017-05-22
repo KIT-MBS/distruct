@@ -1,0 +1,6 @@
+[ bondtypes ]
+  CA CB         1    0.14040   392459.2 ; 7,(1986),230; ADE,TRP
+[ constrainttypes ]
+[ angletypes ]
+[ dihedraltypes ]
+[ dihedraltypes ]

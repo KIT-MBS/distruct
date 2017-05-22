@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Thu 18 May 2017 17:59:18 CEST
+# Last Modified : Mon 22 May 2017 13:48:13 CEST
 #
 #####################################
 
@@ -21,14 +21,14 @@ import os
 # topologyPath = MOBi.gromacs_topology_path
 
 
-def readAtoms(line):
+def read_atoms(line):
     parts = line.split()
     name = parts[0]
     type = parts[1]
     return {name: type}
 
 
-def readBonds(line):
+def read_bonds(line):
     parts = line.split()
     i = parts[0]
     j = parts[1]
@@ -43,7 +43,7 @@ def readBonds(line):
     return {key: value}
 
 
-def readAngles(line):
+def read_angles(line):
     parts = line.split()
     i = parts[0]
     j = parts[1]
@@ -59,7 +59,7 @@ def readAngles(line):
     return {key: value}
 
 
-def readDihedrals(line):
+def read_dihedrals(line):
     # TODO only add, if single minimum
     parts = line.split()
     i = parts[0]
@@ -77,7 +77,7 @@ def readDihedrals(line):
     return {key: value}
 
 
-def readImpropers(line):
+def read_impropers(line):
     # TODO only add, if single minimum
     parts = line.split()
     i = parts[0]
@@ -95,13 +95,10 @@ def readImpropers(line):
     return {key: value}
 
 
-# TODO directives as parameter
-# TODO ignore or select molecule list
 # NOTE amber type ffs have n- and c- terminus residues, that are used here
-# NOTE this still saves not needed junk in the force field
-# i.e. for some reason there is urea, some ions etc. in the aminoacids.rtp
-def parseResidueTopology(residueTopologyFile, macros={}, buildingBlocks=[]):
-    result = dict(zip(buildingBlocks, [{}] * len(buildingBlocks)))
+# NOTE if buildingBlokcs is empty it considers all the ones it can find
+def parse_residue_topology(residueTopologyFile, macros={}, buildingBlocks=[], ignoredDirectives={'exclusions', 'dihedrals'}):
+    result = {}
 
     # read lines from .rtp file and strip comments
     rtpLines = []
@@ -112,6 +109,11 @@ def parseResidueTopology(residueTopologyFile, macros={}, buildingBlocks=[]):
                 line = line.split(';', 1)[0]
                 pass
             if len(line) > 0:
+                # expand macros here
+                # TODO this is not very general, but should suffice for now
+                if line.split()[-1] in macros:
+                    line = ' '.join([line.split()[:-1]]) + ' ' + macros[line.split()[-1]]
+                    pass
                 rtpLines.append(line)
                 pass
             pass
@@ -122,9 +124,14 @@ def parseResidueTopology(residueTopologyFile, macros={}, buildingBlocks=[]):
         # TODO exceptions or just return error?
         raise
 
-    knownDirectives = {'atoms': readAtoms, 'bonds': readBonds, 'exclusions': None, 'angles': readAngles, 'dihedrals': readDihedrals, 'impropers': readImpropers, 'bondedtypes': None}
-
-    # TODO use bondedtypes directive to find default values for function types
+    knownDirectives = {
+            'atoms': read_atoms,
+            'bonds': read_bonds,
+            'exclusions': None,
+            'angles': read_angles,
+            'dihedrals': read_dihedrals,
+            'impropers': read_impropers,
+            'bondedtypes': None}  # TODO use bondedtypes directive to find default values for function types (check in the ffs if useful)
 
     buildingBlock = None  # type of AA or NA usually
     context = None  # see knownDirectives
@@ -132,11 +139,13 @@ def parseResidueTopology(residueTopologyFile, macros={}, buildingBlocks=[]):
         parts = line.split()
         if parts[0] == '[' and parts[2] == ']':
             directive = parts[1]
-            # if directive not in knownDirectives:
-            if directive in buildingBlocks:
+            if directive in buildingBlocks or (len(buildingBlocks) == 0 and directive not in knownDirectives):
                 buildingBlock = directive
                 context = None
                 result[buildingBlock] = {}
+            elif directive in ignoredDirectives:
+                context = None
+                pass
             elif buildingBlock:
                 context = directive
                 result[buildingBlock][context] = {}
@@ -152,11 +161,16 @@ def parseResidueTopology(residueTopologyFile, macros={}, buildingBlocks=[]):
             pass
         pass
 
-    # TODO remove or ignore not needed molecules
+    for buildingBlock in buildingBlocks:
+        if buildingBlock not in result:
+            # TODO more helpful error messages / warnings
+            raise
+        pass
+
     return result
 
 
-def readBondTypes(line):
+def read_bondtypes(line):
     parts = line.split()
     i = parts[0]
     j = parts[1]
@@ -166,10 +180,10 @@ def readBondTypes(line):
     key = (i, j)
     value = (func, b0)
 
-    return {key, value}
+    return {key: value}
 
 
-def readAngleTypes(line):
+def read_angletypes(line):
     parts = line.split()
     i = parts[0]
     j = parts[1]
@@ -179,10 +193,10 @@ def readAngleTypes(line):
 
     key = (i, j, k)
     value = (func, th0)
-    return {key, value}
+    return {key: value}
 
 
-def readDihedralTypes(line):
+def read_dihedraltypes(line):
     parts = line.split()
     i = parts[0]
     j = parts[1]
@@ -193,10 +207,10 @@ def readDihedralTypes(line):
 
     key = (i, j, k, l)
     value = (func, ph0)
-    return {key, value}
+    return {key: value}
 
 
-def parseForceFieldParams(ffParamFile):
+def parse_forcefield_params(ffParamFile):
 
     itpLines = []
 
@@ -223,7 +237,7 @@ def parseForceFieldParams(ffParamFile):
         pass
 
     result = {}
-    knownDirectives = {'bondtypes': readBondTypes, 'constrainttypes': None, 'angletypes': readAngleTypes, 'dihedralTypes': readDihedralTypes}
+    knownDirectives = {'bondtypes': read_bondtypes, 'constrainttypes': None, 'angletypes': read_angletypes, 'dihedralTypes': read_dihedraltypes}
     directive = None
     for line in itpLines:
         parts = line.split()
@@ -243,62 +257,45 @@ def parseForceFieldParams(ffParamFile):
     return result, macros
 
 
-# TODO infer angles from bonds
-# TODO add list of ignored molecules and/or list of considered molecules (probably better)
 # TODO write xml
-# TODO rename this
 # def ffparse(ffname, ignore=[], generateAngles=True, generateDihedrals=False, topPath=topologyPath):
-def ffparse(ffname, ignore=[], generateAngles=True, generateDihedrals=False, topPath=''):
-    # TODO discover folder structure .rtp .itp and so on (look at pdb2gmx)
-    residueTopologies = []
+def generate_chemical_primary_edge_database(ffname, buildingBlocks=[], generateAngles=True, generateDihedrals=False, topPath=''):
+    residueTopologieFiles = []
     forceFieldParamFiles = []
     if os.path.isdir(topPath):
         if os.path.isdir(topPath + ffname + '.ff'):
-            residueTopologies = [f for f in os.listdir(topPath + ffname + '.ff/') if f.endswith('.rtp')]
+            residueTopologieFiles = [f for f in os.listdir(topPath + ffname + '.ff/') if f.endswith('.rtp')]
             forceFieldParamFiles.append(topPath + ffname + '.ff/ffbonded.itp')
             pass
         pass
 
     ffParams = None
+    macros = None
     for forceFieldParamFile in forceFieldParamFiles:
-        ffParams, macros = parseForceFieldParams(forceFieldParamFile)
+        ffParams, macros = parse_forcefield_params(forceFieldParamFile)
         pass
 
     result = {}
-    for residueTopology in residueTopologies:
-        result.update(parseResidueTopology(residueTopology, macros))
+    for residueTopologyFile in residueTopologieFiles:
+        result.update(parse_residue_topology(topPath + ffname + '.ff/' + residueTopologyFile, macros))
         pass
 
-    # TODO check if angles present, if not infer angles from force field and present bonds
-    # TODO only consider useful dihedrals (planar, with single minimum and so on)
     for residue in result:
         # keys in result are atoms, bonds, angles, impropers, dihedrals
         assert 'atoms' in result[residue]
-        # dict from atom name (unique identifier in residue) to type (in ff)
-        atoms = {}
-        # TODO put macro stuff in topology parse
-        for atomEntry in result[residue]['atoms']:
-            atoms[atomEntry[0]] = atomEntry[1]
-            pass
-        for entry in result[residue]['bonds']:
-            if entry[3] in macros:
-                entry[3] = macros[entry[3]]
-            else:
-                # get parameter from ff
-                atom1 = entry[1]
-                atom2 = entry[2]
-                atomtype1 = atoms[atom1]
-                atomtype2 = atoms[atom2]
-                entry[3] = ffParams['bondtypes'][(atomtype1, atomtype2)]
+        for bond, distance in result[residue]['bonds']:
+            if not distance:
+                ffAtomType1 = result[residue]['atoms'][bond[0]]
+                ffAtomType2 = result[residue]['atoms'][bond[1]]
+                distance = ffParams['bondtypes'][(ffAtomType1, ffAtomType2)][1]
                 pass
-
             pass
         # TODO infer angles
         for entry in result[residue]['angles']:
             pass
-        # omega ?
-        for entry in result[residue]['dihedrals']:
-            pass
+        # # omega ? PRO special casing
+        # for entry in result[residue]['dihedrals']:
+        #     pass
         # infer more impropers ??
         for entry in result[residue]['impropers']:
             pass
