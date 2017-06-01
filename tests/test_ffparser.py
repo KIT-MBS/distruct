@@ -9,13 +9,13 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Mon 22 May 2017 14:07:27 CEST
+# Last Modified : Wed 24 May 2017 15:46:46 CEST
 #
 #####################################
 
 import MOBi
 
-testFilePath = MOBi.data_path + 'tests/'
+testFilePath = MOBi.config.data_path + 'tests/'
 
 
 # NOTE example lines taken from a (?) gromos ff
@@ -61,8 +61,9 @@ def test_read_dihedrals():
 def test_residue_topology():
     fileName = testFilePath + 'test.ff/aminoacids.rtp'
     result = MOBi.tools.ffparser.parse_residue_topology(fileName, buildingBlocks=['ALA'])
-    # TODO
+    # TODO add macro stuff!!
     assert 'ALA' in result
+    assert 'notALA' not in result
     pass
 
 
@@ -71,6 +72,7 @@ def test_parse_forcefield_params():
     params, macros = MOBi.tools.ffparser.parse_forcefield_params(fileName)
     # TODO put in something sensible for biophysics context
     assert ('CA', 'CB') in params['bondtypes']
+    # assert frozenset(['CA', 'CB']) in params['bondtypes']
     pass
 
 
@@ -80,8 +82,12 @@ def test_generate_chemical_primary_edge_database():
 
     assert 'ALA' in result
     for residue in result:
+        # print(result[residue]['atoms'])
+        assert None not in result[residue]['bonds'].values()
         assert 'CA' in result[residue]['atoms']
+        # assert frozenset(['CA', 'C']) in result[residue]['bonds']
         assert ('CA', 'C') in result[residue]['bonds']
-        assert ('CA', 'C', 'O') in result[residue]['angles']
+        # print(result)
+        # assert ('CA', 'C', 'O') in result[residue]['angles']
         # TODO test for default improper dihedral in backbone
     pass
