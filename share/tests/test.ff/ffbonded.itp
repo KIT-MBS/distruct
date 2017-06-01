@@ -1,5 +1,102 @@
 [ bondtypes ]
+
+  C  C          1     0.1525   259408.0 ; new99
+  C  OS         1     0.1323   376560.0 ; new99
+  C  H4         1     0.1080   307105.6 ; new99
+  C  H5         1     0.1080   307105.6 ; new99
+  CA OH         1     0.1364   376560.0 ; new99
+  CM OS         1     0.1240   401664.0 ; new99
+  Cl CT         1     0.1766   194137.6 ; new99
+  Br CT         1     0.1944   133051.2 ; new99
+  I  CT         1     0.2166   123846.4 ; new99
+  F  CA         1     0.1359   323004.8 ; new99
+  Cl CA         1     0.1727   161502.4 ; new99
+  I  CA         1     0.2075   143092.8 ; new99
+  Br CA         1     0.1890   143929.6 ; new99
+  OW HW         1    0.09572   462750.4 ; P water
+  HW HW         1    0.15136   462750.4 ; P water
+  C  CA         1    0.14090   392459.2 ; 7,(1986),230; TYR
+  C  CB         1    0.14190   374049.6 ; 7,(1986),230; GUA
+  C  CM         1    0.14440   343088.0 ; 7,(1986),230; THY,URA
+  C  CT         1    0.15220   265265.6 ; 7,(1986),230; AA
+  C  N*         1    0.13830   354803.2 ; 7,(1986),230; CYT,URA
+  C  NA         1    0.13880   349782.4 ; 7,(1986),230; GUA.URA
+  C  NC         1    0.13580   382417.6 ; 7,(1986),230; CYT
+  C  O          1    0.12290   476976.0 ; 7,(1986),230; AA,CYT,GUA,THY,URA
+  C  O2         1    0.12500   548940.8 ; 7,(1986),230; GLU,ASP
+  C  OH         1    0.13640   376560.0 ; 7,(1986),230; TYR
+  CA CA         1    0.14000   392459.2 ; 7,(1986),230; BENZENE,PHE,TRP,TYR
   CA CB         1    0.14040   392459.2 ; 7,(1986),230; ADE,TRP
+  CA CM         1    0.14330   357313.6 ; 7,(1986),230; CYT
+  CA CT         1    0.15100   265265.6 ; 7,(1986),230; PHE,TYR
+  CA HA         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; PHE,TRP,TYR
+  CA H4         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; no assigned
+  CA N2         1    0.13400   402500.8 ; 7,(1986),230; ARG,CYT,GUA
+  CA NA         1    0.13810   357313.6 ; 7,(1986),230; GUA
+  CA NC         1    0.13390   404174.4 ; 7,(1986),230; ADE,CYT,GUA
+  CB CB         1    0.13700   435136.0 ; 7,(1986),230; ADE,GUA
+  CB N*         1    0.13740   364844.8 ; 7,(1986),230; ADE,GUA
+  CB NB         1    0.13910   346435.2 ; 7,(1986),230; ADE,GUA
+  CB NC         1    0.13540   385764.8 ; 7,(1986),230; ADE,GUA
+  CK H5         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; ADE,GUA
+  CK N*         1    0.13710   368192.0 ; 7,(1986),230; ADE,GUA
+  CK NB         1    0.13040   442667.2 ; 7,(1986),230; ADE,GUA
+  CM CM         1    0.13500   459403.2 ; 7,(1986),230; CYT,THY,URA
+  CM CT         1    0.15100   265265.6 ; 7,(1986),230; THY
+  CM HA         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; CYT,URA
+  CM H4         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; CYT,URA
+  CM H5         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; not assigned
+  CM N*         1    0.13650   374886.4 ; 7,(1986),230; CYT,THY,URA
+  CQ H5         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; ADE
+  CQ NC         1    0.13240   420073.6 ; 7,(1986),230; ADE
+  CT CT         1    0.15260   259408.0 ; 7,(1986),230; AA, SUGARS
+  CT HC         1    0.10900   284512.0 ; ged from 331 bsd on NMA nmodes; AA, SUGARS
+  CT H1         1    0.10900   284512.0 ; ged from 331 bsd on NMA nmodes; AA, RIBOSE
+  CT H2         1    0.10900   284512.0 ; ged from 331 bsd on NMA nmodes; SUGARS
+  CT H3         1    0.10900   284512.0 ; ged from 331 bsd on NMA nmodes; not assigned
+  CT HP         1    0.10900   284512.0 ; nged from 331; AA-lysine, methyl ammonium cation
+  CT N*         1    0.14750   282001.6 ; 7,(1986),230; ADE,CYT,GUA,THY,URA
+  CT N2         1    0.14630   282001.6 ; 7,(1986),230; ARG
+  CT OH         1    0.14100   267776.0 ; 7,(1986),230; SUGARS
+  CT OS         1    0.14100   267776.0 ; 7,(1986),230; NUCLEIC ACIDS
+  H  N2         1    0.10100   363171.2 ; 7,(1986),230; ADE,CYT,GUA,ARG
+  H  N*         1    0.10100   363171.2 ; plain unmethylated bases ADE,CYT,GUA,ARG
+  H  NA         1    0.10100   363171.2 ; 7,(1986),230; GUA,URA,HIS
+  HO OH         1    0.09600   462750.4 ; 7,(1986),230; SUGARS,SER,TYR
+  HO OS         1    0.09600   462750.4 ; 7,(1986),230; NUCLEOTIDE ENDS
+  O2 P          1    0.14800   439320.0 ; 7,(1986),230; NA PHOSPHATES
+  OH P          1    0.16100   192464.0 ; 7,(1986),230; NA PHOSPHATES
+  OS P          1    0.16100   192464.0 ; 7,(1986),230; NA PHOSPHATES
+  C* HC         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes, not needed AA
+  C  N          1    0.13350   410032.0 ; 7,(1986),230; AA
+  C* CB         1    0.14590   324678.4 ; 7,(1986),230; TRP
+  C* CT         1    0.14950   265265.6 ; 7,(1986),230; TRP
+  C* CW         1    0.13520   456892.8 ; 7,(1986),230; TRP
+  CA CN         1    0.14000   392459.2 ; 7,(1986),230; TRP
+  CB CN         1    0.14190   374049.6 ; 7,(1986),230; TRP
+  CC CT         1    0.15040   265265.6 ; 7,(1986),230; HIS
+  CC CV         1    0.13750   428441.6 ; 7,(1986),230; HIS(delta)
+  CC CW         1    0.13710   433462.4 ; 7,(1986),230; HIS(epsilon)
+  CC NA         1    0.13850   353129.6 ; 7,(1986),230; HIS
+  CC NB         1    0.13940   343088.0 ; 7,(1986),230; HIS
+  CN NA         1    0.13800   358150.4 ; 7,(1986),230; TRP
+  CR H5         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes;HIS
+  CR NA         1    0.13430   399153.6 ; 7,(1986),230; HIS
+  CR NB         1    0.13350   408358.4 ; 7,(1986),230; HIS
+  CT N          1    0.14490   282001.6 ; 7,(1986),230; AA
+  CT N3         1    0.14710   307105.6 ; 7,(1986),230; LYS
+  CT S          1    0.18100   189953.6 ; ged from 222.0 based on dimethylS nmodes
+  CT SH         1    0.18100   198321.6 ; ged from 222.0 based on methanethiol nmodes
+  CV H4         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes; HIS
+  CV NB         1    0.13940   343088.0 ; 7,(1986),230; HIS
+  CW H4         1    0.10800   307105.6 ; ged from 340. bsd on C6H6 nmodes;HIS(epsilon,+)
+  CW NA         1    0.13810   357313.6 ; 7,(1986),230; HIS,TRP
+  H  N          1    0.10100   363171.2 ; 7,(1986),230; AA
+  H  N3         1    0.10100   363171.2 ; 7,(1986),230; LYS    
+  HS SH         1    0.13360   229283.2 ; 7,(1986),230; CYS
+  S  S          1    0.20380   138908.8 ; 7,(1986),230; CYX   (SCHERAGA)
+  CT F          1    0.13800   307105.6 ; 13,(1992),963;CF4; R0=1.332 FOR CHF3
+
 [ constrainttypes ]
 [ angletypes ]
 [ dihedraltypes ]

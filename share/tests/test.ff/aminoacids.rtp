@@ -1,42 +1,35 @@
 [ bondedtypes ]
     2       2       1       2
 
+
 [ ALA ]
  [ atoms ]
-    N     N    -0.31000     0
-    H     H     0.31000     0
-   CA   CH1     0.00000     1
-   CB   CH3     0.00000     1
-    C     C       0.450     2
-    O     O      -0.450     2
+     N    N           -0.41570     1
+     H    H            0.27190     2
+    CA    CT           0.03370     3
+    HA    H1           0.08230     4
+    CB    CT          -0.18250     5
+   HB1    HC           0.06030     6
+   HB2    HC           0.06030     7
+   HB3    HC           0.06030     8
+     C    C            0.59730     9
+     O    O           -0.56790    10
  [ bonds ]
-    N     H       
-    N    CA       
-   CA    CB       
-   CA     C       
-    C     O       
-    C    +N       
+     N     H
+     N    CA
+    CA    HA
+    CA    CB
+    CA     C
+    CB   HB1
+    CB   HB2
+    CB   HB3
+     C     O
+    -C     N
  [ angles ]
-;  ai    aj    ak    
-   -C     N     H        
-   -C     N    CA        
-    H     N    CA        
-    N    CA    CB        
-    N    CA     C        
-   CB    CA     C        
-   CA     C     O        
-   CA     C    +N        
-    O     C    +N        
  [ impropers ]
-;  ai    aj    ak    al    
-    N    -C    CA     H        
-   CA     N     C    CB        
-    C    CA    +N     O        
- [ dihedrals ]
-;  ai    aj    ak    al    
-  -CA    -C     N    CA      
-   -C     N    CA     C      
-   -C     N    CA     C     
-    N    CA     C    +N      
-    N    CA     C    +N      
-
+    -C    CA     N     H
+    CA    +N     C     O
+                        
+[ notALA ]
+  [ atoms ]
+  [ bonds ]
