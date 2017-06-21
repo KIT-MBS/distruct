@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:53:41 CEST
 #
-# Last Modified : Thu 18 May 2017 11:42:28 CEST
+# Last Modified : Tue 20 Jun 2017 15:28:31 CEST
 #
 #####################################
 
@@ -17,15 +17,16 @@
 
 
 def test_NWK():
-    try:
-        import networkit as nwk
-        g = nwk.Graph(5)
-        g.addEdge(0, 1)
-        g.toString()
-    except:
-        assert 0
+    # try:
+    import networkit as nwk
+    g = nwk.Graph(5)
+    g.addEdge(0, 1)
+    g.toString()
+    # except:
+    #     assert 0
+    return
 
 
 def test_GROMACS():
     # TODO
-    pass
+    return
