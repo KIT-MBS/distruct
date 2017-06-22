@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Thu 22 Jun 2017 13:05:54 CEST
+# Last Modified : Thu 22 Jun 2017 14:24:28 CEST
 #
 #####################################
 
@@ -327,7 +327,7 @@ def translate_bonds_to_edges(bonds, atomTypes, bondTypes):
     for atomPair in bonds:
         vertices = tuple(sorted(atomPair))
         distance = bonds[atomPair]
-        if not distance:
+        if distance is None:
             ffAtomType1 = atomTypes[atomPair[0].strip('+-')]
             ffAtomType2 = atomTypes[atomPair[1].strip('+-')]
             if (ffAtomType1, ffAtomType2) in bondTypes:
@@ -349,7 +349,7 @@ def translate_angles_to_edges(angles, bondEdges, atomTypes, angleTypes):
     for atomTriplet in angles:
         vertices = tuple(sorted((atomTriplet[0], atomTriplet[2])))
         angle = angles[atomTriplet]
-        if not angle:
+        if angle is None:
             ffAtomType1 = atomTypes[atomTriplet[0]].strip('+-')
             ffAtomType2 = atomTypes[atomTriplet[1]].strip('+-')
             ffAtomType3 = atomTypes[atomTriplet[2]].strip('+-')
@@ -378,16 +378,7 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
         # check missing edge
         pairs = [(x, y) for x in atomQuadruplet for y in atomQuadruplet if x < y]
         missingEdges = [(x, y) for (x, y) in pairs if (x, y) not in bondEdges if (x, y) not in angleEdges]
-        # for pair in pairs:
-        #     print(pairs)
-        #     print(pair)
-        #     if tuple(sorted(pair)) in bondEdges:
-        #         pairs.remove(pair)
-        #         pass
-        #     elif tuple(sorted(pair)) in angleEdges:
-        #         pairs.remove(pair)
-        #         pass
-        #     pass
+
         if len(missingEdges) != 1:
             # TODO warn
             print("number of missing edges for improper dihedral is not equal to 1")
