@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Wed 21 Jun 2017 14:47:50 CEST
+# Last Modified : Thu 22 Jun 2017 09:21:07 CEST
 #
 #####################################
 
@@ -168,20 +168,17 @@ def test_translate_angles_to_edges():
 
 
 def test_translate_impropers_to_edges():
-    assert 0
+    impropers = {('A1', 'A2', 'A3', 'A4'): 0.}
+    bondEdges = {('A1', 'A2'): 1., ('A2', 'A3'): 1., ('A3', 'A4'): 1.}
+    angleEdges = {('A1', 'A3'): math.sqrt(2), ('A2', 'A4'): math.sqrt(2.)}
+    atomTypes = {'A1': 'AT1', 'A2': 'AT2', 'A3': 'AT3', 'A4': 'AT4'}
+    dihedralTypes = {('AT1', 'AT2', 'AT3', 'AT4'): 180.}
+
+    result = MOBi.tools.ffparsergmx.translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, dihedralTypes)
+
+    assert math.isclose(result[('A1', 'A4')], 1.)
+
+    impropers = {('A1', 'A2', 'A3', 'A4'): None}
+    result = MOBi.tools.ffparsergmx.translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, dihedralTypes)
+    assert math.isclose(result[('A1', 'A4')], math.sqrt(5.))
     return
-
-
-# def test_generate_chemical_primary_edge_database():
-#     testForceField = 'test'
-#     result = MOBi.tools.ffparsergmx.generate_chemical_primary_edge_database(testForceField, topPath=testFilePath, buildingBlocks=['ALA'])
-#
-#     assert 'ALA' in result
-#     for residue in result:
-#         assert None not in result[residue]['bonds'].values()
-#         assert 'CA' in result[residue]['atoms']
-#         assert ('CA', 'C') in result[residue]['bonds']
-#         # assert ('CA', 'C', 'O') in result[residue]['angles']
-#         # TODO test for default improper dihedral in backbone
-#     assert 0
-#     pass

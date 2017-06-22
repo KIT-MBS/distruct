@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Wed 21 Jun 2017 14:46:05 CEST
+# Last Modified : Thu 22 Jun 2017 13:05:54 CEST
 #
 #####################################
 
@@ -374,35 +374,53 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
     for atomQuadruplet in impropers:
         # TODO order of residues is important!!!
         # NOTE it is assumed the dihedral angle is 0 or 180 degrees, all other 5 edges are known (3 bonds, 2 angles)
-        # TODO collect edges and find, if there is exactly one missing
-        vertices = tuple(sorted((atomQuadruplet[0], atomQuadruplet[3])))
 
-        dihedral = impropers[atomQuadruplet]
-
-        ij = tuple((atomQuadruplet[0], atomQuadruplet[1]))
-        jk = tuple((atomQuadruplet[1], atomQuadruplet[2]))
-        kl = tuple((atomQuadruplet[2], atomQuadruplet[3]))
-        ik = tuple((atomQuadruplet[0], atomQuadruplet[2]))
-        jl = tuple((atomQuadruplet[1], atomQuadruplet[3]))
-
-        assert sorted(ij) in bondEdges
-        assert sorted(jk) in bondEdges
-        assert sorted(kl) in bondEdges
-        assert sorted(ik) in angleEdges
-        assert sorted(jl) in angleEdges
-
-        if vertices in bondEdges or vertices in angleEdges:
+        # check missing edge
+        pairs = [(x, y) for x in atomQuadruplet for y in atomQuadruplet if x < y]
+        missingEdges = [(x, y) for (x, y) in pairs if (x, y) not in bondEdges if (x, y) not in angleEdges]
+        # for pair in pairs:
+        #     print(pairs)
+        #     print(pair)
+        #     if tuple(sorted(pair)) in bondEdges:
+        #         pairs.remove(pair)
+        #         pass
+        #     elif tuple(sorted(pair)) in angleEdges:
+        #         pairs.remove(pair)
+        #         pass
+        #     pass
+        if len(missingEdges) != 1:
+            # TODO warn
+            print("number of missing edges for improper dihedral is not equal to 1")
+            print(missingEdges)
             continue
 
-        d_ij = bondEdges[ik]
+        vertices = tuple(sorted((atomQuadruplet[0], atomQuadruplet[3])))
+        if missingEdges[0] != vertices:
+            # TODO
+            pass
+
+        improper = impropers[atomQuadruplet]
+        print(improper)
+        if improper is None:
+            ffAtomType1 = atomTypes[atomQuadruplet[0]].strip('+-')
+            ffAtomType2 = atomTypes[atomQuadruplet[1]].strip('+-')
+            ffAtomType3 = atomTypes[atomQuadruplet[2]].strip('+-')
+            ffAtomType4 = atomTypes[atomQuadruplet[3]].strip('+-')
+            improper = dihedralTypes[(ffAtomType1, ffAtomType2, ffAtomType3, ffAtomType4)]
+
+        ij = tuple(sorted([atomQuadruplet[0], atomQuadruplet[1]]))
+        jk = tuple(sorted([atomQuadruplet[1], atomQuadruplet[2]]))
+        kl = tuple(sorted([atomQuadruplet[2], atomQuadruplet[3]]))
+        ik = tuple(sorted([atomQuadruplet[0], atomQuadruplet[2]]))
+        jl = tuple(sorted([atomQuadruplet[1], atomQuadruplet[3]]))
+
+        d_ij = bondEdges[ij]
         d_jk = bondEdges[jk]
         d_kl = bondEdges[kl]
         d_ik = angleEdges[ik]
         d_jl = angleEdges[jl]
 
-        # TODO the math is still missing, problem is, that the information, that the for atoms lie in a plane is not enough.
-        # need to know, whether it is trams or cis
-        result[vertices] = math.dist_from_improper(dihedral, d_ij, d_jk, d_kl, d_ik, d_jl)
+        result[vertices] = math.dist_from_improper(improper, d_ij, d_jk, d_kl, d_ik, d_jl)
 
         pass
     return result
