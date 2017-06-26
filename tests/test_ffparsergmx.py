@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Thu 22 Jun 2017 09:21:07 CEST
+# Last Modified : Fri 23 Jun 2017 12:59:47 CEST
 #
 #####################################
 
@@ -106,9 +106,9 @@ def test_parse_forcefield_params():
     fileName = testFilePath + 'test.ff/ffbonded.itp'
     params, macros = MOBi.tools.ffparsergmx.parse_forcefield_params(fileName)
     assert macros == {'A1-4_improper': '0.0'}
-    assert math.isclose(params['bondtypes'][('A1', 'A2')], 1.)
-    assert math.isclose(params['bondtypes'][('A2', 'A3')], 1.2)
-    assert math.isclose(params['bondtypes'][('A3', 'A4')], 1.4)
+    assert math.isclose(params['bondtypes'][('A1', 'A2')], 1.2)
+    assert math.isclose(params['bondtypes'][('A2', 'A3')], 1.0)
+    assert math.isclose(params['bondtypes'][('A3', 'A4')], 1.1)
     assert math.isclose(params['angletypes'][('A1', 'A2', 'A3')], 120.)
     assert math.isclose(params['angletypes'][('A2', 'A3', 'A4')], 115.)
     assert math.isclose(params['dihedraltypes'][('A1', 'A2', 'A3', 'A4')], 180.)
@@ -181,4 +181,21 @@ def test_translate_impropers_to_edges():
     impropers = {('A1', 'A2', 'A3', 'A4'): None}
     result = MOBi.tools.ffparsergmx.translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, dihedralTypes)
     assert math.isclose(result[('A1', 'A4')], math.sqrt(5.))
+    return
+
+
+def test_generate_chemical_primary_edge_database():
+    ffname = 'test'
+    buildingBlocks = ['BB']
+    inferAngles = True
+    topPath = testFilePath
+
+    result = MOBi.tools.ffparsergmx.generate_chemical_primary_edge_database(ffname, buildingBlocks, inferAngles, topPath=topPath)
+    assert result['BB']['vertices'] == {'A1', 'A2', 'A3', 'A4'}
+    assert math.isclose(result['BB']['bondEdges'][('A1', 'A2')], 1.2)
+    assert math.isclose(result['BB']['bondEdges'][('A2', 'A3')], 1.0)
+    assert math.isclose(result['BB']['bondEdges'][('A3', 'A4')], 1.1)
+    assert math.isclose(result['BB']['angleEdges'][('A1', 'A3')], 1.90787884028338913, rel_tol=1e-5)
+    assert math.isclose(result['BB']['angleEdges'][('A2', 'A4')], 1.7719368430701863, rel_tol=1e-5)
+    assert math.isclose(result['BB']['improperEdges']['A1', 'A4'], 2.065313144262336)
     return
