@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Thu 22 Jun 2017 14:24:28 CEST
+# Last Modified : Mon 26 Jun 2017 16:52:17 CEST
 #
 #####################################
 
@@ -275,9 +275,35 @@ def parse_forcefield_params(ffParamFile):
 
 
 def infer_angles(atoms, bonds, angleTypes):
+    # TODO n-termini special casing
     result = {}
+
+    # NOTE needed to get all angles between residues
+    interResidueBonds = [b for b in bonds if '-' in b[0] or '+' in b[0]]
+
+    addedBonds = []
+    for bond in interResidueBonds:
+        # TODO this should probably not happen for termini
+        if '-' in bond[0]:
+            bond = [bond[0].strip('-'), '+' + bond[1]]
+            pass
+        elif '+' in bond[0]:
+            bond = [bond[0].strip('+'), '-' + bond[1]]
+            pass
+        else:
+            raise
+        if bond not in interResidueBonds:
+            addedBonds.append(bond)
+        pass
+
     for atom in atoms:  # NOTE both directions have to be in the dict for each bond
-        localBonds = [b for b in bonds if b[0] is atom]
+        localBonds = [b for b in bonds if b[0] == atom]
+
+        for bond in addedBonds:
+            if atom == bond[0]:
+                localBonds.append(bond)
+            pass
+
         while localBonds:
             bond1 = localBonds.pop()
             for bond2 in localBonds:
@@ -289,7 +315,6 @@ def infer_angles(atoms, bonds, angleTypes):
                 ffAtomType2 = atoms[j.strip('+-')]
                 ffAtomType3 = atoms[k.strip('+-')]
 
-                # TODO check if tuple or list
                 angle = None
                 if (ffAtomType1, ffAtomType2, ffAtomType3) in angleTypes:
                     angle = angleTypes[(ffAtomType1, ffAtomType2, ffAtomType3)]
@@ -311,7 +336,7 @@ def infer_angles(atoms, bonds, angleTypes):
 
 
 # def infer_impropers():
-#     # TODO from rings? probably not useful. peptide bond?
+#     # TODO from rings? probably not useful. peptide bond / backbone dihedral omega?
 #     result = {}
 #     return result
 
@@ -323,6 +348,7 @@ def translate_atoms_to_vertices(atoms):
 
 # TODO these go somewhere else together with all the add_edge_to_graph tools?
 def translate_bonds_to_edges(bonds, atomTypes, bondTypes):
+    # TODO n-termini special casing
     result = {}
     for atomPair in bonds:
         vertices = tuple(sorted(atomPair))
@@ -344,15 +370,18 @@ def translate_bonds_to_edges(bonds, atomTypes, bondTypes):
     return result
 
 
-def translate_angles_to_edges(angles, bondEdges, atomTypes, angleTypes):
+def translate_angles_to_edges(angles, atomTypes, bondTypes, angleTypes):
+    # TODO n-termini special casing
     result = {}
     for atomTriplet in angles:
         vertices = tuple(sorted((atomTriplet[0], atomTriplet[2])))
         angle = angles[atomTriplet]
+
+        ffAtomType1 = atomTypes[atomTriplet[0].strip('+-')]
+        ffAtomType2 = atomTypes[atomTriplet[1].strip('+-')]
+        ffAtomType3 = atomTypes[atomTriplet[2].strip('+-')]
+
         if angle is None:
-            ffAtomType1 = atomTypes[atomTriplet[0]].strip('+-')
-            ffAtomType2 = atomTypes[atomTriplet[1]].strip('+-')
-            ffAtomType3 = atomTypes[atomTriplet[2]].strip('+-')
             if (ffAtomType1, ffAtomType2, ffAtomType3) in angleTypes:
                 angle = angleTypes[(ffAtomType1, ffAtomType2, ffAtomType3)]
             elif (ffAtomType3, ffAtomType2, ffAtomType1) in angleTypes:
@@ -361,14 +390,31 @@ def translate_angles_to_edges(angles, bondEdges, atomTypes, angleTypes):
                 print("WARNING!!!: an angle type was not found in the force field parameters:\n", atomTriplet, (ffAtomType1, ffAtomType2, ffAtomType3))
                 continue
             pass
-        d_ij = bondEdges[tuple(sorted((atomTriplet[0], atomTriplet[1])))]
-        d_jk = bondEdges[tuple(sorted((atomTriplet[1], atomTriplet[2])))]
+
+        d_ij = None
+        d_jk = None
+        if (ffAtomType1, ffAtomType2) in bondTypes:
+            d_ij = bondTypes[tuple(sorted((ffAtomType1, ffAtomType2)))]
+        elif(ffAtomType2, ffAtomType1) in bondTypes:
+            d_ij = bondTypes[tuple(sorted((ffAtomType2, ffAtomType1)))]
+        else:
+            print("WARNING!!!: a bond type was not found in the force field parameters:\n", (atomTriplet[0], atomTriplet[1]), (ffAtomType1, ffAtomType2))
+            continue
+
+        if (ffAtomType2, ffAtomType3) in bondTypes:
+            d_jk = bondTypes[tuple(sorted((ffAtomType2, ffAtomType3)))]
+        elif(ffAtomType3, ffAtomType2) in bondTypes:
+            d_jk = bondTypes[tuple(sorted((ffAtomType3, ffAtomType2)))]
+        else:
+            print("WARNING!!!: a bond type was not found in the force field parameters:\n", (atomTriplet[1], atomTriplet[2]), (ffAtomType2, ffAtomType3))
+            continue
+
         result[vertices] = math.dist_from_angle(angle, d_ij, d_jk)
-        print(result[vertices])
         pass
     return result
 
 
+# TODO switch to bondTypes and angleTypes?
 def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, dihedralTypes):
     result = {}
     for atomQuadruplet in impropers:
@@ -379,19 +425,46 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
         pairs = [(x, y) for x in atomQuadruplet for y in atomQuadruplet if x < y]
         missingEdges = [(x, y) for (x, y) in pairs if (x, y) not in bondEdges if (x, y) not in angleEdges]
 
-        if len(missingEdges) != 1:
-            # TODO warn
+        # NOTE remove interresidue bond edges from the missing edges, that are in the next residue in sequence
+        interResidueBonds = [b for b in bondEdges if '-' in b[0] or '+' in b[0] or '-' in b[1] or '+' in b[1]]
+        addedEdges = []
+        for bond in interResidueBonds:
+            if '+' in bond[0]:
+                addedEdges.append(tuple(sorted((bond[0].strip('+'), '-' + bond[1]))))
+            elif '-' in bond[0]:
+                addedEdges.append(tuple(sorted((bond[0].strip('-'), '+' + bond[1]))))
+            elif '+' in bond[1]:
+                addedEdges.append(tuple(sorted(('-' + bond[0], bond[1].strip('+')))))
+            elif '-' in bond[1]:
+                addedEdges.append(tuple(sorted(('+' + bond[0], bond[1].strip('-')))))
+            else:
+                raise
+            pass
+
+        for bond in addedEdges:
+            if bond in missingEdges:
+                missingEdges.remove(bond)
+                pass
+            pass
+
+        if len(missingEdges) > 1:
             print("number of missing edges for improper dihedral is not equal to 1")
+            print(atomQuadruplet)
             print(missingEdges)
+            continue
+
+        if len(missingEdges) == 0:
             continue
 
         vertices = tuple(sorted((atomQuadruplet[0], atomQuadruplet[3])))
         if missingEdges[0] != vertices:
             # TODO
-            pass
+            print("order of atoms in the dihedral can not be processed in this version. skipping...")
+            print(atomQuadruplet)
+            print(missingEdges)
+            continue
 
         improper = impropers[atomQuadruplet]
-        print(improper)
         if improper is None:
             ffAtomType1 = atomTypes[atomQuadruplet[0]].strip('+-')
             ffAtomType2 = atomTypes[atomQuadruplet[1]].strip('+-')
@@ -456,11 +529,11 @@ def generate_chemical_primary_edge_database(
 
     result = {}
     for buildingBlock in buildingBlockTopologies:
-        # print(buildingBlock)
+        print(buildingBlock)
 
         result[buildingBlock] = {}
 
-        result[buildingBlock]['vertices'] = {}
+        result[buildingBlock]['vertices'] = set()
         result[buildingBlock]['bondEdges'] = {}
         result[buildingBlock]['angleEdges'] = {}
         result[buildingBlock]['improperEdges'] = {}
@@ -488,8 +561,8 @@ def generate_chemical_primary_edge_database(
                 result[buildingBlock]['angleEdges'].update(
                         translate_angles_to_edges(
                             inferredAngles,
-                            result[buildingBlock]['bondEdges'],
                             buildingBlockTopologies[buildingBlock]['atoms'],
+                            ffParams['bondtypes'],
                             ffParams['angletypes']
                         )
                 )
@@ -498,8 +571,8 @@ def generate_chemical_primary_edge_database(
             if 'angles' in buildingBlockTopologies[buildingBlock]:
                 result[buildingBlock]['angleEdges'].update(translate_angles_to_edges(
                     buildingBlockTopologies[buildingBlock]['angles'],
-                    result[buildingBlock]['bondEdges'],
                     buildingBlockTopologies[buildingBlock]['atoms'],
+                    ffParams['bondtypes'],
                     ffParams['angletypes']))
                 pass
 
@@ -513,11 +586,15 @@ def generate_chemical_primary_edge_database(
             #         ffParams['dihedraltypes']))
             #     pass
 
-            # if 'impropers' in buildingBlockTopologies[buildingBlock]:
-            #     result[buildingBlock]['improperEdges'].update(
-            #             translate_impropers_to_edges(
-            #             )
-            #     )
+            if 'impropers' in buildingBlockTopologies[buildingBlock]:
+                result[buildingBlock]['improperEdges'].update(
+                        translate_impropers_to_edges(
+                            buildingBlockTopologies[buildingBlock]['impropers'],
+                            result[buildingBlock]['angleEdges'],
+                            result[buildingBlock]['bondEdges'],
+                            buildingBlockTopologies[buildingBlock]['atoms'],
+                            ffParams['dihedraltypes'])
+                )
             pass
         pass
     return result
