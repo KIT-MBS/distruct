@@ -19,6 +19,11 @@
   [ dihedrals ]
   codswollop this is should not be parsed
 
+[ BB2 ]
+  [ atoms ]
+  [ bonds ]
+  [ impropers ]
+
 [ nBB ]
   [ atoms ]
   A5  A5

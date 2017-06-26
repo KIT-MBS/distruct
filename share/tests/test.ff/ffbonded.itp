@@ -1,8 +1,8 @@
 [ bondtypes ]
 ; i   j     func  b0      kb
-  A1  A2    1     0.1     234265125.0
-  A2  A3    1     0.12    235151324.0
-  A3  A4    1     0.14    362351351.0
+  A1  A2    1     0.12    234265125.0
+  A2  A3    1     0.10    235151324.0
+  A3  A4    1     0.11    362351351.0
 [ constrainttypes ]
 ; this section is intentionally left blank
 [ angletypes ]
