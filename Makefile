@@ -19,7 +19,7 @@ CFLAGS = -std=c++11 -Wall -fopenmp -O3 $(INCD)
 all: $(OBJ)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(OBJ): | $(OBJDIR)
 
