@@ -140,3 +140,4 @@ ENV/
 # custom settings
 bin/
 .build/
+src/_MOBi.cpp
