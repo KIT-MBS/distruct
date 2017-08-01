@@ -3,13 +3,13 @@
  *
  *  Filename : sig.h
  *
- *  Projectname : 
+ *  Projectname : MOBi
  *
  *  Author : Oskar Taubert
  *
  *  Creation Date : Mon 31 Jul 2017 11:05:33 CEST
  *
- *  Last Modified : Mon 31 Jul 2017 11:25:14 CEST
+ *  Last Modified : Tue 01 Aug 2017 11:17:33 CEST
  *
  * *************************************/
 
@@ -22,7 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void handle_signals(int signal)
+// TODO this is not great. the funtion is used in the form of a pointer. for some reason it still throws a function unused warning
+static __attribute__((unused)) void handle_signals(int signal)
 {
     switch(signal)
     {
