@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Fri 21 Jul 2017 15:47:25 CEST
+ *  Last Modified : Mon 31 Jul 2017 13:51:24 CEST
  *
  * *************************************/
 
@@ -20,21 +20,26 @@
 #include <math.h>
 
 #include <NetworKit/viz/GraphLayoutAlgorithm.h>
-#include <NetworKit/numerics/LinearSolver.h>
+//#include <NetworKit/numerics/LinearSolver.h>
+#include <NetworKit/numerics/LAMG/Lamg.h>
 #include <NetworKit/algebraic/CSRMatrix.h>
 
 #include <NetworKit/viz/Octree.h>
 
+//provides keyboard interrupt handling
+#include "aux/sig.h"
+
 namespace MOBi
 {
 
-class BioMaxentStress : public NetworKit::GraphLayoutAlgorithm<double>
+class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
     {
         public:
             // TODO choose alpha depending on system stats (sum/average of weighting factors?), add rest of parameters
             // TODO would one ever want fast computation in this context?
 
             //constructors
+            /*
             BioMaxentStress(
                     const NetworKit::Graph& G,
                     std::vector< NetworKit::Point<double> >& initialCoordinates,
@@ -42,14 +47,29 @@ class BioMaxentStress : public NetworKit::GraphLayoutAlgorithm<double>
                     const uint64_t dim=3,
                     double alpha=1.
                     );
-            // TODO a constructor from sequence and edge list
+                    */
+
+            BioMaxentStress(
+                    uint64_t numNodes,
+                    std::vector<std::pair<uint64_t, uint64_t>>& edges,
+                    std::vector<double>& weights,
+                    std::vector<double>& distances,
+                    std::vector<NetworKit::Point<double>>& initialCoordinates
+                    );
             //destructors
             virtual ~BioMaxentStress() = default;
 
-            virtual void run();
+            void run(uint64_t maxSolves = 100);
+            
+            std::vector<NetworKit::Point<double>> getCoordinates() const
+            {
+                return vertexCoordinates;
+            }
 
         private:
-            NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver;
+            // TODO if there will ever be different solvers
+            // NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver;
+            NetworKit::Lamg<NetworKit::CSRMatrix> solver;
 
             std::vector<double> distances;
 
@@ -69,6 +89,10 @@ class BioMaxentStress : public NetworKit::GraphLayoutAlgorithm<double>
             //logging frequency
             uint32_t loggingFrequency;
 
+            bool converged;
+
+            NetworKit::Graph G;
+            std::vector<NetworKit::Point<double>> vertexCoordinates;
             //
 
             void approximate_repulsive_forces(std::vector<NetworKit::Vector> coordinates, NetworKit::Octree<double>& octree, std::vector<NetworKit::Vector>& forces) const;

@@ -9,10 +9,34 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 22 May 2017 14:15:26 CEST
+# Last Modified : Mon 26 Jun 2017 18:04:11 CEST
 #
 #####################################
 
-from Bio import pdb
+from Bio import PDB
 
-# TODO read bonds from somewhere, read angles from somewhere, parse pdb, generate graph, write graph
+
+def readPDB(PDBCode, fileName):
+    # TODO
+
+    parser = None
+
+    if fileName.endswith('.pdb'):
+        parser = PDB.PDBParser()
+    elif fileName.endswith('.cif'):
+        parser = PDB.MMCIFParser()
+        pass
+    structure = parser.get_structure(PDBCode, fileName)
+
+    seq = []
+
+    # for model in structure:
+    #     for chain in model:
+    #         for residue in chain:
+    #             for atom in residue:
+    #                 pass
+    #             pass
+    #         pass
+    #     pass
+
+    return structure, seq

@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Mon 17 Jul 2017 18:34:49 CEST
+ *  Last Modified : Tue 01 Aug 2017 08:50:32 CEST
  *
  * *************************************/
 
@@ -17,24 +17,72 @@
 
 #include <NetworKit/components/ConnectedComponents.h>
 
+
 namespace MOBi
 {
+    /*
     BioMaxentStress::BioMaxentStress(
             const NetworKit::Graph& G,
-            NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver,
             std::vector< NetworKit::Point<double> >& initialCoordinates,
             std::vector<double> distances,
             const uint64_t dim,
             double alpha
-            ) : GraphLayoutAlgorithm<double>(G, dim), solver(solver), distances(distances), dim(dim), alpha(alpha), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(10)
+            ) : GraphLayoutAlgorithm<double>(G, dim), solver(NetworKit::Lamg<NetworKit::CSRMatrix>(1e-5)), distances(distances), dim(dim), alpha(alpha), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(10)
     {
         // TODO check if input valid here (without asserts)
         // NOTE distances have to be indexed correctly!!!
         vertexCoordinates = initialCoordinates;
         assert(vertexCoordinates.size() == G.numberOfNodes());
     }
+    */
 
-    void BioMaxentStress::run()
+    BioMaxentStress::BioMaxentStress(
+            uint64_t numNodes,
+            std::vector<std::pair<uint64_t, uint64_t>>& edges,
+            std::vector<double>& weights,
+            std::vector<double>& distances,
+            std::vector<NetworKit::Point<double>>& initialCoordinates
+            ) : dim(3), alpha(.1), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(0)
+    {
+        // TODO maybe there are faster ways to generate graphs from edges?
+        G = NetworKit::Graph(numNodes, true, false);
+        // TODO check sizes
+        uint64_t numEdges = weights.size();
+        assert(weights.size() == numEdges);
+        assert(distances.size() == numEdges);
+        assert(edges.size() == numEdges);
+
+        for(uint64_t i=0; i<numEdges; ++i)
+        {
+            G.addEdge(edges[i].first, edges[i].second, weights[i]);
+        }
+        G.indexEdges();
+
+        std::cout << G.numberOfEdges() << std::endl;
+
+        std::vector<std::pair<uint64_t, uint64_t>> sortedEdges (numEdges, std::pair<uint64_t, uint64_t> (0, 0));
+        std::vector<double> sortedWeights (numEdges, 0.);
+        std::vector<double> sortedDistances (numEdges, 0.);
+        for(uint64_t i=0; i<numEdges; ++i)
+        {
+            uint64_t edgeID = G.edgeId(edges[i].first, edges[i].second);
+            sortedEdges[edgeID] = edges[i];
+            sortedWeights[edgeID] = weights[i];
+            sortedDistances[edgeID] = distances[i];
+        }
+        
+        edges = sortedEdges;
+        weights = sortedWeights;
+        // TODO better naming
+        BioMaxentStress::distances = sortedDistances;
+
+        vertexCoordinates = initialCoordinates;
+
+        //TODO this is not nice
+        signal(SIGINT, handle_signals);
+    }
+
+    void BioMaxentStress::run(uint64_t maxSolves)
     {
 
         NetworKit::ConnectedComponents cc(this->G);
@@ -46,6 +94,7 @@ namespace MOBi
 
         if(distances.size() != G.numberOfEdges())
         {
+            std::cout << distances.size() << " " << G.numberOfEdges() << std::endl;
             throw std::invalid_argument("ERROR: Number of edges and distances does not match.");
         }
 
@@ -66,7 +115,11 @@ namespace MOBi
             }
         }
 
-        bool converged = false;
+        std::cout << "BioMaxentStress runnign with:" << std::endl;
+        std::cout << "alpha = " << alpha << std::endl;
+        std::cout << "theta = " << theta << std::endl;
+
+        converged = false;
 
         uint64_t iterationCount = 0;
         while(!converged)
@@ -130,10 +183,30 @@ namespace MOBi
             converged = check_converged(newCoordinates, oldCoordinates);
 
             ++iterationCount;
+            if(converged)
+            {
+                std::cout << "converged after " << iterationCount << " solves" << std::endl;
+            }
+            if(iterationCount > maxSolves)
+            {
+                alpha *= .3;
+                // TODO
+                if(alpha < 0.0008)
+                {
+                    converged = true;
+                    std::cout << "converged: " << converged << std::endl;
+                }
+                else
+                {
+                    run(maxSolves);
+                }
+            }
         }
 
         set_vertexCoordinates(newCoordinates);
         // TODO save stats on run
+        // TODO center
+        // TODO invert if laevus
     }
 
 
@@ -201,6 +274,7 @@ namespace MOBi
                 oldLengthSum += oldCoordinates[d][u] * oldCoordinates[d][u];
             }
         }
+        std::cout << "convergence criterion: " << distSum / oldLengthSum << std::endl;
         return distSum / (oldLengthSum) < convergenceThreshold;
     }
 
