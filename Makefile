@@ -17,7 +17,7 @@ SRC := $(addprefix $(SRCDIR)/,BioMaxentStress.cpp, _MOBi.cpp)
 # OBJ := $(addprefix $(OBJDIR)/,SRC:.cpp=.o)
 OBJ := $(addprefix $(OBJDIR)/,BioMaxentStress.o _MOBi.o)
 
-CFLAGS = -std=c++11 -Wall -fopenmp -fPIC -O3 $(INCD)
+CFLAGS = -std=c++11 -Wall -Werror -fopenmp -fPIC -O3 $(INCD)
 LFLAGS = -Wl,--whole-archive $(HOME)/networkit/libNetworKit.a -Wl,--no-whole-archive
 CYTHONFLAGS = --cplus -Werror -3 -I$(HOME)/networkit/networkit/
 
@@ -26,7 +26,7 @@ all: $(OBJ) ./lib/libMOBi.a ./lib/_MOBi.so
 # TODO clean this up
 ./lib/_MOBi.so: $(SRCDIR)/_MOBi.cpp ./lib/libMOBi.a
 	# $(CC) -shared -pthread -fwrapv -fno-strict-aliasing $(CFLAGS) $(LFLAGS) $(PYTHONINCD) -o 
-	$(CC) -shared -pthread -fwrapv -fno-strict-aliasing -std=c++11 -Wall -fopenmp -fPIC -O3 $(INCD) $(PYTHONINCD) -o ./lib/_MOBi.so ./src/_MOBi.cpp ./src/BioMaxentStress.cpp  $(LFLAGS)
+	$(CC) -shared -pthread -fwrapv -fno-strict-aliasing -std=c++11 -Wall -fopenmp -fPIC -O3 $(INCD) $(PYTHONINCD) -o ./lib/_MOBi.so ./src/_MOBi.cpp ./src/BioMaxentStress.cpp  $(LFLAGS) -Wno-sign-compare -Werror
 
 # TODO make cython optional i.e. ship the cpp source
 $(SRCDIR)/_MOBi.cpp: $(SRCDIR)/_MOBi.pyx

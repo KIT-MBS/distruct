@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 26 Jun 2017 18:04:11 CEST
+# Last Modified : Thu 03 Aug 2017 11:21:29 CEST
 #
 #####################################
 
@@ -17,7 +17,6 @@ from Bio import PDB
 
 
 def readPDB(PDBCode, fileName):
-    # TODO
 
     parser = None
 
@@ -28,15 +27,4 @@ def readPDB(PDBCode, fileName):
         pass
     structure = parser.get_structure(PDBCode, fileName)
 
-    seq = []
-
-    # for model in structure:
-    #     for chain in model:
-    #         for residue in chain:
-    #             for atom in residue:
-    #                 pass
-    #             pass
-    #         pass
-    #     pass
-
-    return structure, seq
+    return structure

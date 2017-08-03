@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Mon 31 Jul 2017 13:51:24 CEST
+ *  Last Modified : Wed 02 Aug 2017 15:13:03 CEST
  *
  * *************************************/
 
@@ -60,7 +60,7 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             virtual ~BioMaxentStress() = default;
 
             void run(uint64_t maxSolves = 100);
-            
+
             std::vector<NetworKit::Point<double>> getCoordinates() const
             {
                 return vertexCoordinates;
@@ -76,13 +76,15 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             //MaxentStress parameters:
 
             uint64_t dim;
-            //entropy weight
+            //entropy weight / temperataure
             double alpha;
             //entropy shape parameter
             double q;
             // TODO entropy range parameter
+            // TODO atom radius!!!
 
             //implementation parameters
+            // TODO should depend on number of atoms!
             double convergenceThreshold;
             //entropy approximation threshold
             double theta;
@@ -99,7 +101,6 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             void compute_distance_laplacian_term(const std::vector<NetworKit::Vector>, std::vector<NetworKit::Vector> result) const;
 
             bool check_converged(const std::vector<NetworKit::Vector>&, const std::vector<NetworKit::Vector>&) const;
-            // TODO
             double compute_stress() const;
             double compute_entropy() const;
             double compute_largest_distance_mean_error() const;

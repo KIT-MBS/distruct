@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Tue 01 Aug 2017 08:50:32 CEST
+ *  Last Modified : Wed 02 Aug 2017 15:18:52 CEST
  *
  * *************************************/
 
@@ -42,11 +42,12 @@ namespace MOBi
             std::vector<double>& weights,
             std::vector<double>& distances,
             std::vector<NetworKit::Point<double>>& initialCoordinates
-            ) : dim(3), alpha(.1), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(0)
+            ) : dim(3), alpha(.1), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(1)
     {
         // TODO maybe there are faster ways to generate graphs from edges?
         G = NetworKit::Graph(numNodes, true, false);
-        // TODO check sizes
+
+        // TODO replace with exceptions, check valid graph
         uint64_t numEdges = weights.size();
         assert(weights.size() == numEdges);
         assert(distances.size() == numEdges);
@@ -58,8 +59,6 @@ namespace MOBi
         }
         G.indexEdges();
 
-        std::cout << G.numberOfEdges() << std::endl;
-
         std::vector<std::pair<uint64_t, uint64_t>> sortedEdges (numEdges, std::pair<uint64_t, uint64_t> (0, 0));
         std::vector<double> sortedWeights (numEdges, 0.);
         std::vector<double> sortedDistances (numEdges, 0.);
@@ -70,7 +69,7 @@ namespace MOBi
             sortedWeights[edgeID] = weights[i];
             sortedDistances[edgeID] = distances[i];
         }
-        
+
         edges = sortedEdges;
         weights = sortedWeights;
         // TODO better naming
@@ -115,7 +114,7 @@ namespace MOBi
             }
         }
 
-        std::cout << "BioMaxentStress runnign with:" << std::endl;
+        std::cout << "BioMaxentStress running with:" << std::endl;
         std::cout << "alpha = " << alpha << std::endl;
         std::cout << "theta = " << theta << std::endl;
 
@@ -124,13 +123,18 @@ namespace MOBi
         uint64_t iterationCount = 0;
         while(!converged)
         {
-            //TODO
             {
                 if(loggingFrequency != 0 && iterationCount % loggingFrequency == 0)
                 {
-                    // TODO compute stress terms, approximate entropy, intermediate embedding and save them
-                    // TODO add output facilities
+                    set_vertexCoordinates(newCoordinates);
+                    // TODO compute intermediate embedding and save it
+                    double stress = compute_stress();
+                    double entropy = compute_entropy();
+                    double ldme = compute_largest_distance_mean_error();
+
+                    std::cout << "stress: " << stress << " entropy: " << entropy << " ldme: " << ldme <<std::endl;
                     // TODO add loggingFrequency input facilities
+                    // TODO add logging
                 }
             }
             // TODO stagger entropy calculation
@@ -175,8 +179,8 @@ namespace MOBi
             }
 
             // TODO check these values
-            uint64_t maxSolverConvergenceTime = 1000;
-            uint64_t maxSolverIterations = 75;
+            uint64_t maxSolverConvergenceTime = 100000;
+            uint64_t maxSolverIterations = 7500;
             solver.parallelSolve(rightHandSides, newCoordinates, maxSolverConvergenceTime, maxSolverIterations);
 
             //TODO check on the ldme as well? (and max steps)
@@ -187,14 +191,14 @@ namespace MOBi
             {
                 std::cout << "converged after " << iterationCount << " solves" << std::endl;
             }
-            if(iterationCount > maxSolves)
+            if(iterationCount >= maxSolves)
             {
                 alpha *= .3;
                 // TODO
-                if(alpha < 0.0008)
+                if(alpha < 0.008)
                 {
                     converged = true;
-                    std::cout << "converged: " << converged << std::endl;
+                    std::cout << "converged (not really) after " << iterationCount << " solves" << std::endl;
                 }
                 else
                 {
@@ -213,7 +217,12 @@ namespace MOBi
     void BioMaxentStress::approximate_repulsive_forces(std::vector<NetworKit::Vector> coordinates, NetworKit::Octree<double>& octree, std::vector<NetworKit::Vector>& result) const
     {
         // TODO implement different qs
-        // TODO this also takes neighbours into acccount?
+        if(fabs(q) > 0.001)
+        {
+            std::cout << "currently only q=0 supported" << std::endl;
+            throw;
+        }
+        // TODO should take vdw radius into account
         G.parallelForNodes([&](uint64_t u) {
 
             NetworKit::Point<double> uCoordinates(dim);
@@ -274,28 +283,63 @@ namespace MOBi
                 oldLengthSum += oldCoordinates[d][u] * oldCoordinates[d][u];
             }
         }
+        std::cout << "distSum: " << distSum  << " oldLengthSum: " << oldLengthSum << std::endl;
         std::cout << "convergence criterion: " << distSum / oldLengthSum << std::endl;
         return distSum / (oldLengthSum) < convergenceThreshold;
     }
 
+    // TODO rename this to internal energy?
     double BioMaxentStress::compute_stress() const
     {
-        // TODO
-        return 0.;
+        double result = 0.;
+
+#pragma omp parallel for reduction(+:result)
+        for(uint64_t u=0; u<G.numberOfNodes(); ++u)
+        {
+            G.forNeighborsOf(u, [&](uint64_t v, double w)
+                    {
+                        double currentDistance = std::max(vertexCoordinates[u].distance(vertexCoordinates[v]), 1e-5);
+                        uint64_t edgeID = G.edgeId(u, v);
+
+                        result += w * (distances[edgeID] - currentDistance) * (distances[edgeID] - currentDistance);
+                    });
+        }
+        result /= 2;
+
+        return result;
     }
 
 
     double BioMaxentStress::compute_entropy() const
     {
-        // TODO
-        return 0.;
+        double result = 0.;
+        // NOTE this is not the entropy mentioned in the theory. this is summed over all pairs of atoms
+#pragma omp parallel for reduction(+:result)
+        for(uint64_t u=0; u<G.numberOfNodes(); ++u)
+        {
+            G.forNodes([&](uint64_t v)
+                    {
+                        if(u!=v)
+                        {
+                            double currentDistance = std::max(vertexCoordinates[u].distance(vertexCoordinates[v]), 1e-5);
+                            result += (fabs(q) < 0.001) ? log(currentDistance) : pow(currentDistance, -q);
+                        }
+                    });
+        }
+        return alpha * result;
     }
 
 
     double BioMaxentStress::compute_largest_distance_mean_error() const
     {
-        // TODO
-        return 0.;
+        double result = 0.;
+
+        G.forEdges([&](uint64_t u, uint64_t v, uint64_t edgeID){
+                double currentDistance = vertexCoordinates[u].distance(vertexCoordinates[v]);
+                result += (distances[edgeID] - currentDistance) * (distances[edgeID] - currentDistance);
+                });
+        result /= distances.size();
+        return sqrt(result);
     }
 
 

@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Fri 23 Jun 2017 12:59:47 CEST
+# Last Modified : Thu 29 Jun 2017 17:30:23 CEST
 #
 #####################################
 
@@ -19,6 +19,7 @@ import MOBi
 
 testFilePath = MOBi.config.data_path + 'tests/'
 
+# TODO replace math.isclose with pytest.approx??
 # TODO test on gromos and amber ffs
 
 
