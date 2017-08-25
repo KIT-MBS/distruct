@@ -9,17 +9,22 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 26 Jun 2017 16:52:17 CEST
+# Last Modified : Thu 17 Aug 2017 04:21:20 PM CEST
 #
 #####################################
 
 import os
+
+from Bio import Alphabet
+from Bio import Data
 
 from . import math
 
 from .. import config
 
 topologyPath = config.gromacs_topology_path
+
+# TODO add weights
 
 
 def read_atoms(line):
@@ -101,13 +106,11 @@ def read_impropers(line):
 
 
 # NOTE amber type ffs have n- and c- terminus residues, that are used here
-# NOTE if buildingBlocks is empty it considers all the ones it can find
 # NOTE amber type ffs have different AAs for an AA with different protonations (HIS)
 # TODO translate names
 def parse_residue_topology(
         residueTopologyFile,
         macros={},
-        buildingBlocks=[],
         ignoredDirectives={'bondedtypes', 'exclusions', 'dihedrals'},
         knownDirectives={'atoms': read_atoms, 'bonds': read_bonds, 'angles': read_angles, 'impropers': read_impropers}):
 
@@ -147,24 +150,21 @@ def parse_residue_topology(
         parts = line.split()
         if parts[0] == '[' and parts[2] == ']':
             directive = parts[1]
-            if directive in buildingBlocks or (len(buildingBlocks) == 0 and directive not in knownDirectives):
+            if directive not in knownDirectives:
                 buildingBlock = directive
                 context = None
                 result[buildingBlock] = {}
-            elif directive not in buildingBlocks:
-                if directive in knownDirectives:
-                    if directive not in ignoredDirectives:
-                        if buildingBlock:
-                            context = directive
-                            result[buildingBlock][context] = {}
-                            pass
-                    else:
-                        context = None
+            else:
+                if directive not in ignoredDirectives:
+                    if buildingBlock:
+                        context = directive
+                        result[buildingBlock][context] = {}
                         pass
                 else:
-                    buildingBlock = None
+                    context = None
                     pass
                 pass
+            pass
         else:
             if buildingBlock and context:
                 if knownDirectives[context]:
@@ -179,7 +179,6 @@ def parse_residue_topology(
     return result
 
 
-# TODO for consistency: put in both directions
 def read_bondtypes(line):
     parts = line.split()
     i = parts[0]
@@ -187,7 +186,6 @@ def read_bondtypes(line):
     # func = parts[2]
     b0 = parts[3]
 
-    # TODO maybe don't use frozensets, just add the inverted tuple to the dict as well?
     key = (i, j)
     # key = frozenset([i, j])
     # value = (int(func), 10 * float(b0))
@@ -275,7 +273,6 @@ def parse_forcefield_params(ffParamFile):
 
 
 def infer_angles(atoms, bonds, angleTypes):
-    # TODO n-termini special casing
     result = {}
 
     # NOTE needed to get all angles between residues
@@ -490,9 +487,10 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
     return result
 
 
+# TODO (not just edges, name inaccurate)
 def generate_chemical_primary_edge_database(
         ffname,
-        buildingBlocks=[],
+        alphabet,
         inferAngles=True,
         inferImpropers=False,
         topPath=topologyPath):
@@ -518,34 +516,76 @@ def generate_chemical_primary_edge_database(
     buildingBlockTopologies = {}
     assert(len(residueTopologieFiles) > 0)
     for residueTopologyFile in residueTopologieFiles:
-        buildingBlockTopologies.update(parse_residue_topology(topPath + ffname + '.ff/' + residueTopologyFile, macros, buildingBlocks))
+        buildingBlockTopologies.update(parse_residue_topology(topPath + ffname + '.ff/' + residueTopologyFile, macros))
         pass
 
-    for buildingBlock in buildingBlocks:
-        if buildingBlock not in buildingBlockTopologies:
-            # TODO more helpful error messages / warnings
-            raise
-        pass
+    # TODO replace this with check on alphabet
+    # for buildingBlock in buildingBlocks:
+    #     if buildingBlock not in buildingBlockTopologies:
+    #         # TODO more helpful error messages / warnings
+    #         raise
+    #     pass
 
     result = {}
-    for buildingBlock in buildingBlockTopologies:
-        print(buildingBlock)
+    # for buildingBlock in buildingBlockTopologies:
+    for letter in alphabet.letters:
+        result[letter] = {}
 
-        result[buildingBlock] = {}
+        result[letter]['vertices'] = set()
+        result[letter]['bondEdges'] = {}
+        result[letter]['angleEdges'] = {}
+        result[letter]['improperEdges'] = {}
 
-        result[buildingBlock]['vertices'] = set()
-        result[buildingBlock]['bondEdges'] = {}
-        result[buildingBlock]['angleEdges'] = {}
-        result[buildingBlock]['improperEdges'] = {}
+        # TODO translate letter to building block and vv
+        # TODO handle termini
+        buildingBlock = None
 
-        result[buildingBlock]['vertices'].update(
+        if letter in buildingBlockTopologies:
+            buildingBlock = letter
+        else:
+            if isinstance(alphabet, Alphabet.ProteinAlphabet):
+                buildingBlock = Data.IUPACData.protein_letters_1to3_extended[letter]
+                if buildingBlock not in buildingBlockTopologies:
+                    buildingBlock = buildingBlock.upper()
+                    if buildingBlock not in buildingBlockTopologies:
+                        # NOTE list is intended to catch meanings: [ beta, gamma, delta, epsilon, zeta, eta, protonated]
+                        # for postfix in ['B', 'G', 'D', 'E', 'Z', 'H', 'P']:
+                        # this is for protonated histidine
+                        # for positivly charged AAs the fully protonated is chosen,
+                        # for negatively charged ones the deprotonated ones
+                        for postfix in ['P']:
+                            if buildingBlock[:2] + postfix in buildingBlockTopologies:
+                                buildingBlock = buildingBlock[:2] + postfix
+                                break
+                            pass
+                        pass
+                    pass
+                pass
+            elif isinstance(alphabet, Alphabet.ThreeLetterProtein):
+                buildingBlock = letter
+                for postfix in ['P']:
+                    if buildingBlock[:2] + postfix in buildingBlockTopologies:
+                        buildingBlock = buildingBlock[:2] + postfix
+                        break
+                    pass
+                pass
+            elif isinstance(alphabet, Alphabet.RNAAlphabet):
+                pass
+            elif isinstance(alphabet, Alphabet.DNAAlphabet):
+                pass
+            else:
+                # TODO explode
+                assert(False)
+                pass
+
+        result[letter]['vertices'].update(
                 translate_atoms_to_vertices(
                     buildingBlockTopologies[buildingBlock]['atoms']
                 )
         )
 
         if 'bonds' in buildingBlockTopologies[buildingBlock]:
-            result[buildingBlock]['bondEdges'].update(
+            result[letter]['bondEdges'].update(
                     translate_bonds_to_edges(
                         buildingBlockTopologies[buildingBlock]['bonds'],
                         buildingBlockTopologies[buildingBlock]['atoms'],
@@ -558,7 +598,7 @@ def generate_chemical_primary_edge_database(
                         buildingBlockTopologies[buildingBlock]['atoms'],
                         buildingBlockTopologies[buildingBlock]['bonds'],
                         ffParams['angletypes'])
-                result[buildingBlock]['angleEdges'].update(
+                result[letter]['angleEdges'].update(
                         translate_angles_to_edges(
                             inferredAngles,
                             buildingBlockTopologies[buildingBlock]['atoms'],
@@ -569,7 +609,7 @@ def generate_chemical_primary_edge_database(
                 pass
             pass
             if 'angles' in buildingBlockTopologies[buildingBlock]:
-                result[buildingBlock]['angleEdges'].update(translate_angles_to_edges(
+                result[letter]['angleEdges'].update(translate_angles_to_edges(
                     buildingBlockTopologies[buildingBlock]['angles'],
                     buildingBlockTopologies[buildingBlock]['atoms'],
                     ffParams['bondtypes'],
@@ -580,18 +620,18 @@ def generate_chemical_primary_edge_database(
             #     inferredImpropers = infer_impropers()  # TODO
             #     result[buildingBlock]['improperEdges'].update(translate_impropers_to_edges(
             #         inferredImpropers,
-            #         result[buildingBlock]['angleEdges'],
-            #         result[buildingBlock]['bondEdges'],
+            #         result[letter]['angleEdges'],
+            #         result[letter]['bondEdges'],
             #         buildingBlockTopologies[buildingBlock]['atoms'],
             #         ffParams['dihedraltypes']))
             #     pass
 
             if 'impropers' in buildingBlockTopologies[buildingBlock]:
-                result[buildingBlock]['improperEdges'].update(
+                result[letter]['improperEdges'].update(
                         translate_impropers_to_edges(
                             buildingBlockTopologies[buildingBlock]['impropers'],
-                            result[buildingBlock]['angleEdges'],
-                            result[buildingBlock]['bondEdges'],
+                            result[letter]['angleEdges'],
+                            result[letter]['bondEdges'],
                             buildingBlockTopologies[buildingBlock]['atoms'],
                             ffParams['dihedraltypes'])
                 )

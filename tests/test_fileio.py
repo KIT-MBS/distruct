@@ -9,13 +9,15 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Mon 19 Jun 2017 13:47:59 CEST
+# Last Modified : Tue 08 Aug 2017 15:32:22 CEST
 #
 #####################################
 
 import os
 
 import MOBi
+
+# TODO redo these
 
 testFilePath = MOBi.config.data_path + 'tests/'
 #

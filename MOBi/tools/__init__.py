@@ -9,12 +9,11 @@
 #
 # Creation Date : Fri 12 May 2017 15:20:35 CEST
 #
-# Last Modified : Fri 04 Aug 2017 11:07:26 CEST
+# Last Modified : Thu 17 Aug 2017 03:03:05 PM CEST
 #
 #####################################
 
 from . import ffparsergmx
-from . import databaseio
 from . import math
 from . import pdbparser
 from . import structurewriter

@@ -1,21 +1,23 @@
 #!/usr/bin/env python3
 #####################################
 #
-# Filename : databaseio.py
+# Filename : fileio.py
 #
 # Projectname : MOBi
 #
 # Author : Oskar Taubert
 #
-# Creation Date : Mon 22 May 2017 14:32:44 CEST
+# Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Tue 20 Jun 2017 10:17:00 CEST
+# Last Modified : Thu 17 Aug 2017 03:01:20 PM CEST
 #
 #####################################
 
 from lxml import etree as ET
 
-from .. import config
+# TODO handle alphabets
+
+from . import config
 defaultDataPath = config.data_path
 
 
@@ -90,7 +92,6 @@ def write_primary_edge_database(
     root = ET.Element(databaseName)
     XMLTree = ET.ElementTree(root)
 
-    # TODO name the nodes <type>-edge to be more precise (angle with a vertex pair and distance is not intuitive)
     for buildingBlock in sorted(database):
         assert buildingBlock in database
         assert 'vertices' in database[buildingBlock]

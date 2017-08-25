@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Wed 02 Aug 2017 15:18:52 CEST
+ *  Last Modified : Tue 22 Aug 2017 03:19:12 PM CEST
  *
  * *************************************/
 
@@ -42,23 +42,50 @@ namespace MOBi
             std::vector<double>& weights,
             std::vector<double>& distances,
             std::vector<NetworKit::Point<double>>& initialCoordinates
-            ) : dim(3), alpha(.1), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(1)
+            ) : dim(3), alpha(1.), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(0)
     {
         // TODO maybe there are faster ways to generate graphs from edges?
+        std::cout << "BioMaxentStress init: " << std::endl;
         G = NetworKit::Graph(numNodes, true, false);
 
         // TODO replace with exceptions, check valid graph
-        uint64_t numEdges = weights.size();
-        assert(weights.size() == numEdges);
-        assert(distances.size() == numEdges);
-        assert(edges.size() == numEdges);
+        uint64_t numEdges = edges.size();
+        if(numEdges != weights.size())
+        {
+            std::cout << numEdges << " " << weights.size() << std::endl;
+            throw std::invalid_argument("ERROR: Number of edges and weights does not match.");
+        }
 
         for(uint64_t i=0; i<numEdges; ++i)
         {
             G.addEdge(edges[i].first, edges[i].second, weights[i]);
         }
+        std::cout << "indexing..." << std::endl;
         G.indexEdges();
 
+        NetworKit::ConnectedComponents cc(this->G);
+        cc.run();
+        if(cc.numberOfComponents() != 1)
+        {
+            std::cout << "Number of connected components: " << cc.numberOfComponents() << std::endl;
+            std::cout << "Sizes of connected components: " << std::endl;
+            std::map<uint64_t, uint64_t> ccsSizes = cc.getComponentSizes();
+            for(auto iter : ccsSizes)
+            {
+                // NOTE dereferencing a map iterator yields a pair
+                std::cout << iter.first << " " << iter.second << std::endl;
+            }
+            
+            throw std::invalid_argument("ERROR: Input graph is not connected.");
+        }
+
+        if(distances.size() != G.numberOfEdges())
+        {
+            std::cout << distances.size() << " " << G.numberOfEdges() << std::endl;
+            throw std::invalid_argument("ERROR: Number of edges and distances does not match.");
+        }
+
+        std::cout << "resorting edges..." << std::endl;
         std::vector<std::pair<uint64_t, uint64_t>> sortedEdges (numEdges, std::pair<uint64_t, uint64_t> (0, 0));
         std::vector<double> sortedWeights (numEdges, 0.);
         std::vector<double> sortedDistances (numEdges, 0.);
@@ -77,25 +104,12 @@ namespace MOBi
 
         vertexCoordinates = initialCoordinates;
 
-        //TODO this is not nice
+        //TODO this is not nice, replace with nwk handler?
         signal(SIGINT, handle_signals);
     }
 
     void BioMaxentStress::run(uint64_t maxSolves)
     {
-
-        NetworKit::ConnectedComponents cc(this->G);
-        cc.run();
-        if(cc.numberOfComponents() != 1)
-        {
-            throw std::invalid_argument("ERROR: Input graph is not connected.");
-        }
-
-        if(distances.size() != G.numberOfEdges())
-        {
-            std::cout << distances.size() << " " << G.numberOfEdges() << std::endl;
-            throw std::invalid_argument("ERROR: Number of edges and distances does not match.");
-        }
 
         NetworKit::CSRMatrix weighted_laplacian = NetworKit::CSRMatrix::laplacianMatrix(G); // L_{w}
         solver.setupConnected(weighted_laplacian);
@@ -121,8 +135,18 @@ namespace MOBi
         converged = false;
 
         uint64_t iterationCount = 0;
+
+        uint64_t currentStaggerThreshold = 0;
+        uint64_t newStaggerThreshold = 0;
+
+        std::vector<NetworKit::Vector> repulsiveForces(dim, std::vector<double>(this->G.numberOfNodes()));
+        std::vector<NetworKit::Vector> rightHandSides(dim, NetworKit::Vector(this->G.numberOfNodes())); // =L_{w,d} * x
         while(!converged)
         {
+            // TODO remove
+            std::cout << "=============================" << std::endl;
+            std::cout << "iteration: " << iterationCount << std::endl;
+            std::cout << "alpha = " << alpha << std::endl;
             {
                 if(loggingFrequency != 0 && iterationCount % loggingFrequency == 0)
                 {
@@ -133,19 +157,24 @@ namespace MOBi
                     double ldme = compute_largest_distance_mean_error();
 
                     std::cout << "stress: " << stress << " entropy: " << entropy << " ldme: " << ldme <<std::endl;
+                    // TODO add average relative error
                     // TODO add loggingFrequency input facilities
                     // TODO add logging
+                    // TODO add units in output
                 }
             }
-            // TODO stagger entropy calculation
+            // TODO stagger entropy calculation (probably only useful for large number of iterations)
 
             oldCoordinates = newCoordinates;
 
-            std::vector<NetworKit::Vector> repulsiveForces(dim, std::vector<double>(this->G.numberOfNodes()));
-            NetworKit::Octree<double> octree(oldCoordinates);
-            approximate_repulsive_forces(oldCoordinates, octree, repulsiveForces);
+            newStaggerThreshold = floor(5 * std::log(iterationCount));
+            if(newStaggerThreshold != currentStaggerThreshold)
+            {
+                NetworKit::Octree<double> octree(oldCoordinates);
+                approximate_repulsive_forces(oldCoordinates, octree, repulsiveForces); // TODO pass theta
+                currentStaggerThreshold = newStaggerThreshold;
+            }
 
-            std::vector<NetworKit::Vector> rightHandSides(dim, NetworKit::Vector(this->G.numberOfNodes())); // =L_{w,d} * x
             compute_distance_laplacian_term(oldCoordinates, rightHandSides);
 
             //TODO test how normalization affects solution quality
@@ -179,8 +208,8 @@ namespace MOBi
             }
 
             // TODO check these values
-            uint64_t maxSolverConvergenceTime = 100000;
-            uint64_t maxSolverIterations = 7500;
+            uint64_t maxSolverConvergenceTime = 1000;
+            uint64_t maxSolverIterations = 75;
             solver.parallelSolve(rightHandSides, newCoordinates, maxSolverConvergenceTime, maxSolverIterations);
 
             //TODO check on the ldme as well? (and max steps)
