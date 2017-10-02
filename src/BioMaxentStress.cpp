@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Tue 22 Aug 2017 03:19:12 PM CEST
+ *  Last Modified : Mon 02 Oct 2017 03:46:53 PM CEST
  *
  * *************************************/
 
@@ -41,8 +41,9 @@ namespace MOBi
             std::vector<std::pair<uint64_t, uint64_t>>& edges,
             std::vector<double>& weights,
             std::vector<double>& distances,
-            std::vector<NetworKit::Point<double>>& initialCoordinates
-            ) : dim(3), alpha(1.), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(0)
+            std::vector<NetworKit::Point<double>>& initialCoordinates,
+            uint32_t loggingFrequency=0
+            ) : dim(3), alpha(1.), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency)
     {
         // TODO maybe there are faster ways to generate graphs from edges?
         std::cout << "BioMaxentStress init: " << std::endl;
@@ -75,7 +76,7 @@ namespace MOBi
                 // NOTE dereferencing a map iterator yields a pair
                 std::cout << iter.first << " " << iter.second << std::endl;
             }
-            
+
             throw std::invalid_argument("ERROR: Input graph is not connected.");
         }
 
@@ -177,8 +178,9 @@ namespace MOBi
 
             compute_distance_laplacian_term(oldCoordinates, rightHandSides);
 
-            //TODO test how normalization affects solution quality
-
+            // TODO normalize entropy term
+            // TODO implement q, (add faster decay of force)
+            // TODO user should not have to fiddle with alpha in most cases
             for(uint64_t d=0; d<dim; ++d)
             {
                 // add entropy term
@@ -314,6 +316,7 @@ namespace MOBi
         }
         std::cout << "distSum: " << distSum  << " oldLengthSum: " << oldLengthSum << std::endl;
         std::cout << "convergence criterion: " << distSum / oldLengthSum << std::endl;
+        std::cout << "convergenceThreshold: " << convergenceThreshold << std::endl;
         return distSum / (oldLengthSum) < convergenceThreshold;
     }
 

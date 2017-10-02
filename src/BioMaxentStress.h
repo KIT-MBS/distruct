@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Fri 25 Aug 2017 02:48:45 PM CEST
+ *  Last Modified : Mon 02 Oct 2017 02:04:07 PM CEST
  *
  * *************************************/
 
@@ -52,7 +52,8 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
                     std::vector<std::pair<uint64_t, uint64_t>>& edges,
                     std::vector<double>& weights,
                     std::vector<double>& distances,
-                    std::vector<NetworKit::Point<double>>& initialCoordinates
+                    std::vector<NetworKit::Point<double>>& initialCoordinates,
+                    uint32_t loggingFrequency
                     );
             //destructors
             virtual ~BioMaxentStress() = default;
