@@ -9,11 +9,10 @@
 #
 # Creation Date : Fri 12 May 2017 15:20:35 CEST
 #
-# Last Modified : Thu 17 Aug 2017 03:03:05 PM CEST
+# Last Modified : Mon 18 Sep 2017 11:44:38 AM CEST
 #
 #####################################
 
 from . import ffparsergmx
 from . import math
 from . import pdbparser
-from . import structurewriter

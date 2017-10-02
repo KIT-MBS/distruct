@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Wed 23 Aug 2017 05:23:54 PM CEST
+# Last Modified : Mon 18 Sep 2017 04:12:50 PM CEST
 #
 #####################################
 
@@ -146,7 +146,7 @@ def read_sequences_from_PDB(fileName):
 
 
 def get_edge(atom1, atom2):
-    edge = tuple(sorted(atom1.get_serial_number(), atom2.get_serial_number()))
+    edge = tuple(sorted([atom1.get_serial_number(), atom2.get_serial_number()]))
     distance = np.sqrt(np.dot(atom1.get_coord() - atom2.get_coord(), atom1.get_coord() - atom2.get_coord()))
     return edge, distance
 
@@ -270,7 +270,7 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
 
         if dssp[key][2] == 'H':  # alpha Helix
             # phi
-            edge, distance = get_dihedral_edge(model, chainID - 1, resID, 'C')
+            edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
             if edge:
                 edges.append(edge)
                 if useStructureDistances:
@@ -294,7 +294,7 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
             # H bond
             if chainID in model:
                 if resID in model[chainID] and resID + 4 in model[chainID]:
-                    if model[chainID][resID].has_id('N') and model[chainID + 4][resID].has_id['C']:
+                    if model[chainID][resID].has_id('N') and model[chainID][resID + 4].has_id('C'):
                         # TODO take H atom into account
                         atom1 = model[chainID][resID]['N']
                         atom2 = model[chainID][resID]['C']
@@ -313,7 +313,7 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
         elif dssp[key][2] == 'E':  # beta strand
 
             # phi
-            edge, distance = get_dihedral_edge(model, chainID - 1, resID, 'C')
+            edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
             if edge:
                 edges.append(edge)
                 if useStructureDistances:
@@ -343,7 +343,7 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
 
 # NOTE default cutOff in units of the structure (assumed angstrom)
 # TODO add sequence cutoff
-def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=4):
+def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=5):
     # NOTE these would include beta sheet hbonds
     # TODO distinguish inter and intra chain contacts?
     # TODO add noise?
@@ -371,8 +371,7 @@ def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=4):
 
 # TODO add parameters
 # TODO work on model instead of structure?
-def generateGraph(PDBCode, fileName, topologyDB):
-    structure = read_PDB(PDBCode, fileName)
+def generateGraph(structure, fileName, topologyDB):
 
     atoms = list(structure[0].get_atoms())
 
@@ -393,7 +392,7 @@ def generateGraph(PDBCode, fileName, topologyDB):
 
     secondaryEdges, secondaryDistances, secondaryWeights = get_secondary_edges(structure[0], fileName)
 
-    tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, 3)
+    tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, 3.)
 
     # print(str(len(tertiaryEdges)) + " tertiary edges found")
 

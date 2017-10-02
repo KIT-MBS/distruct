@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Wed 02 Aug 2017 15:13:03 CEST
+ *  Last Modified : Fri 25 Aug 2017 02:48:45 PM CEST
  *
  * *************************************/
 
@@ -36,8 +36,6 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
     {
         public:
             // TODO choose alpha depending on system stats (sum/average of weighting factors?), add rest of parameters
-            // TODO would one ever want fast computation in this context?
-
             //constructors
             /*
             BioMaxentStress(
@@ -90,6 +88,7 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             double theta;
             //logging frequency
             uint32_t loggingFrequency;
+            // TODO track number of runs?
 
             bool converged;
 

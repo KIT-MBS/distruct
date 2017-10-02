@@ -110,6 +110,7 @@ cdef class BioMaxentStress:
         (<_BioMaxentStress*>(self._this)).run(maxSolves)
         return self
 
+    # TODO rename and make faster
     def getCoordinates(self):
         vertexCoordinates = self._this.getCoordinates()
         result = []
