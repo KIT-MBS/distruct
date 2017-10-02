@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 18 Sep 2017 04:12:50 PM CEST
+# Last Modified : Mon 02 Oct 2017 01:42:17 PM CEST
 #
 #####################################
 
@@ -371,7 +371,7 @@ def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=5):
 
 # TODO add parameters
 # TODO work on model instead of structure?
-def generateGraph(structure, fileName, topologyDB):
+def generateGraph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
 
     atoms = list(structure[0].get_atoms())
 
@@ -392,7 +392,7 @@ def generateGraph(structure, fileName, topologyDB):
 
     secondaryEdges, secondaryDistances, secondaryWeights = get_secondary_edges(structure[0], fileName)
 
-    tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, 3.)
+    tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, cutOff, minSeqDist)
 
     # print(str(len(tertiaryEdges)) + " tertiary edges found")
 
