@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Mon 02 Oct 2017 03:46:53 PM CEST
+ *  Last Modified : Mon 02 Oct 2017 06:22:27 PM CEST
  *
  * *************************************/
 
@@ -43,7 +43,7 @@ namespace MOBi
             std::vector<double>& distances,
             std::vector<NetworKit::Point<double>>& initialCoordinates,
             uint32_t loggingFrequency=0
-            ) : dim(3), alpha(1.), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency)
+            ) : dim(3), alpha(1./numNodes), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency)
     {
         // TODO maybe there are faster ways to generate graphs from edges?
         std::cout << "BioMaxentStress init: " << std::endl;
@@ -105,6 +105,9 @@ namespace MOBi
 
         vertexCoordinates = initialCoordinates;
 
+        std::cout << "Number of nodes: " << G.numberOfNodes() << std::endl;
+        std::cout << "Number of edges: " << G.numberOfEdges() << std::endl;
+
         //TODO this is not nice, replace with nwk handler?
         signal(SIGINT, handle_signals);
     }
@@ -164,8 +167,6 @@ namespace MOBi
                     // TODO add units in output
                 }
             }
-            // TODO stagger entropy calculation (probably only useful for large number of iterations)
-
             oldCoordinates = newCoordinates;
 
             newStaggerThreshold = floor(5 * std::log(iterationCount));
@@ -178,12 +179,12 @@ namespace MOBi
 
             compute_distance_laplacian_term(oldCoordinates, rightHandSides);
 
-            // TODO normalize entropy term
             // TODO implement q, (add faster decay of force)
             // TODO user should not have to fiddle with alpha in most cases
             for(uint64_t d=0; d<dim; ++d)
             {
                 // add entropy term
+                rightHandSides[d] /= rightHandSides[d].length(); //normalize; previously done only for first 20% of solves
                 rightHandSides[d] += alpha * repulsiveForces[d];
             }
 
@@ -278,18 +279,19 @@ namespace MOBi
 
 
     // alternativly create matrix L_{w, d} and multiply by coordinate vector for every dimension
-    void BioMaxentStress::compute_distance_laplacian_term(std::vector<NetworKit::Vector> coordinates, std::vector<NetworKit::Vector> result) const
+    void BioMaxentStress::compute_distance_laplacian_term(std::vector<NetworKit::Vector> coordinates, std::vector<NetworKit::Vector>& result) const
     {
         // NOTE result assumed to be zero initialized
         G.parallelForNodes([&](uint64_t u) {
             double weightedDegree = 0.;
             G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeID) {
                 double targetDistance = distances[edgeID];
-                double currentDistance = sqrt(dist2(coordinates, coordinates, u, v));
+                double currentDistance = std::max(sqrt(dist2(coordinates, coordinates, u, v)), 1e-5);
+                double w = weight * targetDistance / currentDistance;
                 for(uint64_t d=0; d<dim; ++d)
                 {
-                    result[d][u] += - weight * targetDistance / currentDistance * coordinates[d][v];
-                    weightedDegree += weight * targetDistance / currentDistance;
+                    result[d][u] += - w * coordinates[d][v];
+                    weightedDegree += w;
                 }
             });
             for(uint64_t d=0; d<dim; ++d)
@@ -345,10 +347,11 @@ namespace MOBi
     double BioMaxentStress::compute_entropy() const
     {
         double result = 0.;
-        // NOTE this is not the entropy mentioned in the theory. this is summed over all pairs of atoms
+        // NOTE this is not the exactly entropy mentioned in the theory. this is summed over all pairs of atoms
 #pragma omp parallel for reduction(+:result)
         for(uint64_t u=0; u<G.numberOfNodes(); ++u)
         {
+            // TODO get rid of the log, it produces negative entropies at times and is overall bad
             G.forNodes([&](uint64_t v)
                     {
                         if(u!=v)

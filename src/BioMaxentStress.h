@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Mon 02 Oct 2017 02:04:07 PM CEST
+ *  Last Modified : Mon 02 Oct 2017 06:04:52 PM CEST
  *
  * *************************************/
 
@@ -98,7 +98,7 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             //
 
             void approximate_repulsive_forces(std::vector<NetworKit::Vector> coordinates, NetworKit::Octree<double>& octree, std::vector<NetworKit::Vector>& forces) const;
-            void compute_distance_laplacian_term(const std::vector<NetworKit::Vector>, std::vector<NetworKit::Vector> result) const;
+            void compute_distance_laplacian_term(const std::vector<NetworKit::Vector>, std::vector<NetworKit::Vector>& result) const;
 
             bool check_converged(const std::vector<NetworKit::Vector>&, const std::vector<NetworKit::Vector>&) const;
             double compute_stress() const;
