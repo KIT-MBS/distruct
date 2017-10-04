@@ -72,6 +72,8 @@ cdef extern from "../src/BioMaxentStress.h" namespace "MOBi":
                 vector[double] weights,
                 vector[double] distances,
                 vector[Point[double]] initialCoordinates,
+                double alpha,
+                double q,
                 uint32_t loggingFrequency) except +
         void run(uint64_t maxSolves) except +
         # TODO diagnostics, get result, set params
@@ -84,8 +86,7 @@ cdef class BioMaxentStress:
     cdef _BioMaxentStress *_this
     # TODO find a way to use the (python) NetworKit Graph object and the _NetworKit _Graph object
 
-    def __cinit__(self, uint64_t numNodes, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] weights=[], vector[double] distances=[], initialCoordinateList=[], uint32_t loggingFrequency=0):
-        # TODO
+    def __cinit__(self, uint64_t numNodes, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] weights=[], vector[double] distances=[], initialCoordinateList=[], double alpha=1., double q=2., uint32_t loggingFrequency=0):
         cdef uint64_t dim = 3
         cdef Point[double] p = Point[double](dim)
         cdef vector[Point[double]] initialCoordinates = vector[Point[double]]()
@@ -99,7 +100,7 @@ cdef class BioMaxentStress:
                 pass
             initialCoordinates.push_back(p)
             pass
-        self._this = new _BioMaxentStress(numNodes, edges, weights, distances, initialCoordinates, loggingFrequency)
+        self._this = new _BioMaxentStress(numNodes, edges, weights, distances, initialCoordinates, alpha, q, loggingFrequency)
         return
 
 

@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Mon 02 Oct 2017 06:04:52 PM CEST
+ *  Last Modified : Wed 04 Oct 2017 03:34:18 PM CEST
  *
  * *************************************/
 
@@ -53,6 +53,8 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
                     std::vector<double>& weights,
                     std::vector<double>& distances,
                     std::vector<NetworKit::Point<double>>& initialCoordinates,
+                    double alpha, // TODO default args with cython -_-
+                    double q,
                     uint32_t loggingFrequency
                     );
             //destructors
@@ -103,7 +105,7 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             bool check_converged(const std::vector<NetworKit::Vector>&, const std::vector<NetworKit::Vector>&) const;
             double compute_stress() const;
             double compute_entropy() const;
-            double compute_largest_distance_mean_error() const;
+            double compute_distance_error() const;
 
             void set_vertexCoordinates(std::vector<NetworKit::Vector> coordinates);
             inline double dist2(const std::vector<NetworKit::Vector>&, const std::vector<NetworKit::Vector>&, uint64_t, uint64_t) const;

@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Mon 02 Oct 2017 06:22:27 PM CEST
+ *  Last Modified : Wed 04 Oct 2017 03:36:53 PM CEST
  *
  * *************************************/
 
@@ -29,7 +29,6 @@ namespace MOBi
             double alpha
             ) : GraphLayoutAlgorithm<double>(G, dim), solver(NetworKit::Lamg<NetworKit::CSRMatrix>(1e-5)), distances(distances), dim(dim), alpha(alpha), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(10)
     {
-        // TODO check if input valid here (without asserts)
         // NOTE distances have to be indexed correctly!!!
         vertexCoordinates = initialCoordinates;
         assert(vertexCoordinates.size() == G.numberOfNodes());
@@ -42,14 +41,15 @@ namespace MOBi
             std::vector<double>& weights,
             std::vector<double>& distances,
             std::vector<NetworKit::Point<double>>& initialCoordinates,
+            double alpha=1.,
+            double q=2.,
             uint32_t loggingFrequency=0
-            ) : dim(3), alpha(1./numNodes), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency)
+            ) : dim(3), alpha(alpha), q(q), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency)
     {
         // TODO maybe there are faster ways to generate graphs from edges?
         std::cout << "BioMaxentStress init: " << std::endl;
         G = NetworKit::Graph(numNodes, true, false);
 
-        // TODO replace with exceptions, check valid graph
         uint64_t numEdges = edges.size();
         if(numEdges != weights.size())
         {
@@ -158,9 +158,9 @@ namespace MOBi
                     // TODO compute intermediate embedding and save it
                     double stress = compute_stress();
                     double entropy = compute_entropy();
-                    double ldme = compute_largest_distance_mean_error();
+                    double error = compute_distance_error();
 
-                    std::cout << "stress: " << stress << " entropy: " << entropy << " ldme: " << ldme <<std::endl;
+                    std::cout << "stress: " << stress << " entropy: " << entropy << " error: " << error <<std::endl;
                     // TODO add average relative error
                     // TODO add loggingFrequency input facilities
                     // TODO add logging
@@ -215,7 +215,7 @@ namespace MOBi
             uint64_t maxSolverIterations = 75;
             solver.parallelSolve(rightHandSides, newCoordinates, maxSolverConvergenceTime, maxSolverIterations);
 
-            //TODO check on the ldme as well? (and max steps)
+            //TODO check on the error as well? (and max steps)
             converged = check_converged(newCoordinates, oldCoordinates);
 
             ++iterationCount;
@@ -248,12 +248,10 @@ namespace MOBi
 
     void BioMaxentStress::approximate_repulsive_forces(std::vector<NetworKit::Vector> coordinates, NetworKit::Octree<double>& octree, std::vector<NetworKit::Vector>& result) const
     {
-        // TODO implement different qs
-        if(fabs(q) > 0.001)
-        {
-            std::cout << "currently only q=0 supported" << std::endl;
-            throw;
-        }
+        // TODO check q2 > 0
+        double qSign = (q >= 0.) - (q < 0.);
+        double q2 = (q+2)/2;
+
         // TODO should take vdw radius into account
         G.parallelForNodes([&](uint64_t u) {
 
@@ -266,15 +264,23 @@ namespace MOBi
             auto approximate_force_entry = [&](const uint64_t weight, const NetworKit::Point<double> centerOfMass, double dist2)
             {
                 if (dist2 < 1e-5) return;
+                double w = qSign * weight * 1./pow(dist2, q2);
                 for(uint64_t d=0; d<dim; ++d)
                 {
-                    result[d][u] = weight * (uCoordinates[d] - centerOfMass[d]) / dist2;
+                    result[d][u] = w * (uCoordinates[d] - centerOfMass[d]);
                 }
                 return;
             };
 
             octree.approximateDistance(uCoordinates, theta, approximate_force_entry);
         });
+
+        // normalize result
+        // TODO check this
+        for(uint64_t d=0; d<dim; ++d)
+        {
+            result[d] /= result[d].length();
+        }
     }
 
 
@@ -351,7 +357,6 @@ namespace MOBi
 #pragma omp parallel for reduction(+:result)
         for(uint64_t u=0; u<G.numberOfNodes(); ++u)
         {
-            // TODO get rid of the log, it produces negative entropies at times and is overall bad
             G.forNodes([&](uint64_t v)
                     {
                         if(u!=v)
@@ -365,7 +370,7 @@ namespace MOBi
     }
 
 
-    double BioMaxentStress::compute_largest_distance_mean_error() const
+    double BioMaxentStress::compute_distance_error() const
     {
         double result = 0.;
 
@@ -373,8 +378,9 @@ namespace MOBi
                 double currentDistance = vertexCoordinates[u].distance(vertexCoordinates[v]);
                 result += (distances[edgeID] - currentDistance) * (distances[edgeID] - currentDistance);
                 });
+        result = sqrt(result);
         result /= distances.size();
-        return sqrt(result);
+        return result;
     }
 
 
