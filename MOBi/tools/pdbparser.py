@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 02 Oct 2017 01:42:17 PM CEST
+# Last Modified : Wed 04 Oct 2017 09:49:05 AM CEST
 #
 #####################################
 
@@ -394,12 +394,12 @@ def generateGraph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
 
     tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, cutOff, minSeqDist)
 
-    # print(str(len(tertiaryEdges)) + " tertiary edges found")
+    print(str(len(tertiaryEdges)) + " tertiary edges found")
 
     # print(sorted(tertiaryEdges, key=lambda tup: tup[0]))
 
-    # edges += tertiaryEdges
-    # distances += tertiaryDistances
-    # weights += tertiaryWeights
+    edges += tertiaryEdges
+    distances += tertiaryDistances
+    weights += tertiaryWeights
 
     return atoms, edges, distances, weights
