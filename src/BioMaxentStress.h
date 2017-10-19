@@ -9,7 +9,7 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:39 CEST
  *
- *  Last Modified : Wed 04 Oct 2017 03:34:18 PM CEST
+ *  Last Modified : Wed 11 Oct 2017 05:45:10 PM CEST
  *
  * *************************************/
 
@@ -36,23 +36,14 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
     {
         public:
             // TODO choose alpha depending on system stats (sum/average of weighting factors?), add rest of parameters
-            //constructors
-            /*
-            BioMaxentStress(
-                    const NetworKit::Graph& G,
-                    std::vector< NetworKit::Point<double> >& initialCoordinates,
-                    std::vector<double> distances,
-                    const uint64_t dim=3,
-                    double alpha=1.
-                    );
-                    */
+            //TODO constructors
 
             BioMaxentStress(
                     uint64_t numNodes,
                     std::vector<std::pair<uint64_t, uint64_t>>& edges,
-                    std::vector<double>& weights,
-                    std::vector<double>& distances,
-                    std::vector<NetworKit::Point<double>>& initialCoordinates,
+                    std::vector<double> weights,
+                    std::vector<double> distances,
+                    std::vector<NetworKit::Point<double>> initialCoordinates,
                     double alpha, // TODO default args with cython -_-
                     double q,
                     uint32_t loggingFrequency
@@ -71,8 +62,6 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             // TODO if there will ever be different solvers
             // NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver;
             NetworKit::Lamg<NetworKit::CSRMatrix> solver;
-
-            std::vector<double> distances;
 
             //MaxentStress parameters:
 
@@ -96,6 +85,7 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
             bool converged;
 
             NetworKit::Graph G;
+            std::vector<double> distances;
             std::vector<NetworKit::Point<double>> vertexCoordinates;
             //
 
@@ -109,6 +99,10 @@ class BioMaxentStress /*: public NetworKit::GraphLayoutAlgorithm<double>*/
 
             void set_vertexCoordinates(std::vector<NetworKit::Vector> coordinates);
             inline double dist2(const std::vector<NetworKit::Vector>&, const std::vector<NetworKit::Vector>&, uint64_t, uint64_t) const;
+
+            // TODO remove this
+            void setupWeightedLaplacianMatrix();
+            void computeCoordinateLaplacianTerm(const std::vector<NetworKit::Vector>& coordinates, std::vector<NetworKit::Vector>& rhs);
     };
 }
 

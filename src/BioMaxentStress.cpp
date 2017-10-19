@@ -9,42 +9,31 @@
  *
  *  Creation Date : Tue 27 Jun 2017 11:53:49 CEST
  *
- *  Last Modified : Wed 04 Oct 2017 03:36:53 PM CEST
+ *  Last Modified : Wed 11 Oct 2017 05:44:50 PM CEST
  *
  * *************************************/
 
 #include "BioMaxentStress.h"
 
 #include <NetworKit/components/ConnectedComponents.h>
+#include <algorithm> // for std::max
 
 
 namespace MOBi
 {
-    /*
-    BioMaxentStress::BioMaxentStress(
-            const NetworKit::Graph& G,
-            std::vector< NetworKit::Point<double> >& initialCoordinates,
-            std::vector<double> distances,
-            const uint64_t dim,
-            double alpha
-            ) : GraphLayoutAlgorithm<double>(G, dim), solver(NetworKit::Lamg<NetworKit::CSRMatrix>(1e-5)), distances(distances), dim(dim), alpha(alpha), q(0.), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(10)
-    {
-        // NOTE distances have to be indexed correctly!!!
-        vertexCoordinates = initialCoordinates;
-        assert(vertexCoordinates.size() == G.numberOfNodes());
-    }
-    */
 
+
+    // TODO all the other constructors
     BioMaxentStress::BioMaxentStress(
             uint64_t numNodes,
             std::vector<std::pair<uint64_t, uint64_t>>& edges,
-            std::vector<double>& weights,
-            std::vector<double>& distances,
-            std::vector<NetworKit::Point<double>>& initialCoordinates,
+            std::vector<double> weights,
+            std::vector<double> distances,
+            std::vector<NetworKit::Point<double>> initialCoordinates,
             double alpha=1.,
             double q=2.,
             uint32_t loggingFrequency=0
-            ) : dim(3), alpha(alpha), q(q), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency)
+            ) : dim(3), alpha(alpha), q(q), convergenceThreshold(0.001*0.001), theta(.6), loggingFrequency(loggingFrequency), distances(distances), vertexCoordinates(initialCoordinates)
     {
         // TODO maybe there are faster ways to generate graphs from edges?
         std::cout << "BioMaxentStress init: " << std::endl;
@@ -115,8 +104,9 @@ namespace MOBi
     void BioMaxentStress::run(uint64_t maxSolves)
     {
 
-        NetworKit::CSRMatrix weighted_laplacian = NetworKit::CSRMatrix::laplacianMatrix(G); // L_{w}
-        solver.setupConnected(weighted_laplacian);
+        NetworKit::CSRMatrix laplacian = NetworKit::CSRMatrix::laplacianMatrix(G); // L_{w}
+        std::cout << "setting up solver... " << std::endl;
+        solver.setupConnected(laplacian);
 
         // TODO use other vector data structure??
         // NOTE: list of coordinate vectors is 'transposed' to a list of dim lists of coordinates
@@ -144,7 +134,7 @@ namespace MOBi
         uint64_t newStaggerThreshold = 0;
 
         std::vector<NetworKit::Vector> repulsiveForces(dim, std::vector<double>(this->G.numberOfNodes()));
-        std::vector<NetworKit::Vector> rightHandSides(dim, NetworKit::Vector(this->G.numberOfNodes())); // =L_{w,d} * x
+        std::vector<NetworKit::Vector> rightHandSides(dim, NetworKit::Vector(this->G.numberOfNodes())); // =L_{w,d} * x + alpha * b(x)
         while(!converged)
         {
             // TODO remove
@@ -161,30 +151,34 @@ namespace MOBi
                     double error = compute_distance_error();
 
                     std::cout << "stress: " << stress << " entropy: " << entropy << " error: " << error <<std::endl;
-                    // TODO add average relative error
-                    // TODO add loggingFrequency input facilities
                     // TODO add logging
                     // TODO add units in output
                 }
             }
             oldCoordinates = newCoordinates;
 
+            // TODO let user set this
             newStaggerThreshold = floor(5 * std::log(iterationCount));
             if(newStaggerThreshold != currentStaggerThreshold)
             {
+                repulsiveForces = std::vector<NetworKit::Vector>(dim, NetworKit::Vector(G.numberOfNodes(), 0)); // TODO maybe not necessary
                 NetworKit::Octree<double> octree(oldCoordinates);
-                approximate_repulsive_forces(oldCoordinates, octree, repulsiveForces); // TODO pass theta
+                approximate_repulsive_forces(oldCoordinates, octree, repulsiveForces);
                 currentStaggerThreshold = newStaggerThreshold;
             }
 
-            compute_distance_laplacian_term(oldCoordinates, rightHandSides);
+            //compute_distance_laplacian_term(oldCoordinates, rightHandSides);
+            //TODO remove this
+            computeCoordinateLaplacianTerm(oldCoordinates, rightHandSides);
 
-            // TODO implement q, (add faster decay of force)
             // TODO user should not have to fiddle with alpha in most cases
             for(uint64_t d=0; d<dim; ++d)
             {
+                if(iterationCount < maxSolves/5)
+                {
+                    rightHandSides[d] /= rightHandSides[d].length(); //normalize;
+                }
                 // add entropy term
-                rightHandSides[d] /= rightHandSides[d].length(); //normalize; previously done only for first 20% of solves
                 rightHandSides[d] += alpha * repulsiveForces[d];
             }
 
@@ -225,17 +219,18 @@ namespace MOBi
             }
             if(iterationCount >= maxSolves)
             {
-                alpha *= .3;
-                // TODO
-                if(alpha < 0.008)
-                {
-                    converged = true;
-                    std::cout << "converged (not really) after " << iterationCount << " solves" << std::endl;
-                }
-                else
-                {
-                    run(maxSolves);
-                }
+                //alpha *= .3;
+                //// TODO
+                //if(alpha < 0.008)
+                //{
+                //    converged = true;
+                //    std::cout << "converged (not really) after " << iterationCount << " solves" << std::endl;
+                //}
+                //else
+                //{
+                //    run(maxSolves);
+                //}
+                std::cout << "converged (not really) after " << iterationCount << " solves" << std::endl;
             }
         }
 
@@ -287,25 +282,39 @@ namespace MOBi
     // alternativly create matrix L_{w, d} and multiply by coordinate vector for every dimension
     void BioMaxentStress::compute_distance_laplacian_term(std::vector<NetworKit::Vector> coordinates, std::vector<NetworKit::Vector>& result) const
     {
-        // NOTE result assumed to be zero initialized
-        G.parallelForNodes([&](uint64_t u) {
-            double weightedDegree = 0.;
-            G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeID) {
+        //// NOTE result assumed to be zero initialized
+        //G.parallelForNodes([&](uint64_t u) {
+        //    double weightedDegree = 0.;
+        //    G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeID) {
+        //        double targetDistance = distances[edgeID];
+        //        double currentDistance = std::max(sqrt(dist2(coordinates, coordinates, u, v)), 1e-5);
+        //        double w = weight * targetDistance / currentDistance;
+        //        for(uint64_t d=0; d<dim; ++d)
+        //        {
+        //            result[d][u] += - w * coordinates[d][v];
+        //            weightedDegree += w;
+        //        }
+        //    });
+        //    for(uint64_t d=0; d<dim; ++d)
+        //    {
+        //        result[d][u] += weightedDegree * coordinates[d][u];
+        //    }
+        //});
+        //return;
+        NetworKit::Graph localGraph(G.numberOfNodes(), true, false);
+        G.forEdges([&](uint64_t u, uint64_t v, double weight, uint64_t edgeID){
                 double targetDistance = distances[edgeID];
                 double currentDistance = std::max(sqrt(dist2(coordinates, coordinates, u, v)), 1e-5);
-                double w = weight * targetDistance / currentDistance;
-                for(uint64_t d=0; d<dim; ++d)
-                {
-                    result[d][u] += - w * coordinates[d][v];
-                    weightedDegree += w;
-                }
-            });
-            for(uint64_t d=0; d<dim; ++d)
-            {
-                result[d][u] += weightedDegree * coordinates[d][u];
-            }
-        });
+                double lWeight = weight * targetDistance / currentDistance;
+                localGraph.addEdge(u, v, lWeight);
+                });
+        NetworKit::CSRMatrix distanceLaplacian = NetworKit::CSRMatrix::laplacianMatrix(localGraph);
+        for(uint64_t d=0; d<dim; ++d)
+        {
+            result[d] = distanceLaplacian * coordinates[d];
+        }
         return;
+
     }
 
 
@@ -333,18 +342,23 @@ namespace MOBi
     {
         double result = 0.;
 
-#pragma omp parallel for reduction(+:result)
-        for(uint64_t u=0; u<G.numberOfNodes(); ++u)
-        {
-            G.forNeighborsOf(u, [&](uint64_t v, double w)
-                    {
-                        double currentDistance = std::max(vertexCoordinates[u].distance(vertexCoordinates[v]), 1e-5);
-                        uint64_t edgeID = G.edgeId(u, v);
+//#pragma omp parallel for reduction(+:result)
+//        for(uint64_t u=0; u<G.numberOfNodes(); ++u)
+//        {
+//            G.forNeighborsOf(u, [&](uint64_t v, double w)
+//                    {
+//                        double currentDistance = std::max(vertexCoordinates[u].distance(vertexCoordinates[v]), 1e-5);
+//                        uint64_t edgeID = G.edgeId(u, v);
+//
+//                        result += w * (distances[edgeID] - currentDistance) * (distances[edgeID] - currentDistance);
+//                    });
+//        }
+//        result /= 2;
 
-                        result += w * (distances[edgeID] - currentDistance) * (distances[edgeID] - currentDistance);
-                    });
-        }
-        result /= 2;
+        G.forEdges([&](uint64_t u, uint64_t v, double weight, uint64_t edgeID){
+                double currentDistance = std::max(vertexCoordinates[u].distance(vertexCoordinates[v]), 1e-5);
+                result += weight * (distances[edgeID] - currentDistance) * (distances[edgeID] - currentDistance);
+                });
 
         return result;
     }
@@ -432,4 +446,75 @@ namespace MOBi
         }
         return result;
     }
+
+    // TODO remove this
+inline double distance(const std::vector<NetworKit::Vector> coord, const uint64_t u, const uint64_t v)
+{
+    double result = 0.;
+    for (uint64_t d=0; d<3; ++d)
+    {
+        double diff = coord[d][u] - coord[d][v];
+        result += diff * diff;
+    }
+    return sqrt(result);
+}
+
+// TODO remove this
+void BioMaxentStress::computeCoordinateLaplacianTerm(const std::vector<NetworKit::Vector>& coordinates, std::vector<NetworKit::Vector>& rhs) {
+	G.parallelForNodes([&](uint64_t u) {
+		double weightedDegree = 0.0;
+		G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeId) {
+			double dist = std::max(distance(coordinates, u, v), 1e-5);
+            double targetDist = distances[edgeId];
+			double w =  targetDist * weight / dist; // w_{ij} * d_{i,j} / ||x_i - x_j|| NOTE: The last term is multiplied in the paper of Gansner et al. which is wrong!
+			for (uint64_t d = 0; d < dim; ++d) {
+				rhs[d][u] += -w * coordinates[d][v];
+			}
+			weightedDegree += w;
+		});
+
+		for (uint64_t d = 0; d < dim; ++d) {
+			rhs[d][u] += weightedDegree * coordinates[d][u];
+		}
+	});
+}
+
+
+// TODO remove this
+//void BioMaxentStress::setupWeightedLaplacianMatrix()
+//{
+//
+//	uint64_t n = this->G.numberOfNodes();
+//	std::vector<uint64_t> rowIdx(n+1, 0);
+//	std::vector<uint64_t> columnIdx(n + G.upperEdgeIdBound()*2, 0); // currently only supports simple graphs
+//	std::vector<double> nonzeros(columnIdx.size());
+//
+//	uint64_t idx = 0;
+//	G.forNodes([&](uint64_t u) {
+//		double weightedDegree = 0.0;
+//		G.forNeighborsOf(u, [&](uint64_t v, double weight) {
+//			columnIdx[idx] = v;
+//			nonzeros[idx] = -weight;
+//			weightedDegree += weight;
+//			idx++;
+//		});
+//
+//		// add diagonal element
+//		columnIdx[idx] = u;
+//		nonzeros[idx] = weightedDegree;
+//		idx++;
+//
+//		rowIdx[u+1] = G.degree(u)+1; // +1 for diagonal
+//	});
+//
+//	// compute correct rowIdx offsets
+//	for (uint64_t i = 1; i < rowIdx.size(); ++i) {
+//		rowIdx[i] += rowIdx[i-1];
+//	}
+//
+//    NetworKit::CSRMatrix laplacian(n, n, rowIdx, columnIdx, nonzeros);
+//	solver.setupConnected(laplacian);
+//}
+
+
 }
