@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 23 May 2017 17:01:55 CEST
 #
-# Last Modified : Mon 26 Jun 2017 09:34:55 CEST
+# Last Modified : Thu 09 Nov 2017 01:29:02 PM CET
 #
 #####################################
 
@@ -18,6 +18,7 @@
 import math as m
 
 
+# TODO change everthing to radians
 def dist_from_angle(angle, d_ij, d_jk):  # AKA law of cosines
     angle = angle * m.pi / 180.
     d_ik = m.sqrt(d_ij * d_ij + d_jk * d_jk - 2. * d_ij * d_jk * m.cos(angle))

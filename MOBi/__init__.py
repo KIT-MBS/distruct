@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Wed 16 Aug 2017 11:09:21 AM CEST
+# Last Modified : Fri 27 Oct 2017 06:07:33 PM CEST
 #
 #####################################
 
@@ -23,6 +23,8 @@ import sys
 import os
 sys.path.append(os.path.dirname(__file__) + "/../lib/")
 
-from _MOBi import BioMaxentStress
-
 # TODO convenience imports here
+# from _MOBi import BioMaxentStress
+
+# TODO remove this
+from _MOBi import doublyWrappedMaxent

@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Wed 04 Oct 2017 09:49:05 AM CEST
+# Last Modified : Sat 02 Dec 2017 08:27:53 PM CET
 #
 #####################################
 
@@ -22,11 +22,14 @@ from Bio import PDB
 from Bio import Seq
 from Bio import SeqIO
 # from Bio import Alphabet
+from Bio.Data.IUPACData import protein_letters_1to3
 
 from MOBi import data
 
 
-def read_PDB(PDBCode, fileName, assign_serial_numbers=True):
+# NOTE added chemicalDB to check for differing atom naming convention
+# TODO add missing residues from a sequence and use distances from force field at the read pdb step?
+def read_PDB(PDBCode, fileName, chemicalDB = {}, assign_serial_numbers=True):
     # TODO maybe handle hetero stuff if they are present in the force field
 
     structure = None
@@ -64,16 +67,52 @@ def read_PDB(PDBCode, fileName, assign_serial_numbers=True):
         for chain in model:
             for residue in chain:
                 if residue.id[0] != ' ':
+                    # NOTE this removes e.g. hetero residues
                     flaggedForRemoval.append((chain.id, residue.id))
                     assign_serial_numbers = True
+                else:
+                    if residue.get_resname() not in chemicalDB:
+                        flaggedForRemoval.append((chain.id, residue.id))
+                        assign_serial_numbers = True
+                        pass
+                    # TODO remove this and handle termini properly
+                    if residue.has_id('OXT'):
+                        residue.detach_child('OXT')
+                        pass
+                    if chemicalDB:
+                        if residue.get_resname() in chemicalDB:
+                            for atom in residue:
+                                if atom.get_name() not in chemicalDB[residue.get_resname()]['vertices']:
+                                    if not residue.has_id(atom.get_name()[:-1]) and atom.get_name()[:-1] in chemicalDB[residue.get_resname()]['vertices']:
+                                        # NOTE sometimes atoms in pdbfiles are called e.g. CD1 instead of CD
+                                        print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
+                                        oldID = atom.get_id()
+                                        newID = oldID[:-1]
+                                        atom.name = newID
+                                        atom.id = newID
+                                        atom.parent.child_dict[newID] = atom.parent.child_dict[oldID]  # NOTE has_id checks in the parents child_dict. which still has the old id as key. since atoms are not entities for some reason, can't use builtin facilities to manage this
+                                        del atom.parent.child_dict[oldID]  # TODO maybe this should be done outside the loop
+                                        print("renaming to ", atom.get_name())
+                                        # print(chemicalDB[residue.get_resname()]['bondEdges'])
+
+                                    else:
+                                        print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
+                                        # TODO handle this properly
+                                        assert False
+                                        pass
+                                    pass
+                                pass
+                            pass
+                        else:
+                            print("unkown residue: ", str(residue), " removed")
+                            flaggedForRemoval.append((chain.id, residue.id))
+                            assign_serial_numbers = True
+                            pass
                     pass
-                # TODO remove this and handle termini properly
-                if residue.has_id('OXT'):
-                    residue.detach_child('OXT')
                 pass
             pass
-        for residue in flaggedForRemoval:
-            model[residue[0]].detach_child(residue[1])
+        for cr in flaggedForRemoval:
+            model[cr[0]].detach_child(cr[1])
             pass
         flaggedForRemoval = []
         for chain in model:
@@ -101,17 +140,23 @@ def read_PDB(PDBCode, fileName, assign_serial_numbers=True):
             pass
         pass
 
-    # print structure
-    # for model in structure:
-    #     for chain in model:
-    #         for residue in chain:
-    #             print(str(residue.get_id()) + " " + str(residue.get_resname()))
-    #             for atom in residue:
-    #                 print(str(atom.get_serial_number()) + " " + str(atom.get_id()))
-    #                 pass
+    aas = {}
+    # print(structure)
+    # for chain in model:
+    #     print(chain)
+    #     for residue in chain:
+    #         if residue.get_resname() in aas:
+    #             aas[residue.get_resname()] += 1
+    #         else:
+    #             aas[residue.get_resname()] = 1
+    #         print('\t' + str(residue.get_id()) + " " + str(residue.get_resname()))
+    #         for atom in residue:
+    #             print('\t\t' + str(atom.get_serial_number()) + " " + str(atom.get_id()) + " " + str(atom.get_name()))
     #             pass
     #         pass
     #     pass
+    # print(aas)
+    print(len(list(structure.get_atoms())), ' atoms parsed')
 
     return structure
 
@@ -176,9 +221,6 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
     weights = []
 
     # TODO how to handle missing residues (numbering scheme)
-    # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
-
-    # TODO use get_edge(atom1, atom2) function
     for residue in chain:
         resn = residue.get_resname()
         for edgeType in ['bondEdges', 'angleEdges', 'improperEdges']:
@@ -196,16 +238,29 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
                     # edge[i].strip('+-')
                     atomNames.append(edge[i].strip('+-'))
                     pass
-                # TODO this should have worked as well?
-                # if resID in chain and chain[resID].has_id(atomName):
-                #     atomIDs.append(chain[resID][atomName].get_serial_number())
-                #     atomCoordinates.append(chain[resID][atomName].get_coord())
                 if residueIDs[0] in chain and residueIDs[1] in chain and chain[residueIDs[0]].has_id(atomNames[0]) and chain[residueIDs[1]].has_id(atomNames[1]):
                     edgeAtomSerialNumbers = [chain[residueIDs[0]][atomNames[0]].get_serial_number(), chain[residueIDs[1]][atomNames[1]].get_serial_number()]
                     atomCoordinates = [chain[residueIDs[0]][atomNames[0]].get_coord(), chain[residueIDs[1]][atomNames[1]].get_coord()]
                     pass
                 else:
+                    # if 'CD' in atomNames:
+                    #     if resn == 'ILE':
+                    #         print(resn)
+                    #         print(edge)
+                    #         print(residueIDs)
+                    #         print(atomNames)
+                    #         print(chain[residueIDs[0]])
+                    #         print(chain[residueIDs[0]].has_id(atomNames[0]))
+                    #         print(chain[residueIDs[1]].has_id(atomNames[1]))
+                    #         for atom in chain[residueIDs[0]]:
+                    #             print('\t' + atom.get_id())
+                    #             print('\t' + atom.get_name())
+                    #             pass
+                    #         print(chain[residueIDs[0]].child_dict)
+                    #         pass
+                    #     pass
                     # TODO warn?
+                    # TODO for this, proper handling of terminals is necessary
                     pass
                 if len(edgeAtomSerialNumbers) == 2:
                     edges.append(tuple(sorted(edgeAtomSerialNumbers)))
@@ -215,7 +270,8 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
                         distances.append(chemicalDB[resn][edgeType][edge])
                         pass
                     # TODO weights from database
-                    weights.append(10.)
+                    # weights.append(10.)
+                    weights.append(1.)
                     pass
                 pass
             pass
@@ -249,7 +305,8 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
                 distances.append(distance)
             else:
                 raise NotImplementedError()
-            weights.append(5.)
+            # weights.append(5.)
+            weights.append(1.)
             pass
         # if chainID in model:
         #     if resID - 1 in model[chainID] and resID in model[chainID]:
@@ -277,7 +334,8 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
                     distances.append(distance)
                 else:
                     raise NotImplementedError()
-                weights.append(5.)
+                # weights.append(5.1)
+                weights.append(1.)
                 pass
 
             # psi
@@ -288,7 +346,8 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
                     distances.append(distance)
                 else:
                     raise NotImplementedError()
-                weights.append(5.)
+                # weights.append(5.2)
+                weights.append(1.)
                 pass
 
             # H bond
@@ -305,7 +364,8 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
                                 distances.append(distance)
                             else:
                                 raise NotImplementedError()
-                            weights.append(5.)
+                            # weights.append(5.3)
+                            weights.append(1.)
                             pass
                     pass
                 pass
@@ -320,7 +380,8 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
                     distances.append(distance)
                 else:
                     raise NotImplementedError()
-                weights.append(5.)
+                # weights.append(6.1)
+                weights.append(1.)
                 pass
 
             # psi
@@ -331,7 +392,8 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
                     distances.append(distance)
                 else:
                     raise NotImplementedError()
-                weights.append(5.)
+                # weights.append(6.2)
+                weights.append(1.)
                 pass
             pass
         else:
@@ -361,7 +423,8 @@ def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=5):
         if edge not in edges and abs(pair[0].get_parent().get_id()[1] - pair[1].get_parent().get_id()[1]) >= minSeqDist:
             tertiaryEdges.append(edge)
             distances.append(np.sqrt(np.dot(pair[0].get_coord() - pair[1].get_coord(), pair[0].get_coord() - pair[1].get_coord())))
-            weights.append(1.)
+            # weights.append(1.)
+            weights.append(.5)
             pass
         pass
 
@@ -371,7 +434,7 @@ def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=5):
 
 # TODO add parameters
 # TODO work on model instead of structure?
-def generateGraph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
+def generate_graph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
 
     atoms = list(structure[0].get_atoms())
 
@@ -390,10 +453,14 @@ def generateGraph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
     print(str(len(edges)) + " primary edges found")
     # print(sorted(edges, key=lambda tup: tup[0]))
 
-    secondaryEdges, secondaryDistances, secondaryWeights = get_secondary_edges(structure[0], fileName)
+    # secondaryEdges, secondaryDistances, secondaryWeights = get_secondary_edges(structure[0], fileName)
+    # print(str(len(secondaryEdges)) + " secondary edges found")
+
+    # edges += secondaryEdges
+    # distances += secondaryDistances
+    # weights += secondaryWeights
 
     tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, cutOff, minSeqDist)
-
     print(str(len(tertiaryEdges)) + " tertiary edges found")
 
     # print(sorted(tertiaryEdges, key=lambda tup: tup[0]))
@@ -403,3 +470,38 @@ def generateGraph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
     weights += tertiaryWeights
 
     return atoms, edges, distances, weights
+
+
+# TODO put this somewhere else
+def build_structure(id, sequences, topologyDB):
+    structure = Bio.PDB.Structure(id)
+    model = Bio.PDB.Model(0, None)
+    structure.add(model)
+
+    chainID = 'A'
+    for sequence in sequences:
+        chain = PDB.Chain(chainID)
+        chainID = chr(ord(chainID) + 1)
+        model.add(chain)
+        for i, res in enumerate(sequence):  # TODO put in proper residue ids
+            res_ID = (" ", i, " ")
+            resName = protein_letters_1to3[res].upper()
+            segID = "   "
+            residue = Bio.PDB.Residue(res_ID, resName, segID)
+            chain.add(residue)
+            for vertex in topologyDB[residue]['vertices']:
+                atomName = vertex
+                coord = np.array((0., 0., 0.), "f")
+                bfactor = 0.
+                occupancy = 1,
+                altloc = " "
+                fullName = vertex
+                serialNumber
+                # element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
+                element = None  # TODO fix this
+
+                atom = PDB.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
+                pass
+            pass
+        pass
+    return structure
