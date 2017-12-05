@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Tue 05 Dec 2017 08:02:34 PM CET
+# Last Modified : Tue 05 Dec 2017 08:45:01 PM CET
 #
 #####################################
 
@@ -46,31 +46,42 @@ def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=No
         # NOTE overwrites if there are duplicate building block entries in the file
         # if one was added by hand at the end, that one will be used?
         result[buildingBlock.tag] = {}
-        for atoms in buildingBlock.findall('atoms'):
-            if atoms.tag not in result:
-                result[buildingBlock.tag][atoms.tag] = set()
+        for vertices in buildingBlock.findall('vertices'):
+            if vertices.tag not in result:
+                result[buildingBlock.tag][vertices.tag] = set()
                 pass
-            for atom in atoms.findall('atom'):
-                result[buildingBlock.tag][atoms.tag].add(atom.attrib['name'])
+            for atom in vertices.findall('atom'):
+                result[buildingBlock.tag]['vertices'].add(atom.attrib['name'])
                 pass
             pass
+        for child in buildingBlock:
+            if child.tag != 'vertices':
+                if child.tag not in result[buildingBlock.tag]:
+                    result[buildingBlock.tag][child.tag] = {}
+                    pass
+                for edge in child:
+                    result[buildingBlock.tag][child.tag][edge.attrib['vertices']] = float(edge.attrib['distance'])
+                    pass
+                pass
+            pass
+        # TODO iterate over all other tags
         # read bonds and pseudobonds
-        for bonds in buildingBlock.findall('bonds'):
-            if bonds.tag not in result[buildingBlock.tag]:
-                result[buildingBlock.tag][bonds.tag] = {}
-            for edge in bonds.findall('edge'):
-                # TODO
-                result[buildingBlock.tag][atom.attrib['vertices']] = float(atom.attrib['distance'])
-                pass
-            pass
-        # TODO
-        for pseudoBonds in buildingBlock.findall('pseudobonds'):
-            if pseudoBonds.tag not in result[buildingBlock.tag]:
-                result[buildingBlock.tag][pseudoBonds.tag] = {}
-            for edge in pseudoBonds.findall('edge'):
-                # TODO
-                pass
-            pass
+        # for bonds in buildingBlock.findall('bondsEdges'):
+        #     if bonds.tag not in result[buildingBlock.tag]:
+        #         result[buildingBlock.tag][bonds.tag] = {}
+        #     for edge in bonds.findall('edge'):
+        #         # TODO
+        #         result[buildingBlock.tag][atom.attrib['vertices']] = float(atom.attrib['distance'])
+        #         pass
+        #     pass
+        # # TODO
+        # for pseudoBonds in buildingBlock.findall('pseudobonds'):
+        #     if pseudoBonds.tag not in result[buildingBlock.tag]:
+        #         result[buildingBlock.tag][pseudoBonds.tag] = {}
+        #     for edge in pseudoBonds.findall('edge'):
+        #         # TODO
+        #         pass
+        #     pass
 
         pass
 
@@ -102,7 +113,7 @@ def write_primary_edge_database(
         bbElement = ET.SubElement(root, buildingBlock)
         atomsElement = ET.SubElement(bbElement, 'vertices')
         for entry in sorted(database[buildingBlock]['vertices']):
-            ET.SubElement(atomsElement, 'vertices', attrib={'name': entry})
+            ET.SubElement(atomsElement, 'atom', attrib={'name': entry})
             pass
         directives = sorted(database[buildingBlock].keys())
         directives.remove('vertices')
