@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Tue 05 Dec 2017 07:37:47 PM CET
+# Last Modified : Tue 05 Dec 2017 08:02:34 PM CET
 #
 #####################################
 
@@ -42,7 +42,7 @@ def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=No
         XMLTree = ET.parse(f)
         pass
 
-    for buildingBlock in XMLTree:
+    for buildingBlock in XMLTree.getroot():
         # NOTE overwrites if there are duplicate building block entries in the file
         # if one was added by hand at the end, that one will be used?
         result[buildingBlock.tag] = {}
@@ -79,6 +79,7 @@ def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=No
 
 
 # NOTE probably a good idea to name the database something like forcefield_buildingblocks.xml
+# TODO get the sorting right: vertices, bondEdges, angleEdges, improperEdges
 def write_primary_edge_database(
         database,
         databaseName,
@@ -89,7 +90,7 @@ def write_primary_edge_database(
         fileName = databaseName + '.xml'
         pass
     if len(buildingBlocks) == 0:
-        buildingBlocks = database.keys()
+        buildingBlocks = list(database.keys())
         pass
 
     root = ET.Element(databaseName)
@@ -111,7 +112,7 @@ def write_primary_edge_database(
                 # TODO is three significant places adequate for all applications?
                 distance = None
                 if isinstance(database[buildingBlock][directive][entry], float):
-                    distance = '{0:.3f}'.format(database[buildingBlock][directive][entry])
+                    distance = '{0:.5f}'.format(database[buildingBlock][directive][entry])
                 else:
                     # distance = str(database[buildingBlock][directive][entry])
                     raise
