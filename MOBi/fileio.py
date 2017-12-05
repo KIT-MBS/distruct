@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Thu 17 Aug 2017 03:01:20 PM CEST
+# Last Modified : Tue 05 Dec 2017 07:37:47 PM CET
 #
 #####################################
 
@@ -35,6 +35,9 @@ def read_edge_node(node):
 def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=None):
     result = {}
     XMLTree = None
+    if fileName == None:
+        fileName = databaseName + '.xml'
+        pass
     with open(inDir + fileName, 'r') as f:
         XMLTree = ET.parse(f)
         pass
