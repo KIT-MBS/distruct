@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Tue 05 Dec 2017 08:45:01 PM CET
+# Last Modified : Wed 06 Dec 2017 11:33:38 PM CET
 #
 #####################################
 
@@ -60,7 +60,9 @@ def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=No
                     result[buildingBlock.tag][child.tag] = {}
                     pass
                 for edge in child:
-                    result[buildingBlock.tag][child.tag][edge.attrib['vertices']] = float(edge.attrib['distance'])
+                    edgeTuple = tuple(edge.attrib['vertices'].strip('()').split(','))
+                    edgeTuple = tuple(x.strip(" \'") for x in edgeTuple)
+                    result[buildingBlock.tag][child.tag][edgeTuple] = float(edge.attrib['distance'])
                     pass
                 pass
             pass

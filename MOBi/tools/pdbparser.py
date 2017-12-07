@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Sat 02 Dec 2017 08:27:53 PM CET
+# Last Modified : Wed 06 Dec 2017 11:34:55 PM CET
 #
 #####################################
 
@@ -235,7 +235,6 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
                     elif '-' in edge[i]:
                         residueIDs[i] -= 1
                         pass
-                    # edge[i].strip('+-')
                     atomNames.append(edge[i].strip('+-'))
                     pass
                 if residueIDs[0] in chain and residueIDs[1] in chain and chain[residueIDs[0]].has_id(atomNames[0]) and chain[residueIDs[1]].has_id(atomNames[1]):
