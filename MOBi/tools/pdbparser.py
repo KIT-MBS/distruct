@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Wed 06 Dec 2017 11:34:55 PM CET
+# Last Modified : Tue 12 Dec 2017 09:47:38 PM CET
 #
 #####################################
 
@@ -17,6 +17,7 @@ import os
 
 import numpy as np
 
+import Bio
 from Bio import PDB
 # from Bio import SeqUtils
 from Bio import Seq
@@ -29,7 +30,7 @@ from MOBi import data
 
 # NOTE added chemicalDB to check for differing atom naming convention
 # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
-def read_PDB(PDBCode, fileName, chemicalDB = {}, assign_serial_numbers=True):
+def read_PDB(PDBCode, fileName, chemicalDB={}, assign_serial_numbers=True):
     # TODO maybe handle hetero stuff if they are present in the force field
 
     structure = None
@@ -140,7 +141,7 @@ def read_PDB(PDBCode, fileName, chemicalDB = {}, assign_serial_numbers=True):
             pass
         pass
 
-    aas = {}
+    # aas = {}
     # print(structure)
     # for chain in model:
     #     print(chain)
@@ -478,6 +479,7 @@ def build_structure(id, sequences, topologyDB):
     structure.add(model)
 
     chainID = 'A'
+    atomCounter = 0
     for sequence in sequences:
         chain = PDB.Chain(chainID)
         chainID = chr(ord(chainID) + 1)
@@ -495,11 +497,13 @@ def build_structure(id, sequences, topologyDB):
                 occupancy = 1,
                 altloc = " "
                 fullName = vertex
-                serialNumber
+                serialNumber = atomCounter
                 # element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
                 element = None  # TODO fix this
 
                 atom = PDB.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
+                residue.add(atom)
+                atomCounter += 1
                 pass
             pass
         pass
