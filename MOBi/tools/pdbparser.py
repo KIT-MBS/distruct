@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Tue 12 Dec 2017 09:47:38 PM CET
+# Last Modified : Tue 12 Dec 2017 11:32:27 PM CET
 #
 #####################################
 
@@ -474,23 +474,25 @@ def generate_graph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
 
 # TODO put this somewhere else
 def build_structure(id, sequences, topologyDB):
-    structure = Bio.PDB.Structure(id)
-    model = Bio.PDB.Model(0, None)
+    structure = Bio.PDB.Structure.Structure(id)
+    model = Bio.PDB.Model.Model(0, None)
     structure.add(model)
 
     chainID = 'A'
     atomCounter = 0
     for sequence in sequences:
-        chain = PDB.Chain(chainID)
+        chain = PDB.Chain.Chain(chainID)
         chainID = chr(ord(chainID) + 1)
         model.add(chain)
         for i, res in enumerate(sequence):  # TODO put in proper residue ids
             res_ID = (" ", i, " ")
-            resName = protein_letters_1to3[res].upper()
+            # NOTE assume, sequence has the right alphabet, convert before
+            # resName = protein_letters_1to3[res].upper()
+            resName = res
             segID = "   "
-            residue = Bio.PDB.Residue(res_ID, resName, segID)
+            residue = Bio.PDB.Residue.Residue(res_ID, resName, segID)
             chain.add(residue)
-            for vertex in topologyDB[residue]['vertices']:
+            for vertex in topologyDB[resName]['vertices']:
                 atomName = vertex
                 coord = np.array((0., 0., 0.), "f")
                 bfactor = 0.
@@ -498,10 +500,10 @@ def build_structure(id, sequences, topologyDB):
                 altloc = " "
                 fullName = vertex
                 serialNumber = atomCounter
-                # element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
-                element = None  # TODO fix this
+                element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
+                # element = None  # TODO fix this, giving None prints tons of warnings
 
-                atom = PDB.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
+                atom = Bio.PDB.Atom.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
                 residue.add(atom)
                 atomCounter += 1
                 pass
