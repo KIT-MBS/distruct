@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Thu 14 Dec 2017 03:03:02 PM CET
+# Last Modified : Thu 14 Dec 2017 06:43:08 PM CET
 #
 #####################################
 
@@ -243,22 +243,6 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
                     atomCoordinates = [chain[residueIDs[0]][atomNames[0]].get_coord(), chain[residueIDs[1]][atomNames[1]].get_coord()]
                     pass
                 else:
-                    # if 'CD' in atomNames:
-                    #     if resn == 'ILE':
-                    #         print(resn)
-                    #         print(edge)
-                    #         print(residueIDs)
-                    #         print(atomNames)
-                    #         print(chain[residueIDs[0]])
-                    #         print(chain[residueIDs[0]].has_id(atomNames[0]))
-                    #         print(chain[residueIDs[1]].has_id(atomNames[1]))
-                    #         for atom in chain[residueIDs[0]]:
-                    #             print('\t' + atom.get_id())
-                    #             print('\t' + atom.get_name())
-                    #             pass
-                    #         print(chain[residueIDs[0]].child_dict)
-                    #         pass
-                    #     pass
                     # TODO warn?
                     # TODO for this, proper handling of terminals is necessary
                     pass
@@ -269,8 +253,7 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
                     else:
                         distances.append(chemicalDB[resn][edgeType][edge])
                         pass
-                    # TODO weights from database
-                    # weights.append(10.)
+
                     weights.append(1.)
                     pass
                 pass
@@ -404,32 +387,67 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
 
 
 # NOTE default cutOff in units of the structure (assumed angstrom)
-# TODO add sequence cutoff
-def get_tertiary_edges(model, edges, cutOff=3., minSeqDist=5):
+# TODO only return contacts? use fullID?
+def get_tertiary_edges(model, cutOff=5., minSeqDist=5, getContacts=False):
     # NOTE these would include beta sheet hbonds
-    # TODO distinguish inter and intra chain contacts?
-    # TODO add noise?
 
     tertiaryEdges = []
     distances = []
     weights = []
+    contacts = []
 
     ns = PDB.NeighborSearch(list(model.get_atoms()))
     foundPairs = ns.search_all(cutOff)
 
     for pair in foundPairs:
         edge = tuple(sorted((pair[0].get_serial_number(), pair[1].get_serial_number())))
-        # TODO learn more about neighoring residue interactions
-        if edge not in edges and abs(pair[0].get_parent().get_id()[1] - pair[1].get_parent().get_id()[1]) >= minSeqDist:
+        if abs(pair[0].get_parent().get_id()[1] - pair[1].get_parent().get_id()[1]) >= minSeqDist:
             tertiaryEdges.append(edge)
+            chainID1 = pair[0].get_parent().get_parent().get_id()
+            chainID2 = pair[1].get_parent().get_parent().get_id()
+            resID1 = pair[0].get_parent().get_id()[1]
+            resID2 = pair[1].get_parent().get_id()[1]
+            atom1 = pair[0].get_id()
+            atom2 = pair[1].get_id()
+            contacts.append(((chainID1, resID1, atom1), (chainID2, resID2, atom2)))
             distances.append(np.sqrt(np.dot(pair[0].get_coord() - pair[1].get_coord(), pair[0].get_coord() - pair[1].get_coord())))
-            # weights.append(1.)
-            weights.append(.5)
+            weights.append(1.)
             pass
         pass
 
-    # TODO get this stuff in terms of chainID, residueID, atomID
+    if getContacts:
+        return tertiaryEdges, distances, weights, contacts
+        pass
     return tertiaryEdges, distances, weights
+
+
+def translate_to_edges(contacts, model):
+    edges = []
+    for contact in contacts:
+        chainID1 = contact[0][0]
+        chainID2 = contact[1][0]
+        resID1 = contact[0][1]
+        resID2 = contact[1][1]
+        atom1 = contact[0][2]
+        atom2 = contact[1][2]
+
+        # print(model[chainID1][resID1].get_resname())
+        # print(list(model[chainID1][resID1].child_dict.keys()))
+        # for atom in model[chainID1][resID1]:
+        #     print(atom.get_id())
+        #     pass
+        # print(model[chainID2][resID2].get_resname())
+        # print(list(model[chainID2][resID2].child_dict.keys()))
+        # for atom in model[chainID2][resID2]:
+        #     print(atom.get_id())
+        #     pass
+
+        index1 = model[chainID1][resID1][atom1].get_serial_number()
+        index2 = model[chainID2][resID2][atom2].get_serial_number()
+        edges.append((index1, index2))
+        pass
+
+    return edges
 
 
 # TODO add parameters
@@ -498,7 +516,7 @@ def build_structure(id, sequences, topologyDB, offsets=[]):
             residue = Bio.PDB.Residue.Residue(res_ID, resName, segID)
             chain.add(residue)
 
-            vertices = topologyDB[resName]['vertices']
+            vertices = set(topologyDB[resName]['vertices'])
             backbone = ['N', 'CA', 'C', 'O']
             # NOTE first four atoms are backbone, rest is alphabetically ordered
             for vertex in backbone:
@@ -535,4 +553,5 @@ def build_structure(id, sequences, topologyDB, offsets=[]):
                 pass
             pass
         pass
+    print(len(list(structure.get_atoms())), ' atome generated')
     return structure
