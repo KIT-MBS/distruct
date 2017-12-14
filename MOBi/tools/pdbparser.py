@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Tue 12 Dec 2017 11:32:27 PM CET
+# Last Modified : Thu 14 Dec 2017 03:03:02 PM CET
 #
 #####################################
 
@@ -473,26 +473,52 @@ def generate_graph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
 
 
 # TODO put this somewhere else
-def build_structure(id, sequences, topologyDB):
+# TODO list of resIDs instead of simple offset
+def build_structure(id, sequences, topologyDB, offsets=[]):
     structure = Bio.PDB.Structure.Structure(id)
     model = Bio.PDB.Model.Model(0, None)
     structure.add(model)
 
+    if not offsets:
+        offsets = [0] * len(sequences)
+        pass
+
     chainID = 'A'
     atomCounter = 0
-    for sequence in sequences:
+    for sequence, offset in zip(sequences, offsets):
         chain = PDB.Chain.Chain(chainID)
         chainID = chr(ord(chainID) + 1)
         model.add(chain)
         for i, res in enumerate(sequence):  # TODO put in proper residue ids
-            res_ID = (" ", i, " ")
+            res_ID = (" ", i + offset, " ")
             # NOTE assume, sequence has the right alphabet, convert before
             # resName = protein_letters_1to3[res].upper()
             resName = res
             segID = "   "
             residue = Bio.PDB.Residue.Residue(res_ID, resName, segID)
             chain.add(residue)
-            for vertex in topologyDB[resName]['vertices']:
+
+            vertices = topologyDB[resName]['vertices']
+            backbone = ['N', 'CA', 'C', 'O']
+            # NOTE first four atoms are backbone, rest is alphabetically ordered
+            for vertex in backbone:
+                atomName = vertex
+                coord = np.array((0., 0., 0.), "f")
+                bfactor = 0.
+                occupancy = 1,
+                altloc = " "
+                fullName = vertex
+                serialNumber = atomCounter
+                element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
+                # element = None  # TODO fix this, giving None prints tons of warnings
+
+                atom = Bio.PDB.Atom.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
+                residue.add(atom)
+                atomCounter += 1
+                pass
+            vertices -= set(backbone)
+            # for vertex in topologyDB[resName]['vertices']:
+            for vertex in sorted(vertices):
                 atomName = vertex
                 coord = np.array((0., 0., 0.), "f")
                 bfactor = 0.
