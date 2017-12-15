@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Wed 15 Nov 2017 04:10:46 PM CET
+ *  Last Modified : Fri 15 Dec 2017 10:07:31 AM CET
  *
  * *************************************/
 
@@ -38,6 +38,10 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
 
     for(uint64_t i=0; i<numEdges; ++i)
     {
+        if(graph.hasEdge(edges[i].first, edges[i].second))
+        {
+            throw std::invalid_argument("ERROR: Input graph is not simple.");
+        }
         graph.addEdge(edges[i].first, edges[i].second, distances[i]);
     }
     std::cout << "vertices: " << graph.numberOfNodes() << " edges: " << graph.numberOfEdges() << std::endl;
