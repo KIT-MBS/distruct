@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Thu 14 Dec 2017 06:43:08 PM CET
+# Last Modified : Fri 15 Dec 2017 09:46:46 AM CET
 #
 #####################################
 
@@ -444,7 +444,7 @@ def translate_to_edges(contacts, model):
 
         index1 = model[chainID1][resID1][atom1].get_serial_number()
         index2 = model[chainID2][resID2][atom2].get_serial_number()
-        edges.append((index1, index2))
+        edges.append(tuple(sorted((index1, index2))))
         pass
 
     return edges
