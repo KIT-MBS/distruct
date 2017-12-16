@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Fri 15 Dec 2017 09:46:46 AM CET
+# Last Modified : Fri 15 Dec 2017 07:01:07 PM CET
 #
 #####################################
 
@@ -86,14 +86,14 @@ def read_PDB(PDBCode, fileName, chemicalDB={}, assign_serial_numbers=True):
                                 if atom.get_name() not in chemicalDB[residue.get_resname()]['vertices']:
                                     if not residue.has_id(atom.get_name()[:-1]) and atom.get_name()[:-1] in chemicalDB[residue.get_resname()]['vertices']:
                                         # NOTE sometimes atoms in pdbfiles are called e.g. CD1 instead of CD
-                                        print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
+                                        # print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
                                         oldID = atom.get_id()
                                         newID = oldID[:-1]
                                         atom.name = newID
                                         atom.id = newID
                                         atom.parent.child_dict[newID] = atom.parent.child_dict[oldID]  # NOTE has_id checks in the parents child_dict. which still has the old id as key. since atoms are not entities for some reason, can't use builtin facilities to manage this
                                         del atom.parent.child_dict[oldID]  # TODO maybe this should be done outside the loop
-                                        print("renaming to ", atom.get_name())
+                                        # print("renaming to ", atom.get_name())
                                         # print(chemicalDB[residue.get_resname()]['bondEdges'])
 
                                     else:
@@ -197,6 +197,7 @@ def get_edge(atom1, atom2):
     return edge, distance
 
 
+# TODO this is only for backbone dihedrals, rename
 def get_dihedral_edge(model, chainID, resID, atomID):
     if chainID in model:
         if resID in model[chainID] and resID + 1 in model[chainID]:
@@ -264,8 +265,42 @@ def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStr
     return edges, distances, weights
 
 
-# TODO this should be able to process RNA and proteins!
-def get_secondary_edges(model, fileName, useStructureDistances=True):
+def get_secondary_sequence_protein(fileName, topologyDB):
+    # TODO the model seems unnecessary
+    result = {}
+    # model = Bio.PDB.PDBParser().get_structure('sec', fileName)[0]
+    model = read_PDB('sec', fileName, topologyDB)[0]
+    dssp = Bio.PDB.DSSP(model, fileName)
+
+    for chain in model:
+        result[chain.get_id()] = []
+        pass
+
+    for key in dssp.keys():
+        chainID = key[0]
+        resID = key[1][1]
+        letter = dssp[key][2]
+
+        if letter == 'H':
+            result[chainID].append((letter, resID))
+        elif letter == 'E':
+            result[chainID].append((letter, resID))
+        else:
+            result[chainID].append(('-', resID))
+            pass
+        pass
+
+    #################
+    for chainID in result:
+        print([x[0] for x in result[chainID]])
+        print([x[1] for x in result[chainID]])
+        pass
+    #################
+
+    return result
+
+
+def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, useStructureDistances=True):
     # TODO this works only for protein right now
     # TODO load edges to be used from MOBi.data
     # TODO add distance from database
@@ -274,114 +309,193 @@ def get_secondary_edges(model, fileName, useStructureDistances=True):
     distances = []
     weights = []
 
-    dssp = PDB.DSSP(model, fileName)
-
-    for key in dssp.keys():
-        chainID = key[0]
-        resID = key[1][1]
-
-        # omega
-        edge, distance = get_dihedral_edge(model, chainID, resID, 'CA')
-        if edge:
-            edges.append(edge)
-            if useStructureDistances:
-                distances.append(distance)
-            else:
-                raise NotImplementedError()
-            # weights.append(5.)
-            weights.append(1.)
-            pass
-        # if chainID in model:
-        #     if resID - 1 in model[chainID] and resID in model[chainID]:
-        #         if model[chainID][resID - 1].has_id('CA') and model[chainID][resID].has_id('CA'):
-        #             atom1 = model[chainID][resID - 1]['CA']
-        #             atom2 = model[chainID][resID]['CA']
-        #             edge, distance = get_edge(atom1, atom2)
-        #             edges.append(edge)
-        #             if useStructureDistances:
-        #                 distances.append(distance)
-        #             else:
-        #                 raise NotImplementedError()
-        #                 pass
-        #             weights.append(5.)
-        #             pass
-        #         pass
-        #     pass
-
-        if dssp[key][2] == 'H':  # alpha Helix
-            # phi
-            edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
-            if edge:
-                edges.append(edge)
-                if useStructureDistances:
-                    distances.append(distance)
-                else:
-                    raise NotImplementedError()
-                # weights.append(5.1)
-                weights.append(1.)
-                pass
-
-            # psi
-            edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
-            if edge:
-                edges.append(edge)
-                if useStructureDistances:
-                    distances.append(distance)
-                else:
-                    raise NotImplementedError()
-                # weights.append(5.2)
-                weights.append(1.)
-                pass
-
-            # H bond
-            if chainID in model:
-                if resID in model[chainID] and resID + 4 in model[chainID]:
-                    if model[chainID][resID].has_id('N') and model[chainID][resID + 4].has_id('C'):
-                        # TODO take H atom into account
-                        atom1 = model[chainID][resID]['N']
-                        atom2 = model[chainID][resID]['C']
-                        edge, distance = get_edge(atom1, atom2)
+    if useStructureDistances:
+        for chain in model:
+            chainID = chain.get_id()
+            if chainID in secondaryStructureSequence:
+                for i, r in enumerate(secondaryStructureSequence[chainID]):
+                    resID = r[1]
+                    letter = r[0]
+                    edge, distance = get_dihedral_edge(model, chainID, resID, 'CA')
+                    if edge:
+                        edges.append(edge)
+                        distances.append(distance)
+                        weights.append(1.)
+                        pass
+                    if letter == 'H':
+                        # phi
+                        edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
                         if edge:
                             edges.append(edge)
-                            if useStructureDistances:
-                                distances.append(distance)
-                            else:
-                                raise NotImplementedError()
-                            # weights.append(5.3)
+                            distances.append(distance)
+                            weights.append(1.)
+                            print('phi', edge, resID)
+                            pass
+                        # psi
+                        edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+                        if edge:
+                            edges.append(edge)
+                            distances.append(distance)
+                            weights.append(1.)
+                            print('psi', edge, resID)
+                            pass
+                        # h bond
+                        # TODO include H
+                        # TODO test this
+                        if chain.has_id(resID - 4):
+                            print('helix', resID)
+                            print(secondaryStructureSequence[chainID][i - 4][0])
+                            if secondaryStructureSequence[chainID][i - 4][0] == 'H':
+                                print('h bond')
+                                if secondaryStructureSequence[chainID][i - 4][1] == resID - 4:
+                                    print('h bond')
+                                    atom1 = model[chainID][resID]['N']
+                                    atom2 = model[chainID][resID - 4]['C']
+                                    edge, distance = get_edge(atom1, atom2)
+                                    if edge:
+                                        edges.append(edge)
+                                        distances.append(distance)
+                                        weights.append(1.)
+                                        print('H', edge, resID)
+                                        print(distance)
+                                        pass
+                                    pass
+                                pass
+                            pass
+                    elif letter == 'E':
+                        # phi
+                        edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+                        if edge:
+                            edges.append(edge)
+                            distances.append(distance)
                             weights.append(1.)
                             pass
+                        # psi
+                        edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+                        if edge:
+                            edges.append(edge)
+                            distances.append(distance)
+                            weights.append(1.)
+                            pass
+                    elif letter == '-':
+                        pass
+                    else:
+                        raise
                     pass
                 pass
             pass
-        elif dssp[key][2] == 'E':  # beta strand
-
-            # phi
-            edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
-            if edge:
-                edges.append(edge)
-                if useStructureDistances:
-                    distances.append(distance)
-                else:
-                    raise NotImplementedError()
-                # weights.append(6.1)
-                weights.append(1.)
-                pass
-
-            # psi
-            edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
-            if edge:
-                edges.append(edge)
-                if useStructureDistances:
-                    distances.append(distance)
-                else:
-                    raise NotImplementedError()
-                # weights.append(6.2)
-                weights.append(1.)
-                pass
-            pass
-        else:
-            pass
+    else:
+        raise NotImplementedError()
         pass
+
+    # dssp = PDB.DSSP(model, fileName)
+
+    # for key in dssp.keys():
+    #     chainID = key[0]
+    #     resID = key[1][1]
+
+    #     # omega
+    #     edge, distance = get_dihedral_edge(model, chainID, resID, 'CA')
+    #     if edge:
+    #         edges.append(edge)
+    #         if useStructureDistances:
+    #             distances.append(distance)
+    #         else:
+    #             raise NotImplementedError()
+    #         # weights.append(5.)
+    #         weights.append(1.)
+    #         pass
+    #     # if chainID in model:
+    #     #     if resID - 1 in model[chainID] and resID in model[chainID]:
+    #     #         if model[chainID][resID - 1].has_id('CA') and model[chainID][resID].has_id('CA'):
+    #     #             atom1 = model[chainID][resID - 1]['CA']
+    #     #             atom2 = model[chainID][resID]['CA']
+    #     #             edge, distance = get_edge(atom1, atom2)
+    #     #             edges.append(edge)
+    #     #             if useStructureDistances:
+    #     #                 distances.append(distance)
+    #     #             else:
+    #     #                 raise NotImplementedError()
+    #     #                 pass
+    #     #             weights.append(5.)
+    #     #             pass
+    #     #         pass
+    #     #     pass
+
+    #     if dssp[key][2] == 'H':  # alpha Helix
+    #         # phi
+    #         edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+    #         if edge:
+    #             edges.append(edge)
+    #             if useStructureDistances:
+    #                 distances.append(distance)
+    #             else:
+    #                 raise NotImplementedError()
+    #             # weights.append(5.1)
+    #             weights.append(1.)
+    #             pass
+
+    #         # psi
+    #         edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+    #         if edge:
+    #             edges.append(edge)
+    #             if useStructureDistances:
+    #                 distances.append(distance)
+    #             else:
+    #                 raise NotImplementedError()
+    #             # weights.append(5.2)
+    #             weights.append(1.)
+    #             pass
+
+    #         # H bond
+    #         if chainID in model:
+    #             if resID in model[chainID] and resID + 4 in model[chainID]:
+    #                 if model[chainID][resID].has_id('N') and model[chainID][resID + 4].has_id('C'):
+    #                     # TODO take H atom into account
+    #                     atom1 = model[chainID][resID]['N']
+    #                     atom2 = model[chainID][resID]['C']
+    #                     edge, distance = get_edge(atom1, atom2)
+    #                     if edge:
+    #                         edges.append(edge)
+    #                         if useStructureDistances:
+    #                             distances.append(distance)
+    #                         else:
+    #                             raise NotImplementedError()
+    #                         # weights.append(5.3)
+    #                         weights.append(1.)
+    #                         pass
+    #                 pass
+    #             pass
+    #         pass
+    #     elif dssp[key][2] == 'E':  # beta strand
+
+    #         # phi
+    #         edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+    #         if edge:
+    #             edges.append(edge)
+    #             if useStructureDistances:
+    #                 distances.append(distance)
+    #             else:
+    #                 raise NotImplementedError()
+    #             # weights.append(6.1)
+    #             weights.append(1.)
+    #             pass
+
+    #         # psi
+    #         edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+    #         if edge:
+    #             edges.append(edge)
+    #             if useStructureDistances:
+    #                 distances.append(distance)
+    #             else:
+    #                 raise NotImplementedError()
+    #             # weights.append(6.2)
+    #             weights.append(1.)
+    #             pass
+    #         pass
+    #     else:
+    #         pass
+    #     pass
 
     return edges, distances, weights
 
@@ -421,6 +535,7 @@ def get_tertiary_edges(model, cutOff=5., minSeqDist=5, getContacts=False):
     return tertiaryEdges, distances, weights
 
 
+# TODO better naming
 def translate_to_edges(contacts, model):
     edges = []
     for contact in contacts:
@@ -448,6 +563,15 @@ def translate_to_edges(contacts, model):
         pass
 
     return edges
+
+
+# TODO better naming
+# def translate_secondary_structure(model, sequences, topologyDB):
+#     edges = []
+#     distances = []
+#     weights = []
+#
+#     return edges, distances, weights
 
 
 # TODO add parameters
@@ -553,5 +677,5 @@ def build_structure(id, sequences, topologyDB, offsets=[]):
                 pass
             pass
         pass
-    print(len(list(structure.get_atoms())), ' atome generated')
+    print(len(list(structure.get_atoms())), ' atoms generated')
     return structure
