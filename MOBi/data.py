@@ -9,11 +9,12 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Thu 17 Aug 2017 02:24:50 PM CEST
+# Last Modified : Fri 15 Dec 2017 05:36:55 PM CET
 #
 #####################################
 
 from Bio import Alphabet
+from math import pi
 # TODO handle alphabets here
 # use generic base stuff and IUPAC
 # {'ALA', 'Ala', 'A', 'a'}
@@ -39,3 +40,8 @@ amberAAts = ['C' + AA for AA in amberAAs] + ['N' + AA for AA in amberAAs]
 
 # TODO pdb alphabet
 # TODO pdb extended alphabet
+
+alpha_phi = - 60 * pi / 180
+alpha_psi = - 45 * pi / 180
+beta_phi  = -135 * pi / 180
+beta_psi  =  135 * pi / 180
