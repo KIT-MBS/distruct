@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Sun 17 Dec 2017 07:13:09 PM CET
+# Last Modified : Sun 17 Dec 2017 11:40:57 PM CET
 #
 #####################################
 
@@ -21,7 +21,8 @@ from Bio import Alphabet
 # extended
 
 AAs = ['ALA', 'GLY', 'SER', 'THR', 'LEU', 'ILE', 'VAL', 'ASN', 'GLN', 'ARG', 'HIS', 'TRP', 'PHE', 'TYR', 'GLU', 'ASP', 'LYS', 'PRO', 'CYS', 'MET']
-RNAs = ['RA', 'RG', 'RC', 'RU']
+# RNAs = ['RA', 'RG', 'RC', 'RU']
+RNAs = ['A', 'G', 'C', 'U']
 DNAs = ['DA', 'DG', 'DC', 'DT']
 
 
@@ -30,7 +31,14 @@ class ReducedPDBProtein(Alphabet.ThreeLetterProtein):
     pass
 
 
+class PDBRNA(Alphabet.SingleLetterAlphabet):
+    letters = RNAs
+    pass
+
+
 PDBReducedProtein = ReducedPDBProtein()
+PDBRNAalphabet = PDBRNA()
+
 
 # TODO put in translation for ff names and other conventions
 # NOTE for now the maximally protonated residues are used
