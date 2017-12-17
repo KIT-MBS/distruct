@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 05 Dec 2017 08:08:18 PM CET
 #
-# Last Modified : Tue 05 Dec 2017 08:46:20 PM CET
+# Last Modified : Sun 17 Dec 2017 11:42:38 PM CET
 #
 #####################################
 
@@ -23,22 +23,15 @@ for ff in forcefields:
 
     databaseName = ff + "_protein"
     MOBi.fileio.write_primary_edge_database(topDB, databaseName)
-    # test
 
-    topDB2 = MOBi.fileio.parse_primary_edge_database(databaseName, './')
+    topDB2 = MOBi.tools.ffparsergmx.generate_chemical_primary_edge_database(ff, MOBi.data.PDBRNAalphabet)
 
-    # TODO add a real check / test case
-    # assert topDB == topDB2
-    # for k in topDB.keys():
-    #     print(k)
-    #     for k2 in topDB[k].keys():
-    #         print(k2)
-    #         print('topDB')
-    #         print(topDB[k][k2])
-    #         print('topDB2')
-    #         print(topDB2[k][k2])
-    #         print(topDB[k][k2] == topDB2[k][k2])
-    #         pass
-    #     pass
+    databaseName = ff + "_rna"
+    MOBi.fileio.write_primary_edge_database(topDB, databaseName)
+
+    topDB.update(topDB2)
+
+    databaseName = ff
+    MOBi.fileio.write_primary_edge_database(topDB, databaseName)
 
     pass
