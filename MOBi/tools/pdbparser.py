@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Sun 17 Dec 2017 07:33:01 PM CET
+# Last Modified : Sun 17 Dec 2017 11:29:20 PM CET
 #
 #####################################
 
@@ -33,6 +33,8 @@ from MOBi.tools import math
 # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
 def read_PDB(PDBCode, fileName, chemicalDB={}, assign_serial_numbers=True):
     # TODO maybe handle hetero stuff if they are present in the force field
+
+    # TODO Glycin Hs are not read correctly!!! (others probably too)
 
     structure = None
 
