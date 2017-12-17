@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Sun 17 Dec 2017 11:40:57 PM CET
+# Last Modified : Sun 17 Dec 2017 11:46:35 PM CET
 #
 #####################################
 
@@ -31,7 +31,7 @@ class ReducedPDBProtein(Alphabet.ThreeLetterProtein):
     pass
 
 
-class PDBRNA(Alphabet.SingleLetterAlphabet):
+class PDBRNA(Alphabet.RNAAlphabet):
     letters = RNAs
     pass
 
