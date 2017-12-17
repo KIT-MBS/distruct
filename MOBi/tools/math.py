@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 23 May 2017 17:01:55 CEST
 #
-# Last Modified : Thu 09 Nov 2017 01:29:02 PM CET
+# Last Modified : Sun 17 Dec 2017 07:48:25 PM CET
 #
 #####################################
 
@@ -25,7 +25,13 @@ def dist_from_angle(angle, d_ij, d_jk):  # AKA law of cosines
     return d_ik
 
 
+def angle_from_dist(a, b, c):
+    gamma = m.acos((a * a + b * b - c * c) / (2 * a * b))
+    return gamma * 180. / m.pi
+
+
 # TODO this is probably not optimal. smaller numerical error?
+# TODO remove this?
 def dist_from_improper(dihedral, d_ij, d_jk, d_kl, d_ik, d_jl):
     r_ijk = m.acos((d_ij * d_ij + d_jk * d_jk - d_ik * d_ik) / (2 * d_ij * d_jk))
     r_ljk = m.acos((d_jl * d_jl + d_jk * d_jk - d_kl * d_kl) / (2 * d_jl * d_jk))
@@ -41,7 +47,12 @@ def dist_from_improper(dihedral, d_ij, d_jk, d_kl, d_ik, d_jl):
     return d_il
 
 
-# TODO this is needed for secondary structure stuff
 def dist_from_dihedral(dihedral, d_ij, d_jk, d_kl, d_ik, d_jl):  # i-l edge for rings and proper-like improper dihedrals
     dihedral = dihedral * m.pi / 180.
-    pass
+
+    r_ijk = angle_from_dist(d_ij, d_jk, d_ik)
+    r_ljk = angle_from_dist(d_jl, d_jk, d_kl)
+
+    r_ijl = m.acos(m.cos(r_ijk) * m.cos(r_ljk) + m.sin(r_ijk) * m.sin(r_ljk) * m.cos(dihedral))
+    d_il = dist_from_angle(r_ijl, d_ij, d_jl)
+    return d_il

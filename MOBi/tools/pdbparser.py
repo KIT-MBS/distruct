@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Fri 15 Dec 2017 07:01:07 PM CET
+# Last Modified : Sun 17 Dec 2017 07:33:01 PM CET
 #
 #####################################
 
@@ -23,9 +23,10 @@ from Bio import PDB
 from Bio import Seq
 from Bio import SeqIO
 # from Bio import Alphabet
-from Bio.Data.IUPACData import protein_letters_1to3
+# from Bio.Data.IUPACData import protein_letters_1to3
 
 from MOBi import data
+from MOBi.tools import math
 
 
 # NOTE added chemicalDB to check for differing atom naming convention
@@ -309,83 +310,144 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
     distances = []
     weights = []
 
-    if useStructureDistances:
-        for chain in model:
-            chainID = chain.get_id()
-            if chainID in secondaryStructureSequence:
-                for i, r in enumerate(secondaryStructureSequence[chainID]):
-                    resID = r[1]
-                    letter = r[0]
+    for chain in model:
+        chainID = chain.get_id()
+        if chainID in secondaryStructureSequence:
+            # TODO check if first or last residue
+            for i, r in enumerate(secondaryStructureSequence[chainID]):
+                resID = r[1]
+                letter = r[0]
+                resn = chain[resID].get_resname()
+                # prevresn = None
+                # nextresn = None
+                # if resID - 1 in chain:
+                #     prevresn = chain[resID - 1].get_resname()
+                #     pass
+                # if resID + 1 in chain:
+                #     prevresn = chain[resID - 1].get_resname()
+                #     pass
+                edge = None
+                distance = None
+                # omega
+                if resn != 'PRO':  # TODO alphabet
                     edge, distance = get_dihedral_edge(model, chainID, resID, 'CA')
                     if edge:
+                        if not useStructureDistances:
+                            prevresn = chain[resID - 1].get_resname()
+                            dAB = topologyDB[prevresn]['bondEdges'][('C', 'CA')]
+                            dBC = topologyDB[resn]['bondEdges'][('-C', 'N')]
+                            dCD = topologyDB[resn]['bondEdges'][('CA', 'N')]
+                            dAC = topologyDB[prevresn]['angleEdges'][('+N', 'CA')]
+                            dBD = topologyDB[resn]['angleEdges'][('-C', 'CA')]
+                            distance = math.dist_from_dihedral(180., dAB, dBC, dCD, dAC, dBD)
+                            pass
+                        edges.append(edge)
+                        distances.append(distance)
+                        weights.append(1.)
+                        print('omega', edge, resID)
+                        pass
+                    pass
+                edge = None
+                distance = None
+                if letter == 'H':
+                    # phi
+                    edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+                    if edge:
+                        if not useStructureDistances:
+                            dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
+                            dBC = topologyDB[resn]['bondEdges'][('CA', 'N')]
+                            dCD = topologyDB[resn]['bondEdges'][('C', 'CA')]
+                            dAC = topologyDB[resn]['angleEdges'][('-C', 'CA')]
+                            dBD = topologyDB[resn]['angleEdges'][('C', 'N')]
+                            distance = math.dist_from_dihedral(data.alpha_phi, dAB, dBC, dCD, dAC, dBD)
+                            pass
+                        edges.append(edge)
+                        distances.append(distance)
+                        weights.append(1.)
+                        print('phi', edge, resID)
+                        pass
+                    # psi
+                    edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+                    if edge:
+                        if not useStructureDistances:
+                            nextresn = chain[resID + 1].get_resname()
+                            dAB = topologyDB[resn]['bondEdges'][('CA', 'N')]
+                            dBC = topologyDB[resn]['bondEdges'][('C', 'CA')]
+                            dCD = topologyDB[nextresn]['bondEdges'][('-C', 'N')]
+                            dAC = topologyDB[resn]['angleEdges'][('-C', 'CA')]
+                            dBD = topologyDB[resn]['angleEdges'][('+N', 'CA')]
+                            distance = math.dist_from_dihedral(data.alpha_psi, dAB, dBC, dCD, dAC, dBD)
+                            pass
+                        edges.append(edge)
+                        distances.append(distance)
+                        weights.append(1.)
+                        print('psi', edge, resID)
+                        pass
+                    # h bond
+                    # TODO include H
+                    # TODO test this
+                    if chain.has_id(resID - 4):
+                        print('helix', resID)
+                        print(secondaryStructureSequence[chainID][i - 4][0])
+                        if secondaryStructureSequence[chainID][i - 4][0] == 'H':
+                            if secondaryStructureSequence[chainID][i - 4][1] == resID - 4:
+                                atom1 = model[chainID][resID]['N']
+                                atom2 = model[chainID][resID - 4]['C']
+                                edge, distance = get_edge(atom1, atom2)
+                                if edge:
+                                    # TODO maybe add edge between acceptor and hydrogen
+                                    if not useStructureDistances:
+                                        dAB = topologyDB[resn]['bondEdges'][('H', 'N')]
+                                        dBC = data.hbond
+                                        angle = data.hangle
+                                        distance = math.dist_from_angle(angle, dAB, dBC)
+                                        pass
+                                    edges.append(edge)
+                                    distances.append(distance)
+                                    weights.append(1.)
+                                    # print('H', edge, resID)
+                                    # print(distance)
+                                    pass
+                                pass
+                            pass
+                        pass
+                elif letter == 'E':
+                    # phi
+                    edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+                    if edge:
+                        if not useStructureDistances:
+                            dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
+                            dBC = topologyDB[resn]['bondEdges'][('CA', 'N')]
+                            dCD = topologyDB[resn]['bondEdges'][('C', 'CA')]
+                            dAC = topologyDB[resn]['angleEdges'][('-C', 'CA')]
+                            dBD = topologyDB[resn]['angleEdges'][('C', 'N')]
+                            distance = math.dist_from_dihedral(data.beta_phi, dAB, dBC, dCD, dAC, dBD)
+                            pass
                         edges.append(edge)
                         distances.append(distance)
                         weights.append(1.)
                         pass
-                    if letter == 'H':
-                        # phi
-                        edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
-                        if edge:
-                            edges.append(edge)
-                            distances.append(distance)
-                            weights.append(1.)
-                            print('phi', edge, resID)
-                            pass
-                        # psi
-                        edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
-                        if edge:
-                            edges.append(edge)
-                            distances.append(distance)
-                            weights.append(1.)
-                            print('psi', edge, resID)
-                            pass
-                        # h bond
-                        # TODO include H
-                        # TODO test this
-                        if chain.has_id(resID - 4):
-                            print('helix', resID)
-                            print(secondaryStructureSequence[chainID][i - 4][0])
-                            if secondaryStructureSequence[chainID][i - 4][0] == 'H':
-                                print('h bond')
-                                if secondaryStructureSequence[chainID][i - 4][1] == resID - 4:
-                                    print('h bond')
-                                    atom1 = model[chainID][resID]['N']
-                                    atom2 = model[chainID][resID - 4]['C']
-                                    edge, distance = get_edge(atom1, atom2)
-                                    if edge:
-                                        edges.append(edge)
-                                        distances.append(distance)
-                                        weights.append(1.)
-                                        print('H', edge, resID)
-                                        print(distance)
-                                        pass
-                                    pass
-                                pass
-                            pass
-                    elif letter == 'E':
-                        # phi
-                        edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
-                        if edge:
-                            edges.append(edge)
-                            distances.append(distance)
-                            weights.append(1.)
-                            pass
-                        # psi
-                        edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
-                        if edge:
-                            edges.append(edge)
-                            distances.append(distance)
-                            weights.append(1.)
-                            pass
-                    elif letter == '-':
+                    # psi
+                    edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+                    if edge:
+                        if not useStructureDistances:
+                            nextresn = chain[resID + 1].get_resname()
+                            dAB = topologyDB[resn]['bondEdges'][('CA', 'N')]
+                            dBC = topologyDB[resn]['bondEdges'][('C', 'CA')]
+                            dCD = topologyDB[nextresn]['bondEdges'][('-C', 'N')]
+                            dAC = topologyDB[resn]['angleEdges'][('-C', 'CA')]
+                            dBD = topologyDB[resn]['angleEdges'][('+N', 'CA')]
+                            distance = math.dist_from_dihedral(data.beta_psi, dAB, dBC, dCD, dAC, dBD)
+                        edges.append(edge)
+                        distances.append(distance)
+                        weights.append(1.)
                         pass
-                    else:
-                        raise
+                elif letter == '-':
                     pass
+                else:
+                    raise
                 pass
             pass
-    else:
-        raise NotImplementedError()
         pass
 
     # dssp = PDB.DSSP(model, fileName)
