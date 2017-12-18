@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Sun 17 Dec 2017 11:29:20 PM CET
+# Last Modified : Mon 18 Dec 2017 10:41:58 AM CET
 #
 #####################################
 
@@ -108,14 +108,15 @@ def read_PDB(PDBCode, fileName, chemicalDB={}, assign_serial_numbers=True):
                                 pass
                             pass
                         else:
-                            print("unkown residue: ", str(residue), " removed")
-                            flaggedForRemoval.append((chain.id, residue.id))
+                            print("unkown residue: ", str(residue), "in chain ", str(chain), " flagged for removal")
+                            flaggedForRemoval.append((chain.get_id(), residue.get_id()))
                             assign_serial_numbers = True
                             pass
                     pass
                 pass
             pass
         for cr in flaggedForRemoval:
+            residue = model[cr[0]][cr[1]]
             model[cr[0]].detach_child(cr[1])
             pass
         flaggedForRemoval = []
@@ -203,10 +204,10 @@ def get_edge(atom1, atom2):
 # TODO this is only for backbone dihedrals, rename
 def get_dihedral_edge(model, chainID, resID, atomID):
     if chainID in model:
-        if resID in model[chainID] and resID + 1 in model[chainID]:
-            if model[chainID][resID].has_id(atomID) and model[chainID][resID + 1].has_id(atomID):
+        if resID in model[chainID] and resID - 1 in model[chainID]:
+            if model[chainID][resID].has_id(atomID) and model[chainID][resID - 1].has_id(atomID):
                 atom1 = model[chainID][resID][atomID]
-                atom2 = model[chainID][resID + 1][atomID]
+                atom2 = model[chainID][resID - 1][atomID]
                 return get_edge(atom1, atom2)
                 pass
             pass
@@ -353,7 +354,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                 distance = None
                 if letter == 'H':
                     # phi
-                    edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+                    edge, distance = get_dihedral_edge(model, chainID, resID, 'C')
                     if edge:
                         if not useStructureDistances:
                             dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
@@ -369,7 +370,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         print('phi', edge, resID)
                         pass
                     # psi
-                    edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+                    edge, distance = get_dihedral_edge(model, chainID, resID + 1, 'N')
                     if edge:
                         if not useStructureDistances:
                             nextresn = chain[resID + 1].get_resname()
@@ -415,7 +416,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         pass
                 elif letter == 'E':
                     # phi
-                    edge, distance = get_dihedral_edge(model, chainID, resID - 1, 'C')
+                    edge, distance = get_dihedral_edge(model, chainID, resID, 'C')
                     if edge:
                         if not useStructureDistances:
                             dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
@@ -430,7 +431,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         weights.append(1.)
                         pass
                     # psi
-                    edge, distance = get_dihedral_edge(model, chainID, resID, 'N')
+                    edge, distance = get_dihedral_edge(model, chainID, resID + 1, 'N')
                     if edge:
                         if not useStructureDistances:
                             nextresn = chain[resID + 1].get_resname()
