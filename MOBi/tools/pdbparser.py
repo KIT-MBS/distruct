@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Sun 31 Dec 2017 02:23:33 PM CET
+# Last Modified : Sun 31 Dec 2017 04:13:43 PM CET
 #
 #####################################
 
@@ -318,6 +318,8 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
         if chainID in secondaryStructureSequence:
             # TODO check if first or last residue
             for i, r in enumerate(secondaryStructureSequence[chainID]):
+                print('###')
+                print(r)
                 resID = r[1]
                 letter = r[0]
                 resn = chain[resID].get_resname()
@@ -343,7 +345,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         D = chain[resID]['CA'].get_vector()
                         dihedral = PDB.calc_dihedral(A, B, C, D)
                         # ##############
-                        print("measured dihedral: ", dihedral)
+                        print("measured dihedral: ", dihedral*180./ np.pi)
                         print("measured distance: ", distance)
                         if not useStructureDistances:
                             prevresn = chain[resID - 1].get_resname()
@@ -378,7 +380,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         dihedral = PDB.calc_dihedral(A, B, C, D)
                         # ##############
                         print("measured distance: ", distance)
-                        print("measured dihedral: ", dihedral)
+                        print("measured dihedral: ", dihedral * 180. / np.pi)
                         if not useStructureDistances:
                             dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
                             dBC = topologyDB[resn]['bondEdges'][('CA', 'N')]
@@ -407,7 +409,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         dihedral = PDB.calc_dihedral(A, B, C, D)
                         # ##############
                         print("measured distance: ", distance)
-                        print("measured dihedral: ", dihedral)
+                        print("measured dihedral: ", dihedral * 180. / np.pi)
                         if not useStructureDistances:
                             nextresn = chain[resID + 1].get_resname()
                             dAB = topologyDB[resn]['bondEdges'][('CA', 'N')]
@@ -428,9 +430,8 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                     # TODO include H
                     # TODO test this
                     if chain.has_id(resID - 4):
-                        print('helix', resID)
-                        print(secondaryStructureSequence[chainID][i - 4][0])
-                        print("measured distance: ", distance)
+                        print('helix')
+                        print('H bond')
                         if secondaryStructureSequence[chainID][i - 4][0] == 'H':
                             if secondaryStructureSequence[chainID][i - 4][1] == resID - 4:
                                 atom1 = model[chainID][resID]['N']
