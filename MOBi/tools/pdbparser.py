@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Sun 31 Dec 2017 04:13:43 PM CET
+# Last Modified : Sun 31 Dec 2017 11:29:51 PM CET
 #
 #####################################
 
@@ -355,7 +355,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                             dAC = topologyDB[prevresn]['angleEdges'][('+N', 'CA')]
                             dBD = topologyDB[resn]['angleEdges'][('-C', 'CA')]
                             distance = math.dist_from_dihedral(180., dAB, dBC, dCD, dAC, dBD)
-                            print("guessed angle: ", 180.)
+                            print("guessed dihedral: ", 180.)
                             print("guessed distance: ", distance)
                             pass
                         edges.append(edge)
@@ -389,7 +389,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                             dBD = topologyDB[resn]['angleEdges'][('C', 'N')]
                             distance = math.dist_from_dihedral(data.alpha_phi, dAB, dBC, dCD, dAC, dBD)
                             print("guessed distance: ", distance)
-                            print("guessed dihedral: ", data.alpha_phi)
+                            print("guessed dihedral: ", data.alpha_phi * 180. / np.pi)
                             pass
                         edges.append(edge)
                         distances.append(distance)
@@ -419,7 +419,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                             dBD = topologyDB[resn]['angleEdges'][('+N', 'CA')]
                             distance = math.dist_from_dihedral(data.alpha_psi, dAB, dBC, dCD, dAC, dBD)
                             print("guessed distance: ", distance)
-                            print("guessed dihedral: ", data.alpha_psi)
+                            print("guessed dihedral: ", data.alpha_psi * 180. / np.pi)
                             pass
                         edges.append(edge)
                         distances.append(distance)
@@ -459,6 +459,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                 elif letter == 'E':
                     # phi
                     edge, distance = get_dihedral_edge(model, chainID, resID, 'C')
+                    print("measured distance: ", distance)
                     if edge:
                         if not useStructureDistances:
                             dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
@@ -475,6 +476,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                         pass
                     # psi
                     edge, distance = get_dihedral_edge(model, chainID, resID + 1, 'N')
+                    print("measured distance: ", distance)
                     if edge:
                         if not useStructureDistances:
                             nextresn = chain[resID + 1].get_resname()

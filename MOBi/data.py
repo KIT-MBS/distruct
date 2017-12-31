@@ -9,12 +9,12 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Sun 17 Dec 2017 11:46:35 PM CET
+# Last Modified : Sun 31 Dec 2017 11:21:03 PM CET
 #
 #####################################
 
 from Bio import Alphabet
-# from math import pi
+from math import pi
 # TODO handle alphabets here
 # use generic base stuff and IUPAC
 # {'ALA', 'Ala', 'A', 'a'}
@@ -50,14 +50,9 @@ amberAAts = ['C' + AA for AA in amberAAs] + ['N' + AA for AA in amberAAs]
 # TODO pdb alphabet
 # TODO pdb extended alphabet
 
-# TODO RAD
-# alpha_phi = - 60 * pi / 180
-# alpha_psi = - 45 * pi / 180
-# beta_phi = -135 * pi / 180
-# beta_psi = 135 * pi / 180
-alpha_phi = - 60
-alpha_psi = - 45
-beta_phi = -135
-beta_psi = 135
+alpha_phi = - 60 * pi / 180.
+alpha_psi = - 45 * pi / 180.
+beta_phi = -135 * pi / 180.
+beta_psi = 135 * pi / 180.
 hbond = 1.9  # hydrogen - acceptor
-hangle = 160.  # angle donor-hydrogen-acceptor
+hangle = 180. * pi / 180.  # angle donor-hydrogen-acceptor
