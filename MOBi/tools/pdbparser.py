@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 18 Dec 2017 01:09:15 PM CET
+# Last Modified : Sun 31 Dec 2017 02:23:33 PM CET
 #
 #####################################
 
@@ -336,6 +336,14 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                     edge, distance = get_dihedral_edge(model, chainID, resID, 'CA')
                     if edge:
                         print("omega:")
+                        # ############## should be 3.8 angstrom for trans
+                        A = chain[resID - 1]['CA'].get_vector()
+                        B = chain[resID - 1]['C'].get_vector()
+                        C = chain[resID]['N'].get_vector()
+                        D = chain[resID]['CA'].get_vector()
+                        dihedral = PDB.calc_dihedral(A, B, C, D)
+                        # ##############
+                        print("measured dihedral: ", dihedral)
                         print("measured distance: ", distance)
                         if not useStructureDistances:
                             prevresn = chain[resID - 1].get_resname()
@@ -345,6 +353,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                             dAC = topologyDB[prevresn]['angleEdges'][('+N', 'CA')]
                             dBD = topologyDB[resn]['angleEdges'][('-C', 'CA')]
                             distance = math.dist_from_dihedral(180., dAB, dBC, dCD, dAC, dBD)
+                            print("guessed angle: ", 180.)
                             print("guessed distance: ", distance)
                             pass
                         edges.append(edge)
@@ -361,7 +370,15 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                     if edge:
                         print("helix")
                         print("phi:")
+                        # ##############
+                        A = chain[resID - 1]['C'].get_vector()
+                        B = chain[resID]['N'].get_vector()
+                        C = chain[resID]['CA'].get_vector()
+                        D = chain[resID]['C'].get_vector()
+                        dihedral = PDB.calc_dihedral(A, B, C, D)
+                        # ##############
                         print("measured distance: ", distance)
+                        print("measured dihedral: ", dihedral)
                         if not useStructureDistances:
                             dAB = topologyDB[resn]['bondEdges'][('-C', 'N')]
                             dBC = topologyDB[resn]['bondEdges'][('CA', 'N')]
@@ -370,6 +387,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                             dBD = topologyDB[resn]['angleEdges'][('C', 'N')]
                             distance = math.dist_from_dihedral(data.alpha_phi, dAB, dBC, dCD, dAC, dBD)
                             print("guessed distance: ", distance)
+                            print("guessed dihedral: ", data.alpha_phi)
                             pass
                         edges.append(edge)
                         distances.append(distance)
@@ -379,6 +397,17 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                     # psi
                     edge, distance = get_dihedral_edge(model, chainID, resID + 1, 'N')
                     if edge:
+                        print("helix")
+                        print("psi:")
+                        # ##############
+                        A = chain[resID]['N'].get_vector()
+                        B = chain[resID]['CA'].get_vector()
+                        C = chain[resID]['C'].get_vector()
+                        D = chain[resID + 1]['N'].get_vector()
+                        dihedral = PDB.calc_dihedral(A, B, C, D)
+                        # ##############
+                        print("measured distance: ", distance)
+                        print("measured dihedral: ", dihedral)
                         if not useStructureDistances:
                             nextresn = chain[resID + 1].get_resname()
                             dAB = topologyDB[resn]['bondEdges'][('CA', 'N')]
@@ -388,6 +417,7 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                             dBD = topologyDB[resn]['angleEdges'][('+N', 'CA')]
                             distance = math.dist_from_dihedral(data.alpha_psi, dAB, dBC, dCD, dAC, dBD)
                             print("guessed distance: ", distance)
+                            print("guessed dihedral: ", data.alpha_psi)
                             pass
                         edges.append(edge)
                         distances.append(distance)
@@ -400,11 +430,13 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
                     if chain.has_id(resID - 4):
                         print('helix', resID)
                         print(secondaryStructureSequence[chainID][i - 4][0])
+                        print("measured distance: ", distance)
                         if secondaryStructureSequence[chainID][i - 4][0] == 'H':
                             if secondaryStructureSequence[chainID][i - 4][1] == resID - 4:
                                 atom1 = model[chainID][resID]['N']
                                 atom2 = model[chainID][resID - 4]['C']
                                 edge, distance = get_edge(atom1, atom2)
+                                print("measured distance: ", distance)
                                 if edge:
                                     # TODO maybe add edge between acceptor and hydrogen
                                     if not useStructureDistances:
