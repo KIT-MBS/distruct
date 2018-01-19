@@ -296,7 +296,8 @@ private:
 	 * @return The corresponding weighting factor.
 	 */
 	inline double weightingFactor(double edgeWeight, index edgeId) const {
-		return probabilityProvided? 1+5*exp(-5*(1-probability[edgeId])) : 1.0;
+        return probabilityProvided? probability[edgeId] : 1.0;
+		//return probabilityProvided? 1+5*exp(-5*(1-probability[edgeId])) : 1.0;
 	}
 
 	/**
