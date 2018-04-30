@@ -1,12 +1,10 @@
-#import networkit as nwk
-
 from libc.stdint cimport uint64_t
 from libc.stdint cimport uint32_t
 from libcpp.vector cimport vector
 from libcpp.utility cimport pair
 
 # TODO maybe replace this? NetworKit::Point was deprecated and then undeprecated again.
-cdef extern from "NetworKit/viz/Point.h" namespace "NetworKit":
+cdef extern from "cpp/viz/Point.h" namespace "NetworKit":
     cdef cppclass Point[T]:
         Point()
         Point(uint64_t dim)
