@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Thu 17 Aug 2017 04:21:20 PM CEST
+# Last Modified : Mon 30 Apr 2018 05:21:24 PM CEST
 #
 #####################################
 
@@ -18,7 +18,9 @@ import os
 from Bio import Alphabet
 from Bio import Data
 
-from . import math
+from math import pi
+
+from . import math as m
 
 from .. import config
 
@@ -56,7 +58,7 @@ def read_angles(line):
     k = parts[2]
     th0 = None
     if len(parts) > 3:
-        th0 = float(parts[3])
+        th0 = float(parts[3]) * pi/180.
         pass
 
     # key = (i, j, k)
@@ -94,7 +96,7 @@ def read_impropers(line):
     k = parts[2]
     l = parts[3]
     if len(parts) > 4:
-        q0 = float(parts[4])
+        q0 = float(parts[4]) * pi/180.
     else:
         q0 = None
         pass
@@ -200,9 +202,9 @@ def read_angletypes(line):
     j = parts[1]
     k = parts[2]
     # func = parts[3]
-    th0 = parts[4]
+    th0 = float(parts[4]) * pi/180.
 
-    return {(i, j, k): float(th0), (k, j, i): float(th0)}
+    return {(i, j, k): th0 , (k, j, i): th0}
 
 
 # TODO wildcards (X)
@@ -219,7 +221,7 @@ def read_dihedraltypes(line):
         # TODO check ordering stuff!!
         key = (i, j, k, l)
         # value = (func, ph0)
-        value = float(ph0)
+        value = float(ph0) * pi/180.
         return {key: value}
     else:
         return {}
@@ -337,6 +339,8 @@ def infer_angles(atoms, bonds, angleTypes):
 #     result = {}
 #     return result
 
+# TODO add backbone dihedral omega
+
 
 def translate_atoms_to_vertices(atoms):
     result = set(atoms.keys())
@@ -406,12 +410,12 @@ def translate_angles_to_edges(angles, atomTypes, bondTypes, angleTypes):
             print("WARNING!!!: a bond type was not found in the force field parameters:\n", (atomTriplet[1], atomTriplet[2]), (ffAtomType2, ffAtomType3))
             continue
 
-        result[vertices] = math.dist_from_angle(angle, d_ij, d_jk)
+        result[vertices] = m.dist_from_angle(angle, d_ij, d_jk)
         pass
     return result
 
 
-# TODO switch to bondTypes and angleTypes?
+# TODO switch to bondTypes and angleTypes
 def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, dihedralTypes):
     result = {}
     for atomQuadruplet in impropers:
@@ -481,7 +485,7 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
         d_ik = angleEdges[ik]
         d_jl = angleEdges[jl]
 
-        result[vertices] = math.dist_from_improper(improper, d_ij, d_jk, d_kl, d_ik, d_jl)
+        result[vertices] = m.dist_from_improper(improper, d_ij, d_jk, d_kl, d_ik, d_jl)
 
         pass
     return result
@@ -574,7 +578,7 @@ def generate_chemical_primary_edge_database(
             elif isinstance(alphabet, Alphabet.DNAAlphabet):
                 pass
             else:
-                # TODO explode
+                # TODO error message
                 assert(False)
                 pass
 

@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 23 May 2017 17:01:55 CEST
 #
-# Last Modified : Sun 31 Dec 2017 11:11:46 PM CET
+# Last Modified : Mon 30 Apr 2018 03:56:37 PM CEST
 #
 #####################################
 
@@ -18,9 +18,7 @@
 import math as m
 
 
-# TODO change everthing to radians
 def dist_from_angle(angle, d_ij, d_jk):  # AKA law of cosines
-    # angle = angle * m.pi / 180.
     d_ik = m.sqrt(d_ij * d_ij + d_jk * d_jk - 2. * d_ij * d_jk * m.cos(angle))
     return d_ik
 
@@ -28,7 +26,6 @@ def dist_from_angle(angle, d_ij, d_jk):  # AKA law of cosines
 def angle_from_dist(a, b, c):
     gamma = m.acos((a * a + b * b - c * c) / (2 * a * b))
     return gamma
-    # return gamma * 180. / m.pi
 
 
 # TODO this is probably not optimal. smaller numerical error?
@@ -49,7 +46,6 @@ def dist_from_improper(dihedral, d_ij, d_jk, d_kl, d_ik, d_jl):
 
 
 def dist_from_dihedral(dihedral, d_ij, d_jk, d_kl, d_ik, d_jl):  # i-l edge for rings and proper-like improper dihedrals
-    # dihedral = dihedral * m.pi / 180.
 
     r_ijk = angle_from_dist(d_ij, d_jk, d_ik)
     r_ljk = angle_from_dist(d_jl, d_jk, d_kl)
