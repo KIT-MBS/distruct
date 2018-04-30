@@ -7,17 +7,13 @@
 #
 # Author : Oskar Taubert
 #
-# Creation Date : Thu 11 May 2017 16:36:26 CEST
+# Creation Date : Mon 30 Apr 2018 05:13:44 PM CEST
 #
-# Last Modified : Mon 26 Jun 2017 18:55:30 CEST
+# Last Modified : Mon 30 Apr 2018 05:25:33 PM CEST
 #
 #####################################
 
-import MOBi
-
-testFilePath = MOBi.config.data_path + 'test/'
-
-
-def test_readPDB():
-    assert 0
-    return
+# TODO test termini
+# TODO test RNA and protein and DNA and mixed complexes
+# TODO test all functions
+# TODO test reconstruction from dihedral angles
