@@ -3,20 +3,20 @@
 #
 # Filename : config.py
 #
-# Projectname :
+# Projectname : MOBi
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Mon 22 May 2017 17:23:27 CEST
 #
-# Last Modified : Tue 15 Aug 2017 02:27:13 PM CEST
+# Last Modified : Mon 30 Apr 2018 01:53:01 PM CEST
 #
 #####################################
 
 import os
 
-# TODO fix this in setup? don't use environment variable instead fix this at installation
-data_path = os.environ['MOBi_DATAPATH']
+data_path = os.path.split(os.path.abspath(__file__))[0] + '/../share/'
+print(data_path)
 
 # TODO do a setup function where it reads this from gromacs output
 # (or tries to  and if it does not work, warns and tells user to set it themselves)
