@@ -141,3 +141,4 @@ ENV/
 bin/
 .build/
 src/_MOBi.cpp
+.pytest_cache
