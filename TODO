@@ -1,0 +1,5 @@
+
+- add fixed coordinate subsets
+- remove networkit dependency for now (until they fix their build system)
+- clean everything up and remove old and unneeded cruft
+- optimize
