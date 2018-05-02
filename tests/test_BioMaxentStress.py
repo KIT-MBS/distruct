@@ -3,15 +3,17 @@
 #
 # Filename : test_BioMaxentStress.py
 #
-# Projectname :
+# Projectname : MOBi
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Thu 29 Jun 2017 17:08:04 CEST
 #
-# Last Modified : Thu 03 Aug 2017 15:45:26 CEST
+# Last Modified : Mon 30 Apr 2018 05:54:52 PM CEST
 #
 #####################################
+
+# TODO integrate test_MaxenStress here, after the cleanup
 
 
 def test_BioMaxentStress():

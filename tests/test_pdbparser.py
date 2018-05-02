@@ -9,11 +9,12 @@
 #
 # Creation Date : Mon 30 Apr 2018 05:13:44 PM CEST
 #
-# Last Modified : Mon 30 Apr 2018 05:25:33 PM CEST
+# Last Modified : Mon 30 Apr 2018 05:51:44 PM CEST
 #
 #####################################
 
 # TODO test termini
 # TODO test RNA and protein and DNA and mixed complexes
+# TODO test parse xray and nmr generated structures
 # TODO test all functions
 # TODO test reconstruction from dihedral angles
