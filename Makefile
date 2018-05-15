@@ -7,19 +7,25 @@ CC = g++
 CYTHONC = cython
 PYTHONINCD = -I/usr/include/python3.6m/
 # TODO environment variables
-INCD = -I$(HOME)/networkit/include/
-LIBD = -L$(HOME)/networkit
+# TODO this is horrible awefulness
+INCD = -I$(HOME)/Projects/networkit/networkit/
+# LIBD = -L$(HOME)/Projects/networkit
+LIBD = /usr/lib/python3.6/site-packages
 
 LIB = -lNetworKit
 SRCDIR = ./src
 OBJDIR = ./.build
-SRC := $(addprefix $(SRCDIR)/,BioMaxentStress.cpp, BioMaxentStress.cpp, IDGPOptimizerOld.cpp, BioMaxentStressOldOld.cpp, _MOBi.cpp)
+# SRC := $(addprefix $(SRCDIR)/,BioMaxentStress.cpp, BioMaxentStress.cpp, IDGPOptimizerOld.cpp, BioMaxentStressOldOld.cpp, _MOBi.cpp)
+SRC := $(addprefix $(SRCDIR)/,BioMaxentStress.cpp, BioMaxentStress.cpp, BioMaxentStressOldOld.cpp, _MOBi.cpp)
 # OBJ := $(addprefix $(OBJDIR)/,SRC:.cpp=.o)
-OBJ := $(addprefix $(OBJDIR)/,BioMaxentStress.o, BioMaxentStressOld.o, IDGPOptimizerOld.o, BioMaxentStressOldOld.o, _MOBi.o)
+OBJ := $(addprefix $(OBJDIR)/,BioMaxentStress.o, BioMaxentStressOld.o, BioMaxentStressOldOld.o, _MOBi.o)
 
+# TODO mkdir for lib
 CFLAGS = -std=c++11 -Wall -Werror -fopenmp -fPIC -O3 $(INCD)
-LFLAGS = -Wl,--whole-archive $(HOME)/networkit/libNetworKit.a -Wl,--no-whole-archive
-CYTHONFLAGS = --cplus -Werror -3 -I$(HOME)/networkit/networkit/
+# LFLAGS = -Wl,--whole-archive $(HOME)/networkit/libNetworKit.a -Wl,--no-whole-archive
+LFLAGS = -Wl,--whole-archive $(LIBD)/_NetworKit.cpython-36m-x86_64-linux-gnu.so -Wl,--no-whole-archive
+# CYTHONFLAGS = --cplus -Werror -3 -I$(HOME)/networkit/networkit/
+CYTHONFLAGS = --cplus -Werror -3 -I$(LIBD)/networkit/networkit/
 
 # TODO create output folders
 
