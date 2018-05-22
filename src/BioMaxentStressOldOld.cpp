@@ -9,11 +9,11 @@
 
 //#include "SplitTree.h"
 
-#include <NetworKit/auxiliary/Log.h>
-#include <NetworKit/auxiliary/PrioQueue.h>
+//#include <auxiliary/Log.h>
+//#include <auxiliary/PrioQueue.h>
 
 //#include <NetworKit/numerics/LAMG/Lamg.h>
-#include <NetworKit/numerics/LinearSolver.h>
+#include <cpp/numerics/LinearSolver.h>
 
 #include <queue>
 

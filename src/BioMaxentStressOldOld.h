@@ -8,18 +8,18 @@
 #ifndef BIOMAXENTSTRESS_H_
 #define BIOMAXENTSTRESS_H_
 
-#include <NetworKit/viz/GraphLayoutAlgorithm.h>
-#include <NetworKit/numerics/LinearSolver.h>
-#include <NetworKit/algebraic/CSRMatrix.h>
-#include <NetworKit/viz/Octree.h>
+#include <cpp/viz/GraphLayoutAlgorithm.h>
+#include <cpp/numerics/LinearSolver.h>
+#include <cpp/algebraic/CSRMatrix.h>
+#include <cpp/viz/Octree.h>
 
 //#include <NetworKit/graph/BFS.h>
-#include <NetworKit/distance/Dijkstra.h>
-#include <NetworKit/distance/AlgebraicDistance.h>
+#include <cpp/distance/Dijkstra.h>
+#include <cpp/distance/AlgebraicDistance.h>
 
-#include <NetworKit/viz/FruchtermanReingold.h>
-#include <NetworKit/io/LineFileReader.h>
-#include <NetworKit/auxiliary/StringTools.h>
+#include <cpp/viz/FruchtermanReingold.h>
+#include <cpp/io/LineFileReader.h>
+#include <cpp/auxiliary/StringTools.h>
 
 #include <sys/time.h>
 

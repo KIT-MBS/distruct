@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Fri 15 Dec 2017 10:07:31 AM CET
+ *  Last Modified : Tue 17 Apr 2018 03:53:17 PM CEST
  *
  * *************************************/
 
@@ -18,14 +18,14 @@
 
 #include <vector>
 
-#include <NetworKit/graph/Graph.h>
-#include <NetworKit/numerics/LAMG/Lamg.h>
-#include <NetworKit/algebraic/CSRMatrix.h>
+#include <cpp/graph/Graph.h>
+#include <cpp/numerics/LAMG/Lamg.h>
+#include <cpp/algebraic/CSRMatrix.h>
 
-#include <NetworKit/components/ConnectedComponents.h>
+#include <cpp/components/ConnectedComponents.h>
 
 #include "BioMaxentStressOldOld.h"
-#include "IDGPOptimizerOld.h"
+//#include "IDGPOptimizerOld.h"
 
 std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha, double q, uint64_t solves, std::vector<std::pair<uint64_t, uint64_t>> edges, std::vector<double> distances, std::vector<double> probabilities/*, std::vector<NetworKit::Point<double>> initCoords*/)
 {
