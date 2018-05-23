@@ -3,13 +3,13 @@
  *
  *  Filename : DuckingWrapper.h
  *
- *  Projectname : 
+ *  Projectname : MOBi
  *
  *  Author : Oskar Taubert
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Tue 17 Apr 2018 03:53:17 PM CEST
+ *  Last Modified : Wed 23 May 2018 05:33:08 PM CEST
  *
  * *************************************/
 
@@ -24,8 +24,9 @@
 
 #include <cpp/components/ConnectedComponents.h>
 
-#include "BioMaxentStressOldOld.h"
-//#include "IDGPOptimizerOld.h"
+#include "BioMaxentStress.h"
+
+// TODO remove this and use the proper networkit cython interface
 
 std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha, double q, uint64_t solves, std::vector<std::pair<uint64_t, uint64_t>> edges, std::vector<double> distances, std::vector<double> probabilities/*, std::vector<NetworKit::Point<double>> initCoords*/)
 {
@@ -90,7 +91,7 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
     //}
     //
     // TODO do all the checks
-    
+
     // defaults
     alpha = 1.;
     double alphaReduction = .3;
