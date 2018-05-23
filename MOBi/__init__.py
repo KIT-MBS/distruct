@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Fri 18 May 2018 06:28:17 PM CEST
+# Last Modified : Wed 23 May 2018 03:47:21 PM CEST
 #
 #####################################
 
@@ -19,7 +19,7 @@ from . import seq
 from . import fileio
 from . import tools
 
-from .Superimposer import Superimposer
+from .superimposer import Superimposer
 
 import sys
 import os

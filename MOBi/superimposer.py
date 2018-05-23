@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #####################################
 #
-# Filename : Superimposer.py
+# Filename : superimposer.py
 #
 # Projectname : MOBi
 #
@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 17 May 2018 07:39:39 PM CEST
 #
-# Last Modified : Fri 18 May 2018 08:13:52 PM CEST
+# Last Modified : Wed 23 May 2018 03:47:12 PM CEST
 #
 #####################################
 
