@@ -9,13 +9,15 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Sun 31 Dec 2017 11:29:51 PM CET
+# Last Modified : Thu 24 May 2018 10:05:55 AM CEST
 #
 #####################################
 
 import os
 
 import numpy as np
+
+# TODO most of this should go into the main part
 
 import Bio
 from Bio import PDB
