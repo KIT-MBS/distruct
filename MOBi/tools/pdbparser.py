@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Thu 24 May 2018 10:05:55 AM CEST
+# Last Modified : Mon 28 May 2018 05:29:06 PM CEST
 #
 #####################################
 
@@ -217,58 +217,58 @@ def get_dihedral_edge(model, chainID, resID, atomID):
     return None, None
 
 
-# TODO parameter names
-def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStructureDistances=True):
-    # TODO handle a structure containing chains with RNA and AA
-    # NOTE this takes only atoms, that are in the structure. to use all atoms: read in sequence, generate vertices and edges with a force field
-    # TODO edge types as parameter
-    # TODO handle termini
-
-    edges = []
-    distances = []
-    weights = []
-
-    # TODO how to handle missing residues (numbering scheme)
-    for residue in chain:
-        resn = residue.get_resname()
-        for edgeType in ['bondEdges', 'angleEdges', 'improperEdges']:
-            for edge in chemicalDB[resn][edgeType]:
-                residueIDs = [residue.get_id()[1], residue.get_id()[1]]
-                atomNames = []
-                edgeAtomSerialNumbers = []
-                atomCoordinates = []
-                for i in range(len(edge)):
-                    if '+' in edge[i]:
-                        residueIDs[i] += 1
-                    elif '-' in edge[i]:
-                        residueIDs[i] -= 1
-                        pass
-                    atomNames.append(edge[i].strip('+-'))
-                    pass
-                if residueIDs[0] in chain and residueIDs[1] in chain and chain[residueIDs[0]].has_id(atomNames[0]) and chain[residueIDs[1]].has_id(atomNames[1]):
-                    edgeAtomSerialNumbers = [chain[residueIDs[0]][atomNames[0]].get_serial_number(), chain[residueIDs[1]][atomNames[1]].get_serial_number()]
-                    atomCoordinates = [chain[residueIDs[0]][atomNames[0]].get_coord(), chain[residueIDs[1]][atomNames[1]].get_coord()]
-                    pass
-                else:
-                    # TODO warn?
-                    # TODO for this, proper handling of terminals is necessary
-                    pass
-                if len(edgeAtomSerialNumbers) == 2:
-                    edges.append(tuple(sorted(edgeAtomSerialNumbers)))
-                    if useStructureDistances:
-                        distances.append(np.sqrt(np.dot(atomCoordinates[0] - atomCoordinates[1], atomCoordinates[0] - atomCoordinates[1])))
-                    else:
-                        distances.append(chemicalDB[resn][edgeType][edge])
-                        pass
-
-                    weights.append(1.)
-                    pass
-                pass
-            pass
-        pass
-
-    # TODO warn if atoms that are in a database building block are missing in the structure
-    return edges, distances, weights
+# # TODO parameter names
+# def get_primary_edges(chain, chemicalDB, alphabet=data.PDBReducedProtein, useStructureDistances=True):
+#     # TODO handle a structure containing chains with RNA and AA
+#     # NOTE this takes only atoms, that are in the structure. to use all atoms: read in sequence, generate vertices and edges with a force field
+#     # TODO edge types as parameter
+#     # TODO handle termini
+#
+#     edges = []
+#     distances = []
+#     weights = []
+#
+#     # TODO how to handle missing residues (numbering scheme)
+#     for residue in chain:
+#         resn = residue.get_resname()
+#         for edgeType in ['bondEdges', 'angleEdges', 'improperEdges']:
+#             for edge in chemicalDB[resn][edgeType]:
+#                 residueIDs = [residue.get_id()[1], residue.get_id()[1]]
+#                 atomNames = []
+#                 edgeAtomSerialNumbers = []
+#                 atomCoordinates = []
+#                 for i in range(len(edge)):
+#                     if '+' in edge[i]:
+#                         residueIDs[i] += 1
+#                     elif '-' in edge[i]:
+#                         residueIDs[i] -= 1
+#                         pass
+#                     atomNames.append(edge[i].strip('+-'))
+#                     pass
+#                 if residueIDs[0] in chain and residueIDs[1] in chain and chain[residueIDs[0]].has_id(atomNames[0]) and chain[residueIDs[1]].has_id(atomNames[1]):
+#                     edgeAtomSerialNumbers = [chain[residueIDs[0]][atomNames[0]].get_serial_number(), chain[residueIDs[1]][atomNames[1]].get_serial_number()]
+#                     atomCoordinates = [chain[residueIDs[0]][atomNames[0]].get_coord(), chain[residueIDs[1]][atomNames[1]].get_coord()]
+#                     pass
+#                 else:
+#                     # TODO warn?
+#                     # TODO for this, proper handling of terminals is necessary
+#                     pass
+#                 if len(edgeAtomSerialNumbers) == 2:
+#                     edges.append(tuple(sorted(edgeAtomSerialNumbers)))
+#                     if useStructureDistances:
+#                         distances.append(np.sqrt(np.dot(atomCoordinates[0] - atomCoordinates[1], atomCoordinates[0] - atomCoordinates[1])))
+#                     else:
+#                         distances.append(chemicalDB[resn][edgeType][edge])
+#                         pass
+#
+#                     weights.append(1.)
+#                     pass
+#                 pass
+#             pass
+#         pass
+#
+#     # TODO warn if atoms that are in a database building block are missing in the structure
+#     return edges, distances, weights
 
 
 def get_secondary_sequence_protein(fileName, topologyDB):

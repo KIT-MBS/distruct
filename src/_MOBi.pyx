@@ -178,6 +178,14 @@ def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_
 #     pass
 
 # TODO separate the Distruct class
+
+cdef cppclass _edge:
+    cdef tuple fullAtomID1
+    cdef tuple fullAtomID2
+    cdef double weight
+    cdef double distance
+    pass
+
 from Bio.PDB.Structure import Structure
 from networkit import Graph
 
@@ -189,7 +197,7 @@ class Distruct(Structure):
     Also contains a list of edges between vertices (atoms).
     """
 
-    def __init__(self, id, sequences = None, SSsequences = None):
+    def __init__(self, id, sequences = None, SSsequences = None, topologyDB=):
         """
         Initialize Distruct object.
 
@@ -209,16 +217,101 @@ class Distruct(Structure):
 
     # TODO Distructure builder
 
+    def _get_entity(self, fullID):
+        """
+        Get a child entity from the Structure from its full ID.
+
+        Primarily intended to convert an Atoms full_id to the integer ID of the corresponding vertex.
+        """
+
+        assert self.id == fullID[0]
+
+        e = self
+        for ID in fulID[1:]:
+            e = e[ID]
+            pass
+        return e
+
+    def _generate_chain_primary_edges(chainID, useStructureDistances=False):
+        """
+        Generate the primary edges for a single chain.
+        """
+        edges = list()
+
+        c = self[0][chainID]
+        for r in c:
+            resn = r.get_resname()
+            for edgeType in ["bondEdges", "angleEdges", "improperEdges"]:
+                for edge in self.topologyDB[resn][edgeType]:
+                    # NOTE It is assumed the hetero field is empty.
+                    # TODO Correctly handle insertion code
+                    resIDs = [r.get_id()[1], r.get_id()[1]]
+                    atomIDs = list()
+                    edgeAtomIDs = list()
+                    atomCoords = list()
+                    for i in range(len(edge)):
+                        if '+' in edge[i]:
+                            resIDs[i] += 1
+                        elif '-' in edge[i]:
+                            resIDs[i] += 1
+                            pass
+                        atomIDs.append(edge[i].strip('+-'))
+                        pass
+                    if resIDs[0] in c and resIDs[1] in c:
+                        if c[resIDs[0]].has_id(atomIDs[0]) and c[resIDs[1]].has_id(atomIDs[1]):
+                            edgeFullAtomIDs = [
+                                    c[resIDs[0]][atomIDs[0]].get_full_id(),
+                                    c[resIDs[1]][atomIDs[1]].get_full_id()]
+                            atoms = [
+                                    c[resIDs[0]][atomIDs[0]],
+                                    c[resIDs[1]][atomIDs[1]]]
+
+                            distance = None
+                            # TODO check how coordinates are initialized, when unknown
+                            if useStructureDistances and (atoms[1] - atoms[0] > 0.1):
+                                distance = atoms[1] - atoms[0]
+                            else:
+                                distance = topologyDB[resn][edgeType][edge]
+                                pass
+                            weight = 1.
+                            edges.append((edgeFullAtomIDs, distance, weight))
+                        else:
+                            # NOTE atoms that are present in topology are not in the structure
+                            # this may happen when there are missing atoms in a parsed structure
+                            # or when hydrogens are deliberately left out
+                            pass
+                    else:
+                        # NOTE the next or previous residue of r is not present
+                        # this happens, when there are missing residues in the structure
+                        # or when the end of the chain is reached
+                        # TODO handle termini
+                        pass
+                    pass
+                pass
+            pass
+
+        return edges
+
     def generate_primary_edges():
         """
         Generate the edges for bonds, angles and improper/fixed dihedrals.
         """
-        raise NotImplementedError
+
+        edges = list()
+        # TODO what to do for more than one model?
+        for c in self[0]:
+            edges += _generate_chain_primary_edges(chainID)
+            pass
+
+        self._primary_edges = edges
+        return
 
     def generate_secondary_edges():
         """
         Generate the edges for backbone dihedrals and helix hydrogen bridges from SS.
         """
+
+        # TODO check for protein / rna
         raise NotImplementedError
 
     def generate_tertiary_edges():
