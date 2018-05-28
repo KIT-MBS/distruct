@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Wed 23 May 2018 05:33:08 PM CEST
+ *  Last Modified : Thu 24 May 2018 11:57:30 AM CEST
  *
  * *************************************/
 
@@ -110,10 +110,5 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
 
     return maxent.getCoordinates();
 }
-
-//void runLocalSimulatedAnnealing()
-//{
-//
-//}
 
 #endif /* DUCKINGWRAPPER_H */
