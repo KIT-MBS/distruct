@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Wed 06 Dec 2017 11:33:38 PM CET
+# Last Modified : Mon 28 May 2018 10:07:16 AM CEST
 #
 #####################################
 
@@ -32,7 +32,8 @@ def read_edge_node(node):
 
 
 # NOTE this is not the simplest way to dict2xml but it produces more easily (human) readable files (i feel)(so they are better me-readable, really)
-def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=None):
+# def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=None):
+def read_topology_file(databaseName, inDir=defaultDataPath, fileName=None):
     result = {}
     XMLTree = None
     if fileName == None:
