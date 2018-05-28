@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 30 Apr 2018 05:21:24 PM CEST
+# Last Modified : Mon 28 May 2018 05:41:32 PM CEST
 #
 #####################################
 
@@ -27,6 +27,7 @@ from .. import config
 topologyPath = config.gromacs_topology_path
 
 # TODO add weights
+# TODO add omega to topologies
 
 
 def read_atoms(line):
