@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Wed 23 May 2018 03:47:21 PM CEST
+# Last Modified : Mon 28 May 2018 11:10:18 AM CEST
 #
 #####################################
 
@@ -23,6 +23,7 @@ from .superimposer import Superimposer
 
 import sys
 import os
+# TODO is this too hacky? there probably is a proper way
 sys.path.append(os.path.dirname(__file__) + "/../lib/")
 
 # TODO convenience imports here
@@ -30,3 +31,5 @@ sys.path.append(os.path.dirname(__file__) + "/../lib/")
 
 # TODO remove this
 from _MOBi import doublyWrappedMaxent
+
+from _MOBi import Distruct
