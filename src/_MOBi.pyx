@@ -179,12 +179,13 @@ def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_
 
 # TODO separate the Distruct class
 
-cdef cppclass _edge:
-    cdef tuple fullAtomID1
-    cdef tuple fullAtomID2
-    cdef double weight
-    cdef double distance
-    pass
+# TODO a more efficient MOBi::edge class may be useful at some point, but the atom IDs will have to be python objects
+# cdef cppclass _edge:
+#     cdef tuple fullAtomID1
+#     cdef tuple fullAtomID2
+#     cdef double weight
+#     cdef double distance
+#     pass
 
 from Bio.PDB.Structure import Structure
 from networkit import Graph
@@ -314,6 +315,7 @@ class Distruct(Structure):
         # TODO check for protein / rna
         raise NotImplementedError
 
+    # TODO handle adding contacts similarly to how networkit handles adding edges
     def generate_tertiary_edges():
         """
         Generate tertiary edges from supplied contacts
