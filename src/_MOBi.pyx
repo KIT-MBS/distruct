@@ -306,7 +306,7 @@ class Distruct(Structure):
         self._primary_edges = edges
         return
 
-    def generate_secondary_edges():
+    def generate_secondary_edges(self):
         """
         Generate the edges for backbone dihedrals and helix hydrogen bridges from SS.
         """
@@ -315,13 +315,13 @@ class Distruct(Structure):
         raise NotImplementedError
 
     # TODO handle adding contacts similarly to how networkit handles adding edges
-    def generate_tertiary_edges():
+    def generate_tertiary_edges(self):
         """
         Generate tertiary edges from supplied contacts
         """
         raise NotImplementedError
 
-    def run():
+    def run(self):
         """
         Generate atomic coordinates from the supplied edges, running MaxEnt-Stress graph drawing.
         """
