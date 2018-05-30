@@ -3,30 +3,52 @@
 #
 # Filename : MOBi_tests.py
 #
-# Projectname :
+# Projectname : MOBi
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 09 May 2017 13:53:41 CEST
 #
-# Last Modified : Tue 20 Jun 2017 15:28:31 CEST
+# Last Modified : Tue 29 May 2018 12:45:03 PM CEST
 #
 #####################################
 
-# import MOBi
-
 
 def test_NWK():
-    # try:
     import networkit as nwk
     g = nwk.Graph(5)
     g.addEdge(0, 1)
     g.toString()
-    # except:
-    #     assert 0
     return
 
+# TODO test other dependencies
 
-def test_GROMACS():
-    # TODO
+# def test_GROMACS():
+#     # TODO
+#     return
+
+
+def test_distruct():
+    from MOBi import Distruct
+    from MOBi import data
+
+    code = "1ptq"
+    fileName = code + '.pdb'
+
+    # generate distruct
+    # create structure
+    ds = Distruct(code, sequences)
+    # create edges
+    # create primary edges
+    ds.generate_primary_edges()
+    # create tertiary edges
+    # get contact map
+    contactMap = MOBi.tools.generate_atomic_contacts(refStructure)
+    ds.generate_tertiary_edges(contactMap)
+    # generate coordinates
+    ds.run()
+
+    # TODO structural alignment
+    RMSD = MOBi.tools.align(ds, refStructure)
+
     return

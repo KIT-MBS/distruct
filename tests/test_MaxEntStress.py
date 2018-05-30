@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Tue 22 May 2018 06:17:28 PM CEST
+# Last Modified : Mon 28 May 2018 10:11:46 AM CEST
 #
 #####################################
 
@@ -27,7 +27,7 @@ testFilePath = MOBi.config.data_path + 'tests/'
 
 
 def test_BMS():
-    topDB = MOBi.fileio.parse_primary_edge_database("amber99sb-ildn_protein")
+    topDB = MOBi.data.defaultTopologyDB
     code = '1ptq'
     fileName = testFilePath + code + '.pdb'
 

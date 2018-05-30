@@ -9,7 +9,7 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Fri 18 May 2018 08:10:15 PM CEST
+# Last Modified : Mon 28 May 2018 10:11:21 AM CEST
 #
 #####################################
 
@@ -41,3 +41,18 @@ def test_superimposer():
     # TODO is this really that bad??
     assert sup.rms == approx(0., abs=1e-2)
 
+
+def test_compare():
+
+    # code = '1ptq'
+    # fileName = testFilePath + code + '.pdb'
+
+    # refStructure = MOBi.tools.pdbparser.read_PDB(code, fileName, topDB)
+
+    # resStructure = MOBi.tools.pdbparser.read_PDB(code, fileName, topDB)
+
+    # TODO compare "my" superimposer to the one implemented in biopython
+
+    assert 0
+
+    return
