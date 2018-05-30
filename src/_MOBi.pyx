@@ -189,6 +189,7 @@ def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_
 
 from Bio.PDB.Structure import Structure
 from networkit import Graph
+from MOBi import data
 
 class Distruct(Structure):
     """
@@ -198,7 +199,7 @@ class Distruct(Structure):
     Also contains a list of edges between vertices (atoms).
     """
 
-    def __init__(self, id, sequences = None, SSsequences = None, topologyDB=):
+    def __init__(self, id, sequences = None, SSsequences = None, topologyDB=data.defaultTopologyDB):
         """
         Initialize Distruct object.
 
@@ -228,19 +229,18 @@ class Distruct(Structure):
         assert self.id == fullID[0]
 
         e = self
-        for ID in fulID[1:]:
+        for ID in fullID[1:]:
             e = e[ID]
             pass
         return e
 
-    def _generate_chain_primary_edges(chainID, useStructureDistances=False):
+    def _generate_chain_primary_edges(self, chain, useStructureDistances=False):
         """
         Generate the primary edges for a single chain.
         """
         edges = list()
 
-        c = self[0][chainID]
-        for r in c:
+        for r in chain:
             resn = r.get_resname()
             for edgeType in ["bondEdges", "angleEdges", "improperEdges"]:
                 for edge in self.topologyDB[resn][edgeType]:
@@ -258,21 +258,21 @@ class Distruct(Structure):
                             pass
                         atomIDs.append(edge[i].strip('+-'))
                         pass
-                    if resIDs[0] in c and resIDs[1] in c:
-                        if c[resIDs[0]].has_id(atomIDs[0]) and c[resIDs[1]].has_id(atomIDs[1]):
+                    if resIDs[0] in chain and resIDs[1] in chain:
+                        if chain[resIDs[0]].has_id(atomIDs[0]) and chain[resIDs[1]].has_id(atomIDs[1]):
                             edgeFullAtomIDs = [
-                                    c[resIDs[0]][atomIDs[0]].get_full_id(),
-                                    c[resIDs[1]][atomIDs[1]].get_full_id()]
+                                    chain[resIDs[0]][atomIDs[0]].get_full_id(),
+                                    chain[resIDs[1]][atomIDs[1]].get_full_id()]
                             atoms = [
-                                    c[resIDs[0]][atomIDs[0]],
-                                    c[resIDs[1]][atomIDs[1]]]
+                                    chain[resIDs[0]][atomIDs[0]],
+                                    chain[resIDs[1]][atomIDs[1]]]
 
                             distance = None
                             # TODO check how coordinates are initialized, when unknown
                             if useStructureDistances and (atoms[1] - atoms[0] > 0.1):
                                 distance = atoms[1] - atoms[0]
                             else:
-                                distance = topologyDB[resn][edgeType][edge]
+                                distance = self.topologyDB[resn][edgeType][edge]
                                 pass
                             weight = 1.
                             edges.append((edgeFullAtomIDs, distance, weight))
@@ -293,15 +293,14 @@ class Distruct(Structure):
 
         return edges
 
-    def generate_primary_edges():
+    def generate_primary_edges(self):
         """
         Generate the edges for bonds, angles and improper/fixed dihedrals.
         """
 
         edges = list()
-        # TODO what to do for more than one model?
         for c in self[0]:
-            edges += _generate_chain_primary_edges(chainID)
+            edges += self._generate_chain_primary_edges(c)
             pass
 
         self._primary_edges = edges
