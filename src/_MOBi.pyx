@@ -177,7 +177,7 @@ def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_
 #
 #     pass
 
-# TODO separate the Distruct class
+# TODO separate the Distructure class
 
 # TODO a more efficient MOBi::edge class may be useful at some point, but the atom IDs will have to be python objects
 # cdef cppclass _edge:
@@ -191,7 +191,7 @@ from Bio.PDB.Structure import Structure
 from networkit import Graph
 from MOBi import data
 
-class Distruct(Structure):
+class Distructure(Structure):
     """
     Interface between hierarchical Bio.Structure representation of a molecule and a graph.
 
@@ -201,7 +201,7 @@ class Distruct(Structure):
 
     def __init__(self, id, sequences = None, SSsequences = None, topologyDB=data.defaultTopologyDB):
         """
-        Initialize Distruct object.
+        Initialize Distructure object.
 
         Optionally takes primary structure (residue sequence),
         protein secondary structure (3 state)
@@ -244,7 +244,10 @@ class Distruct(Structure):
             resn = r.get_resname()
             for edgeType in ["bondEdges", "angleEdges", "improperEdges"]:
                 for edge in self.topologyDB[resn][edgeType]:
-                    # NOTE It is assumed the hetero field is empty.
+                    # NOTE edges between neighboring residues in sequence are constructed
+                    # NOTE with sequential sequence ids. May cause problems with non-
+                    # NOTE blank insertion codes and the like (hetero field should be fine).
+
                     # TODO Correctly handle insertion code
                     resIDs = [r.get_id()[1], r.get_id()[1]]
                     atomIDs = list()

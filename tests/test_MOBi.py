@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:53:41 CEST
 #
-# Last Modified : Tue 29 May 2018 12:45:03 PM CEST
+# Last Modified : Fri 01 Jun 2018 02:46:54 PM CEST
 #
 #####################################
 
@@ -28,8 +28,8 @@ def test_NWK():
 #     return
 
 
-def test_distruct():
-    from MOBi import Distruct
+def test_Distructure():
+    from MOBi import Distructure
     from MOBi import data
 
     code = "1ptq"
@@ -37,7 +37,7 @@ def test_distruct():
 
     # generate distruct
     # create structure
-    ds = Distruct(code, sequences)
+    ds = Distructure(code, sequences)
     # create edges
     # create primary edges
     ds.generate_primary_edges()

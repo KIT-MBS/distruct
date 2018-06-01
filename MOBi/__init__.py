@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Mon 28 May 2018 11:10:18 AM CEST
+# Last Modified : Fri 01 Jun 2018 02:47:56 PM CEST
 #
 #####################################
 
@@ -32,4 +32,4 @@ sys.path.append(os.path.dirname(__file__) + "/../lib/")
 # TODO remove this
 from _MOBi import doublyWrappedMaxent
 
-from _MOBi import Distruct
+from _MOBi import Distructure
