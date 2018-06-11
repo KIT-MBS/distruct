@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 28 May 2018 05:29:06 PM CEST
+# Last Modified : Mon 11 Jun 2018 04:28:39 PM CEST
 #
 #####################################
 
@@ -613,69 +613,69 @@ def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, u
     return edges, distances, weights
 
 
-# NOTE default cutOff in units of the structure (assumed angstrom)
-# TODO only return contacts? use fullID?
-def get_tertiary_edges(model, cutOff=5., minSeqDist=5, getContacts=False):
-    # NOTE these would include beta sheet hbonds
+# # NOTE default cutOff in units of the structure (assumed angstrom)
+# # TODO only return contacts? use fullID?
+# def get_tertiary_edges(model, cutOff=5., minSeqDist=5, getContacts=False):
+#     # NOTE these would include beta sheet hbonds
+#
+#     tertiaryEdges = []
+#     distances = []
+#     weights = []
+#     contacts = []
+#
+#     ns = PDB.NeighborSearch(list(model.get_atoms()))
+#     foundPairs = ns.search_all(cutOff)
+#
+#     for pair in foundPairs:
+#         edge = tuple(sorted((pair[0].get_serial_number(), pair[1].get_serial_number())))
+#         if abs(pair[0].get_parent().get_id()[1] - pair[1].get_parent().get_id()[1]) >= minSeqDist:
+#             tertiaryEdges.append(edge)
+#             chainID1 = pair[0].get_parent().get_parent().get_id()
+#             chainID2 = pair[1].get_parent().get_parent().get_id()
+#             resID1 = pair[0].get_parent().get_id()[1]
+#             resID2 = pair[1].get_parent().get_id()[1]
+#             atom1 = pair[0].get_id()
+#             atom2 = pair[1].get_id()
+#             contacts.append(((chainID1, resID1, atom1), (chainID2, resID2, atom2)))
+#             distances.append(np.sqrt(np.dot(pair[0].get_coord() - pair[1].get_coord(), pair[0].get_coord() - pair[1].get_coord())))
+#             weights.append(1.)
+#             pass
+#         pass
+#
+#     if getContacts:
+#         return tertiaryEdges, distances, weights, contacts
+#         pass
+#     return tertiaryEdges, distances, weights
 
-    tertiaryEdges = []
-    distances = []
-    weights = []
-    contacts = []
 
-    ns = PDB.NeighborSearch(list(model.get_atoms()))
-    foundPairs = ns.search_all(cutOff)
-
-    for pair in foundPairs:
-        edge = tuple(sorted((pair[0].get_serial_number(), pair[1].get_serial_number())))
-        if abs(pair[0].get_parent().get_id()[1] - pair[1].get_parent().get_id()[1]) >= minSeqDist:
-            tertiaryEdges.append(edge)
-            chainID1 = pair[0].get_parent().get_parent().get_id()
-            chainID2 = pair[1].get_parent().get_parent().get_id()
-            resID1 = pair[0].get_parent().get_id()[1]
-            resID2 = pair[1].get_parent().get_id()[1]
-            atom1 = pair[0].get_id()
-            atom2 = pair[1].get_id()
-            contacts.append(((chainID1, resID1, atom1), (chainID2, resID2, atom2)))
-            distances.append(np.sqrt(np.dot(pair[0].get_coord() - pair[1].get_coord(), pair[0].get_coord() - pair[1].get_coord())))
-            weights.append(1.)
-            pass
-        pass
-
-    if getContacts:
-        return tertiaryEdges, distances, weights, contacts
-        pass
-    return tertiaryEdges, distances, weights
-
-
-# TODO better naming
-def translate_to_edges(contacts, model):
-    edges = []
-    for contact in contacts:
-        chainID1 = contact[0][0]
-        chainID2 = contact[1][0]
-        resID1 = contact[0][1]
-        resID2 = contact[1][1]
-        atom1 = contact[0][2]
-        atom2 = contact[1][2]
-
-        # print(model[chainID1][resID1].get_resname())
-        # print(list(model[chainID1][resID1].child_dict.keys()))
-        # for atom in model[chainID1][resID1]:
-        #     print(atom.get_id())
-        #     pass
-        # print(model[chainID2][resID2].get_resname())
-        # print(list(model[chainID2][resID2].child_dict.keys()))
-        # for atom in model[chainID2][resID2]:
-        #     print(atom.get_id())
-        #     pass
-
-        index1 = model[chainID1][resID1][atom1].get_serial_number()
-        index2 = model[chainID2][resID2][atom2].get_serial_number()
-        edges.append(tuple(sorted((index1, index2))))
-        pass
-
-    return edges
+# # TODO better naming
+# def translate_to_edges(contacts, model):
+#     edges = []
+#     for contact in contacts:
+#         chainID1 = contact[0][0]
+#         chainID2 = contact[1][0]
+#         resID1 = contact[0][1]
+#         resID2 = contact[1][1]
+#         atom1 = contact[0][2]
+#         atom2 = contact[1][2]
+#
+#         # print(model[chainID1][resID1].get_resname())
+#         # print(list(model[chainID1][resID1].child_dict.keys()))
+#         # for atom in model[chainID1][resID1]:
+#         #     print(atom.get_id())
+#         #     pass
+#         # print(model[chainID2][resID2].get_resname())
+#         # print(list(model[chainID2][resID2].child_dict.keys()))
+#         # for atom in model[chainID2][resID2]:
+#         #     print(atom.get_id())
+#         #     pass
+#
+#         index1 = model[chainID1][resID1][atom1].get_serial_number()
+#         index2 = model[chainID2][resID2][atom2].get_serial_number()
+#         edges.append(tuple(sorted((index1, index2))))
+#         pass
+#
+#     return edges
 
 
 # TODO better naming
@@ -687,108 +687,107 @@ def translate_to_edges(contacts, model):
 #     return edges, distances, weights
 
 
-# TODO add parameters
-# TODO work on model instead of structure?
-def generate_graph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
+# # TODO add parameters
+# # TODO work on model instead of structure?
+# def generate_graph(structure, fileName, topologyDB, cutOff=3., minSeqDist=5):
+#
+#     atoms = list(structure[0].get_atoms())
+#
+#     edges = []
+#     distances = []
+#     weights = []
+#
+#     for chain in structure[0]:
+#         chainEdges, chainDistances, chainWeights = get_primary_edges(chain, topologyDB)
+#         edges += chainEdges
+#         distances += chainDistances
+#         weights += chainWeights
+#         pass
+#
+#     print(str(len(atoms)) + " vertices found")
+#     print(str(len(edges)) + " primary edges found")
+#     # print(sorted(edges, key=lambda tup: tup[0]))
+#
+#     # secondaryEdges, secondaryDistances, secondaryWeights = get_secondary_edges(structure[0], fileName)
+#     # print(str(len(secondaryEdges)) + " secondary edges found")
+#
+#     # edges += secondaryEdges
+#     # distances += secondaryDistances
+#     # weights += secondaryWeights
+#
+#     tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, cutOff, minSeqDist)
+#     print(str(len(tertiaryEdges)) + " tertiary edges found")
+#
+#     # print(sorted(tertiaryEdges, key=lambda tup: tup[0]))
+#
+#     edges += tertiaryEdges
+#     distances += tertiaryDistances
+#     weights += tertiaryWeights
+#
+#     return atoms, edges, distances, weights
 
-    atoms = list(structure[0].get_atoms())
 
-    edges = []
-    distances = []
-    weights = []
-
-    for chain in structure[0]:
-        chainEdges, chainDistances, chainWeights = get_primary_edges(chain, topologyDB)
-        edges += chainEdges
-        distances += chainDistances
-        weights += chainWeights
-        pass
-
-    print(str(len(atoms)) + " vertices found")
-    print(str(len(edges)) + " primary edges found")
-    # print(sorted(edges, key=lambda tup: tup[0]))
-
-    # secondaryEdges, secondaryDistances, secondaryWeights = get_secondary_edges(structure[0], fileName)
-    # print(str(len(secondaryEdges)) + " secondary edges found")
-
-    # edges += secondaryEdges
-    # distances += secondaryDistances
-    # weights += secondaryWeights
-
-    tertiaryEdges, tertiaryDistances, tertiaryWeights = get_tertiary_edges(structure[0], edges, cutOff, minSeqDist)
-    print(str(len(tertiaryEdges)) + " tertiary edges found")
-
-    # print(sorted(tertiaryEdges, key=lambda tup: tup[0]))
-
-    edges += tertiaryEdges
-    distances += tertiaryDistances
-    weights += tertiaryWeights
-
-    return atoms, edges, distances, weights
-
-
-# TODO put this somewhere else
-# TODO list of resIDs instead of simple offset
-def build_structure(id, sequences, topologyDB, offsets=[]):
-    structure = Bio.PDB.Structure.Structure(id)
-    model = Bio.PDB.Model.Model(0, None)
-    structure.add(model)
-
-    if not offsets:
-        offsets = [0] * len(sequences)
-        pass
-
-    chainID = 'A'
-    atomCounter = 0
-    for sequence, offset in zip(sequences, offsets):
-        chain = PDB.Chain.Chain(chainID)
-        chainID = chr(ord(chainID) + 1)
-        model.add(chain)
-        for i, res in enumerate(sequence):  # TODO put in proper residue ids
-            res_ID = (" ", i + offset, " ")
-            # NOTE assume, sequence has the right alphabet, convert before
-            # resName = protein_letters_1to3[res].upper()
-            resName = res
-            segID = "   "
-            residue = Bio.PDB.Residue.Residue(res_ID, resName, segID)
-            chain.add(residue)
-
-            vertices = set(topologyDB[resName]['vertices'])
-            backbone = ['N', 'CA', 'C', 'O']
-            # NOTE first four atoms are backbone, rest is alphabetically ordered
-            for vertex in backbone:
-                atomName = vertex
-                coord = np.array((0., 0., 0.), "f")
-                bfactor = 0.
-                occupancy = 1,
-                altloc = " "
-                fullName = vertex
-                serialNumber = atomCounter
-                element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
-                # element = None  # TODO fix this, giving None prints tons of warnings
-
-                atom = Bio.PDB.Atom.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
-                residue.add(atom)
-                atomCounter += 1
-                pass
-            vertices -= set(backbone)
-            # for vertex in topologyDB[resName]['vertices']:
-            for vertex in sorted(vertices):
-                atomName = vertex
-                coord = np.array((0., 0., 0.), "f")
-                bfactor = 0.
-                occupancy = 1,
-                altloc = " "
-                fullName = vertex
-                serialNumber = atomCounter
-                element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
-                # element = None  # TODO fix this, giving None prints tons of warnings
-
-                atom = Bio.PDB.Atom.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
-                residue.add(atom)
-                atomCounter += 1
-                pass
-            pass
-        pass
-    print(len(list(structure.get_atoms())), ' atoms generated')
-    return structure
+# # TODO list of resIDs instead of simple offset
+# def build_structure(id, sequences, topologyDB, offsets=[]):
+#     structure = Bio.PDB.Structure.Structure(id)
+#     model = Bio.PDB.Model.Model(0, None)
+#     structure.add(model)
+#
+#     if not offsets:
+#         offsets = [0] * len(sequences)
+#         pass
+#
+#     chainID = 'A'
+#     atomCounter = 0
+#     for sequence, offset in zip(sequences, offsets):
+#         chain = PDB.Chain.Chain(chainID)
+#         chainID = chr(ord(chainID) + 1)
+#         model.add(chain)
+#         for i, res in enumerate(sequence):  # TODO put in proper residue ids
+#             res_ID = (" ", i + offset, " ")
+#             # NOTE assume, sequence has the right alphabet, convert before
+#             # resName = protein_letters_1to3[res].upper()
+#             resName = res
+#             segID = "   "
+#             residue = Bio.PDB.Residue.Residue(res_ID, resName, segID)
+#             chain.add(residue)
+#
+#             vertices = set(topologyDB[resName]['vertices'])
+#             backbone = ['N', 'CA', 'C', 'O']
+#             # NOTE first four atoms are backbone, rest is alphabetically ordered
+#             for vertex in backbone:
+#                 atomName = vertex
+#                 coord = np.array((0., 0., 0.), "f")
+#                 bfactor = 0.
+#                 occupancy = 1,
+#                 altloc = " "
+#                 fullName = vertex
+#                 serialNumber = atomCounter
+#                 element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
+#                 # element = None  # TODO fix this, giving None prints tons of warnings
+#
+#                 atom = Bio.PDB.Atom.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
+#                 residue.add(atom)
+#                 atomCounter += 1
+#                 pass
+#             vertices -= set(backbone)
+#             # for vertex in topologyDB[resName]['vertices']:
+#             for vertex in sorted(vertices):
+#                 atomName = vertex
+#                 coord = np.array((0., 0., 0.), "f")
+#                 bfactor = 0.
+#                 occupancy = 1,
+#                 altloc = " "
+#                 fullName = vertex
+#                 serialNumber = atomCounter
+#                 element = atomName[0]  # TODO valid for C, O, N, S, H, P? in proteins? definitely not universal!!!
+#                 # element = None  # TODO fix this, giving None prints tons of warnings
+#
+#                 atom = Bio.PDB.Atom.Atom(atomName, coord, bfactor, occupancy, altloc, fullName, serialNumber, element)
+#                 residue.add(atom)
+#                 atomCounter += 1
+#                 pass
+#             pass
+#         pass
+#     print(len(list(structure.get_atoms())), ' atoms generated')
+#     return structure
