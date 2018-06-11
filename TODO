@@ -1,6 +1,14 @@
 
-- add fixed coordinate subsets
-- clean everything up and remove old and unneeded cruft
-- optimize
-- README
-- citations
+Short term:
+    implement central Distructure class to interface between Bio Structure and graph representation
+    put in new default topology database with amino acids, nucleic acids and better alphabet handling
+    optimize c++ part
+    test on different types of structure (make sure NMR ones and ribosome work)
+    test on robustness, error output, maybe filtering
+    compare to DYANA and CONCOORD at least
+
+Long term:
+    add fixed coordinate subsets / initialization
+    README
+    Docs
+    Citations
