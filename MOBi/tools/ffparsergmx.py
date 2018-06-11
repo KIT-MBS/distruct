@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 28 May 2018 05:41:32 PM CEST
+# Last Modified : Fri 08 Jun 2018 02:47:07 PM CEST
 #
 #####################################
 
@@ -28,6 +28,8 @@ topologyPath = config.gromacs_topology_path
 
 # TODO add weights
 # TODO add omega to topologies
+
+# TODO enforce a sensible ordering of atoms in the topDB
 
 
 def read_atoms(line):
