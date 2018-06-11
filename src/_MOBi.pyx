@@ -3,6 +3,8 @@ from libc.stdint cimport uint32_t
 from libcpp.vector cimport vector
 from libcpp.utility cimport pair
 
+import numpy as np
+
 # TODO maybe replace this? NetworKit::Point was deprecated and then undeprecated again.
 cdef extern from "cpp/viz/Point.h" namespace "NetworKit":
     cdef cppclass Point[T]:
@@ -188,8 +190,14 @@ def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_
 #     pass
 
 from Bio.PDB.Structure import Structure
+from Bio.PDB.Chain import Chain
+from Bio.PDB.Residue import Residue
+from Bio.PDB.Atom import Atom
+
 from networkit import Graph
 from MOBi import data
+
+from itertools import zip_longest
 
 class Distructure(Structure):
     """
@@ -199,7 +207,7 @@ class Distructure(Structure):
     Also contains a list of edges between vertices (atoms).
     """
 
-    def __init__(self, id, sequences = None, SSsequences = None, topologyDB=data.defaultTopologyDB):
+    def __init__(self, id, sequences = [], resIDLists = [], SSsequences = None, topologyDB=data.defaultTopologyDB):
         """
         Initialize Distructure object.
 
@@ -212,10 +220,67 @@ class Distructure(Structure):
 
         Structure.__init__(self, id)
         self.graph = Graph(0, True, False)
-        if sequences is not None:
-            # TODO
-            raise NotImplementedError
+
+        if sequences:
+            chainCounter = 1
+            atomCounter = 0  # NOTE atomCount starts at 0 since graph vertices do
+            for sequence, resIDs in zip_longest(sequences, resIDLists, fillvalue=list()):
+                chainID = self._chain_count2ID(chainCounter)
+                resCounter = 1
+                chainCounter += 1
+
+                chain = Chain(chainID)
+
+                for resID, letter in zip_longest(resIDs, sequence):
+                    assert letter is not None
+                    resName = letter
+                    segID = "   "  # TODO check this
+                    residue = Residue(resID, resName, segID)
+                    chain.add(residue)
+                    resCounter += 1
+
+                    resAtoms = topologyDB[resName]['vertices']
+                    # TODO use ordered dict for vertices
+                    for vertex in resAtoms:
+                        atomName = vertex
+                        coord = np.full(3, np.nan)
+                        bFactor = 0.
+                        occupancy = 1.
+                        altloc = " "
+                        fullName = vertex  # TODO get the coorect full name from somewhere
+                        serialNumber = atomCounter
+                        element = atomName = [0]  # TODO get from top db
+                        atom = Atom(atomName, coord, bFactor, occupancy, altloc, fullName, serialNumber, element)
+                        residue.add(atom)
+                        atomCounter += 1
+                        pass
+                    pass
+
+                pass
+            pass
         return
+
+    def _chain_count2ID(count):
+        ID = ''
+
+        base26 = []
+        while count:
+            base26.append(count % 26)
+            count = count // 26
+            pass
+
+        for i in range(len(base26) - 1):
+            if base26[i] <= 0:
+                base26[i] += 26
+                base26[i+1] -= 1
+                pass
+            pass
+        for x in base26:
+            if x > 0:
+                ID += chr(ord('A') - 1 + x)
+                pass
+            pass
+        return ID
 
     # TODO Distructure builder
 
