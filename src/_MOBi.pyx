@@ -401,9 +401,12 @@ class Distructure(Structure):
 
     def generate_edges(self):
         # TODO improve
-        # TODO add redundancy checks
-        for contact in self._primaryContacts + self._secondaryContacts + self._tertiaryContacts:
-            self.graph.addEdge(contact[0][0], contact[0][1], contact[1])
+        # TODO add redundancy checks, setWeights just generates the edge, if it does not exist yet
+        # and otherwise just sets the new weight.
+        # because of this it iterates over tertiary contacts first and overwrites them later with
+        # primary contact weights. this should probably not be in the shipping version!!!!!
+        for contact in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts:
+            self.graph.setWeight(contact[0][0], contact[0][1], contact[1])
             pass
 
         return
@@ -415,7 +418,8 @@ class Distructure(Structure):
 
         # TODO work on graph directly
         edges = self.graph.edges()
-        distDict = {(u, v): d for ((u, v), w, d) in self._primaryContacts + self._secondaryContacts + self._tertiaryContacts}
+        # TODO redundancy check befor this. at this point there should be no overlap between the different sets of contacts.
+        distDict = {(u, v): d for ((u, v), w, d) in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts}
         distances = [distDict[(u, v)] for (u, v) in edges]
         weights = [self.graph.weight(u, v) for (u, v) in edges]
 
