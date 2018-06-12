@@ -204,7 +204,7 @@ class Distructure(Structure):
     Interface between hierarchical Bio.Structure representation of a molecule and a graph.
 
     Contains Structure, Model, Chain and Residue objects.
-    Also contains a list of edges between vertices (atoms).
+    Also maintains a list of contacts and corresponding edges between vertices (atoms).
     """
 
     def __init__(self, id, sequences = [], resIDLists = [], SSsequences = None, topologyDB=data.defaultTopologyDB):
@@ -219,7 +219,6 @@ class Distructure(Structure):
         # TODO implement 8 state protein SS
 
         Structure.__init__(self, id)
-        self.graph = Graph(0, True, False)
 
         if sequences:
             chainCounter = 1
@@ -239,9 +238,8 @@ class Distructure(Structure):
                     chain.add(residue)
                     resCounter += 1
 
-                    resAtoms = topologyDB[resName]['vertices']
                     # TODO use ordered dict for vertices
-                    for vertex in resAtoms:
+                    for vertex in topologyDB[resName]['vertices']:
                         atomName = vertex
                         coord = np.full(3, np.nan)
                         bFactor = 0.
@@ -255,9 +253,13 @@ class Distructure(Structure):
                         atomCounter += 1
                         pass
                     pass
-
                 pass
             pass
+        self.graph = Graph(atomCounter, True, False)
+        self.graph.setName(id)
+        self._primaryContacts = list()
+        self._secondaryContacts = list()
+        self._tertiaryContacts = list()
         return
 
     def _chain_count2ID(count):
@@ -299,14 +301,17 @@ class Distructure(Structure):
             pass
         return e
 
-    def _generate_chain_primary_edges(self, chain, useStructureDistances=False):
+    def _generate_chain_primary_contacts(self, chain, useStructureDistances=False):
         """
-        Generate the primary edges for a single chain.
+        Generate the primary contacts for a single chain.
         """
-        edges = list()
+
+        # TODO maybe this should be a dict
+        contacts = list()
 
         for r in chain:
             resn = r.get_resname()
+            # TODO maybe rename keys in dict
             for edgeType in ["bondEdges", "angleEdges", "improperEdges"]:
                 for edge in self.topologyDB[resn][edgeType]:
                     # NOTE edges between neighboring residues in sequence are constructed
@@ -343,7 +348,7 @@ class Distructure(Structure):
                                 distance = self.topologyDB[resn][edgeType][edge]
                                 pass
                             weight = 1.
-                            edges.append((edgeFullAtomIDs, distance, weight))
+                            contacts.append((edgeFullAtomIDs, distance, weight))
                         else:
                             # NOTE atoms that are present in topology are not in the structure
                             # this may happen when there are missing atoms in a parsed structure
@@ -359,40 +364,66 @@ class Distructure(Structure):
                 pass
             pass
 
-        return edges
+        return contacts
 
-    def generate_primary_edges(self):
+    def generate_primary_contacts(self):
         """
-        Generate the edges for bonds, angles and improper/fixed dihedrals.
+        Generate the contacts for bonds, angles and improper/fixed dihedrals.
         """
 
-        edges = list()
+        contacts = list()
         for c in self[0]:
-            edges += self._generate_chain_primary_edges(c)
+            contacts += self._generate_chain_primary_contacts(c)
             pass
 
-        self._primary_edges = edges
+        self._primaryContacts = contacts
         return
 
-    def generate_secondary_edges(self):
+    def generate_secondary_contacts(self):
         """
-        Generate the edges for backbone dihedrals and helix hydrogen bridges from SS.
+        Generate the contacts for backbone dihedrals and helix hydrogen bridges from SS sequence.
+
+        Note that long range hydrogen bonds like between beta strands are tertiary contacts in this
+        context.
         """
 
         # TODO check for protein / rna
+        # TODO implement other SS elements
         raise NotImplementedError
 
-    # TODO handle adding contacts similarly to how networkit handles adding edges
-    def generate_tertiary_edges(self):
-        """
-        Generate tertiary edges from supplied contacts
-        """
-        raise NotImplementedError
+    # def generate_tertiary_edges(self):
+    #     """
+    #     Generate tertiary edges from supplied contacts
+    #     """
+    #     # TODO RENAME
+    #     raise NotImplementedError
 
-    def run(self):
+    def generate_edges(self):
+        # TODO improve
+        for contact in self._primaryContacts + self._secondaryContacts + self._tertiaryContacts:
+            self.graph.addEdge(contact[0][0], contact[0][1], contact[1])
+            pass
+
+        return
+
+    def run(self, double alpha = 1., double q = 0., uint64_t solves = 300):
         """
         Generate atomic coordinates from the supplied edges, running MaxEnt-Stress graph drawing.
         """
-        raise NotImplementedError
+
+        # TODO work on graph directly
+        edges = self.graph.edges()
+        distDict = {(u, v): d for ((u, v), w, d) in self._primaryContacts + self._secondaryContacts + self._tertiaryContacts}
+        distances = [distDict[(u, v)] for (u, v) in edges]
+        weights = [self.graph.weight(u, v) for (u, v) in edges]
+
+        # TODO move checks here
+        cdef vector[Point[double]] coord = runMaxent(self.graph.numberOfNodes(), alpha, q, solves, edges, distances, weights)
+
+        for atom in self.get_atoms():
+            atomCoord = coord[atom.get_serial_number()]
+            atom.set_coord(np.array([atomCoord[0], atomCoord[1], atomCoord[2]]))
+            pass
+
 
     pass
