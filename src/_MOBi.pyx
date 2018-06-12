@@ -391,15 +391,17 @@ class Distructure(Structure):
         # TODO implement other SS elements
         raise NotImplementedError
 
-    # def generate_tertiary_edges(self):
-    #     """
-    #     Generate tertiary edges from supplied contacts
-    #     """
-    #     # TODO RENAME
-    #     raise NotImplementedError
+    def set_tertiary_contacts(self, contacts):
+        self._tertiaryContacts = contacts
+        return
+
+    def add_tertiary_contacts(self, contacts):
+        self._tertiaryContacts += contacts
+        return
 
     def generate_edges(self):
         # TODO improve
+        # TODO add redundancy checks
         for contact in self._primaryContacts + self._secondaryContacts + self._tertiaryContacts:
             self.graph.addEdge(contact[0][0], contact[0][1], contact[1])
             pass
