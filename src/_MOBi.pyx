@@ -32,20 +32,20 @@ cdef extern from "DuckingWrapper.h":
             ) except +
     pass
 
-#cdef doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_t solves=300, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] distances=[], vector[double] probabilites=[]):
-def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_t solves=300, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] distances=[], vector[double] probabilites=[]):
-
-    cdef vector[Point[double]] coord = runMaxent(numNodes, alpha, q, solves, edges, distances, probabilites)
-
-    result = []
-    for vertex in coord:
-        l = []
-        for i in range(vertex.getDimensions()):
-            l.append(vertex[i])
-            pass
-        result.append(l)
-        pass
-    return result
+# #cdef doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_t solves=300, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] distances=[], vector[double] probabilites=[]):
+# def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_t solves=300, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] distances=[], vector[double] probabilites=[]):
+# 
+#     cdef vector[Point[double]] coord = runMaxent(numNodes, alpha, q, solves, edges, distances, probabilites)
+# 
+#     result = []
+#     for vertex in coord:
+#         l = []
+#         for i in range(vertex.getDimensions()):
+#             l.append(vertex[i])
+#             pass
+#         result.append(l)
+#         pass
+#     return result
 
 # cdef extern from "../src/BioMaxentStressOld.h" namespace "NetworKit":
 #     cdef cppclass _BioMaxentStress "NetworKit::BioMaxentStress":
