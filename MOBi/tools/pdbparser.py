@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 11 Jun 2018 04:28:39 PM CEST
+# Last Modified : Mon 11 Jun 2018 04:34:44 PM CEST
 #
 #####################################
 
@@ -168,17 +168,17 @@ def read_PDB(PDBCode, fileName, chemicalDB={}, assign_serial_numbers=True):
     return structure
 
 
-def read_sequences_from_PDB(fileName):
-    # TODO choose correct alphabet
-    sequences = {}
-    with open(fileName, 'rU') as f:
-        for record in SeqIO.parse(f, 'pdb-seqres'):
-            sequence = Seq(record.seq)
-            # print(">" + record.id + "\n" + record.seq)
-            sequences[record.id] = sequence
-            pass
-        pass
-    return sequences
+# def read_sequences_from_PDB(fileName):
+#     # TODO choose correct alphabet
+#     sequences = {}
+#     with open(fileName, 'rU') as f:
+#         for record in SeqIO.parse(f, 'pdb-seqres'):
+#             sequence = Seq(record.seq)
+#             # print(">" + record.id + "\n" + record.seq)
+#             sequences[record.id] = sequence
+#             pass
+#         pass
+#     return sequences
 
 
 # # adds Hs and missing atoms.
