@@ -430,6 +430,12 @@ class Distructure(Structure):
             atomCoord = coord[atom.get_serial_number()]
             atom.set_coord(np.array([atomCoord[0], atomCoord[1], atomCoord[2]]))
             pass
+        return
 
+    def update_serial_numbers(self):
+        for i, a in enumerate(self.get_atoms()):
+            a.set_serial_number(i)
+            pass
+        return
 
     pass
