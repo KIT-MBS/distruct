@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Mon 18 Jun 2018 04:06:43 PM CEST
+# Last Modified : Mon 18 Jun 2018 04:27:48 PM CEST
 #
 #####################################
 
@@ -20,16 +20,6 @@ from lxml import etree as ET
 from . import config
 from . import data
 defaultDataPath = config.data_path
-
-
-def read_edge_node(node):
-    result = {}
-
-    # TODO conversion for vertices attrib
-    # should this be a set?
-    result[node.attrib['vertices']] = float(node.attrib['dstance'])
-
-    return result
 
 
 # NOTE this is not the simplest way to dict2xml but it produces more easily (human) readable files (i feel)(so they are better me-readable, really)
@@ -52,6 +42,7 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
             if vertices.tag not in result:
                 result[buildingBlock.tag][vertices.tag] = list()
                 pass
+            # TODO check this preserves ordering
             for atom in vertices.findall('atom'):
                 result[buildingBlock.tag]['vertices'].append(atom.attrib['name'])
                 pass
@@ -68,25 +59,6 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
                     pass
                 pass
             pass
-        # TODO iterate over all other tags
-        # read bonds and pseudobonds
-        # for bonds in buildingBlock.findall('bondsEdges'):
-        #     if bonds.tag not in result[buildingBlock.tag]:
-        #         result[buildingBlock.tag][bonds.tag] = {}
-        #     for edge in bonds.findall('edge'):
-        #         # TODO
-        #         result[buildingBlock.tag][atom.attrib['vertices']] = float(atom.attrib['distance'])
-        #         pass
-        #     pass
-        # # TODO
-        # for pseudoBonds in buildingBlock.findall('pseudobonds'):
-        #     if pseudoBonds.tag not in result[buildingBlock.tag]:
-        #         result[buildingBlock.tag][pseudoBonds.tag] = {}
-        #     for edge in pseudoBonds.findall('edge'):
-        #         # TODO
-        #         pass
-        #     pass
-
         pass
 
     # TODO check if test fails correctly
