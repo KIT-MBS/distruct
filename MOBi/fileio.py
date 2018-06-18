@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Mon 28 May 2018 10:07:16 AM CEST
+# Last Modified : Mon 18 Jun 2018 04:06:43 PM CEST
 #
 #####################################
 
@@ -18,6 +18,7 @@ from lxml import etree as ET
 # TODO handle alphabets
 
 from . import config
+from . import data
 defaultDataPath = config.data_path
 
 
@@ -33,7 +34,7 @@ def read_edge_node(node):
 
 # NOTE this is not the simplest way to dict2xml but it produces more easily (human) readable files (i feel)(so they are better me-readable, really)
 # def parse_primary_edge_database(databaseName, inDir=defaultDataPath, fileName=None):
-def read_topology_file(databaseName, inDir=defaultDataPath, fileName=None):
+def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
     result = {}
     XMLTree = None
     if fileName == None:
@@ -49,10 +50,10 @@ def read_topology_file(databaseName, inDir=defaultDataPath, fileName=None):
         result[buildingBlock.tag] = {}
         for vertices in buildingBlock.findall('vertices'):
             if vertices.tag not in result:
-                result[buildingBlock.tag][vertices.tag] = set()
+                result[buildingBlock.tag][vertices.tag] = list()
                 pass
             for atom in vertices.findall('atom'):
-                result[buildingBlock.tag]['vertices'].add(atom.attrib['name'])
+                result[buildingBlock.tag]['vertices'].append(atom.attrib['name'])
                 pass
             pass
         for child in buildingBlock:
@@ -92,14 +93,14 @@ def read_topology_file(databaseName, inDir=defaultDataPath, fileName=None):
     return result
 
 
-# NOTE probably a good idea to name the database something like forcefield_buildingblocks.xml
-# TODO get the sorting right: vertices, bondEdges, angleEdges, improperEdges
-def write_primary_edge_database(
+# TODO get the sorting right: vertices, bondEdges, angleEdges, improperEdges dihedralEdges
+def write_topology_database(
         database,
         databaseName,
         buildingBlocks=[],
         outDir='./',
-        fileName=None):
+        fileName=None,
+        alphabet=data.alphabet):
     if not fileName:
         fileName = databaseName + '.xml'
         pass
@@ -110,12 +111,12 @@ def write_primary_edge_database(
     root = ET.Element(databaseName)
     XMLTree = ET.ElementTree(root)
 
-    for buildingBlock in sorted(database):
+    for buildingBlock in alphabet.letters:
         assert buildingBlock in database
         assert 'vertices' in database[buildingBlock]
         bbElement = ET.SubElement(root, buildingBlock)
         atomsElement = ET.SubElement(bbElement, 'vertices')
-        for entry in sorted(database[buildingBlock]['vertices']):
+        for entry in database[buildingBlock]['vertices']:
             ET.SubElement(atomsElement, 'atom', attrib={'name': entry})
             pass
         directives = sorted(database[buildingBlock].keys())

@@ -9,14 +9,14 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Fri 08 Jun 2018 02:47:07 PM CEST
+# Last Modified : Mon 18 Jun 2018 03:36:38 PM CEST
 #
 #####################################
 
 import os
 
 from Bio import Alphabet
-from Bio import Data
+from Bio.Data import IUPACData
 
 from math import pi
 
@@ -26,17 +26,21 @@ from .. import config
 
 topologyPath = config.gromacs_topology_path
 
-# TODO add weights
 # TODO add omega to topologies
 
-# TODO enforce a sensible ordering of atoms in the topDB
+
+# TODO inconsistent naming
+def read_atomtypes(line):
+    parts = line.split()
+    name = parts[0]
+    type = parts[1]
+    return {name: type}
 
 
 def read_atoms(line):
     parts = line.split()
     name = parts[0]
-    type = parts[1]
-    return {name: type}
+    return name
 
 
 def read_bonds(line):
@@ -48,9 +52,6 @@ def read_bonds(line):
         b0 = float(parts[2])
         pass
 
-    # key = (i, j)
-    # value = b0
-    # return {key: value}
     return {(i, j): b0, (j, i): b0}
 
 
@@ -64,31 +65,27 @@ def read_angles(line):
         th0 = float(parts[3]) * pi/180.
         pass
 
-    # key = (i, j, k)
-    # value = th0
-    # return {key: value}
     return {(i, j, k): th0, (k, j, i): th0}
 
 
-# # TODO general dihedrals logic
-# def read_dihedrals(line):  # NOTE proper dihedrals are not useful at this point
-#     # TODO only add, if single minimum
-#     # here function type and defaults matter
-#     parts = line.split()
-#     i = parts[0]
-#     j = parts[1]
-#     k = parts[2]
-#     l = parts[3]
-#     if len(parts) > 4:
-#         phi0 = float(parts[4])
-#     else:
-#         phi0 = None
-#         pass
-#
-#     # NOTE order matters
-#     key = (i, j, k, l)
-#     value = phi0
-#     return {key: value}
+def read_dihedrals(line):  # NOTE proper dihedrals are not useful at this point
+    # TODO only add, if single minimum
+    # NOTE here function type and defaults matter
+    parts = line.split()
+    i = parts[0]
+    j = parts[1]
+    k = parts[2]
+    l = parts[3]
+    if len(parts) > 4:
+        phi0 = float(parts[4]) * pi/180.
+    else:
+        phi0 = None
+        pass
+
+    # NOTE order matters
+    key = (i, j, k, l)
+    value = phi0
+    return {key: value}
 
 
 def read_impropers(line):
@@ -105,19 +102,20 @@ def read_impropers(line):
         pass
 
     # NOTE order matters
+    # TODO more combinations are possible
     key = (i, j, k, l)
     value = q0
     return {key: value}
 
 
-# NOTE amber type ffs have n- and c- terminus residues, that are used here
-# NOTE amber type ffs have different AAs for an AA with different protonations (HIS)
-# TODO translate names
 def parse_residue_topology(
         residueTopologyFile,
         macros={},
         ignoredDirectives={'bondedtypes', 'exclusions', 'dihedrals'},
-        knownDirectives={'atoms': read_atoms, 'bonds': read_bonds, 'angles': read_angles, 'impropers': read_impropers}):
+        knownDirectives={'atoms': read_atomtypes, 'bonds': read_bonds, 'angles': read_angles, 'impropers': read_impropers}):
+    """
+    Parse force field parameters, translate residue names, cull, translate atom names.
+    """
 
     result = {}
 
@@ -163,6 +161,9 @@ def parse_residue_topology(
                 if directive not in ignoredDirectives:
                     if buildingBlock:
                         context = directive
+                        # TODO this is getting too noodly
+                        if context == 'atoms':
+                            result[buildingBlock]['vertices'] = list()
                         result[buildingBlock][context] = {}
                         pass
                 else:
@@ -173,8 +174,10 @@ def parse_residue_topology(
         else:
             if buildingBlock and context:
                 if knownDirectives[context]:
-                    # result[buildingBlock][context].append(knownDirectives[context](line))
-                    # key, value = knownDirectives[context](line)
+                    # TODO improve, kinda hacky
+                    if context == 'atoms':
+                        result[buildingBlock]['vertices'].append(read_atoms(line))
+                        pass
                     result[buildingBlock][context].update(knownDirectives[context](line))
                     pass
                 pass
@@ -231,7 +234,6 @@ def read_dihedraltypes(line):
     pass
 
 
-# TODO directives as parameter
 def parse_forcefield_params(ffParamFile):
 
     itpLines = []
@@ -345,14 +347,12 @@ def infer_angles(atoms, bonds, angleTypes):
 # TODO add backbone dihedral omega
 
 
-def translate_atoms_to_vertices(atoms):
-    result = set(atoms.keys())
-    return result
+# def translate_atoms_to_vertices(atoms):
+#     result = [a[0] for a in atoms]
+#     return result
 
 
-# TODO these go somewhere else together with all the add_edge_to_graph tools?
 def translate_bonds_to_edges(bonds, atomTypes, bondTypes):
-    # TODO n-termini special casing
     result = {}
     for atomPair in bonds:
         vertices = tuple(sorted(atomPair))
@@ -493,155 +493,308 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
         pass
     return result
 
-
-# TODO (not just edges, name inaccurate)
-def generate_chemical_primary_edge_database(
-        ffname,
-        alphabet,
-        inferAngles=True,
-        inferImpropers=False,
-        topPath=topologyPath):
-
-    residueTopologieFiles = []
-    forceFieldParamFiles = []
-
-    if os.path.isdir(topPath):
-        if os.path.isdir(topPath + ffname + '.ff'):
-            residueTopologieFiles = [f for f in os.listdir(topPath + ffname + '.ff/') if f.endswith('.rtp')]
-            forceFieldParamFiles.append(topPath + ffname + '.ff/ffbonded.itp')
-            pass
-        pass
-
-    ffParams = {}
-    macros = {}
-    for forceFieldParamFile in forceFieldParamFiles:
-        ffP, m = parse_forcefield_params(forceFieldParamFile)
-        ffParams.update(ffP)
-        macros.update(m)
-        pass
-
-    buildingBlockTopologies = {}
-    assert(len(residueTopologieFiles) > 0)
-    for residueTopologyFile in residueTopologieFiles:
-        buildingBlockTopologies.update(parse_residue_topology(topPath + ffname + '.ff/' + residueTopologyFile, macros))
-        pass
-
-    # TODO replace this with check on alphabet
-    # for buildingBlock in buildingBlocks:
-    #     if buildingBlock not in buildingBlockTopologies:
-    #         # TODO more helpful error messages / warnings
-    #         raise
-    #     pass
-
+def translate(buildingBlockTopologies, ffParams, inferAngles=True, inferImpropers=False):
+    """
+    Translate building block topologies parsed from .rtp files to vertices and edges.
+    """
     result = {}
-    # for buildingBlock in buildingBlockTopologies:
-    for letter in alphabet.letters:
-        result[letter] = {}
+    for b in buildingBlockTopologies:
+        print(b)
+        result[b] = {}
+        result[b]['vertices'] = list()
+        result[b]['bondEdges'] = {}
+        result[b]['angleEdges'] = {}
+        result[b]['improperEdges'] = {}
+        result[b]['dihedralEdges'] = {}
 
-        result[letter]['vertices'] = set()
-        result[letter]['bondEdges'] = {}
-        result[letter]['angleEdges'] = {}
-        result[letter]['improperEdges'] = {}
+        # result[b]['vertices'] = translate_atoms_to_vertices(
+        #         buildingBlockTopologies[b]['atoms']
+        #         )
+        result[b]['vertices'] = buildingBlockTopologies[b]['vertices']
 
-        # TODO translate letter to building block and vv
-        # TODO handle termini
-        buildingBlock = None
-
-        if letter in buildingBlockTopologies:
-            buildingBlock = letter
-        else:
-            if isinstance(alphabet, Alphabet.ProteinAlphabet):
-                buildingBlock = Data.IUPACData.protein_letters_1to3_extended[letter]
-                if buildingBlock not in buildingBlockTopologies:
-                    buildingBlock = buildingBlock.upper()
-                    if buildingBlock not in buildingBlockTopologies:
-                        # NOTE list is intended to catch meanings: [ beta, gamma, delta, epsilon, zeta, eta, protonated]
-                        # for postfix in ['B', 'G', 'D', 'E', 'Z', 'H', 'P']:
-                        # this is for protonated histidine
-                        # for positivly charged AAs the fully protonated is chosen,
-                        # for negatively charged ones the deprotonated ones
-                        for postfix in ['P']:
-                            if buildingBlock[:2] + postfix in buildingBlockTopologies:
-                                buildingBlock = buildingBlock[:2] + postfix
-                                break
-                            pass
-                        pass
-                    pass
-                pass
-            elif isinstance(alphabet, Alphabet.ThreeLetterProtein):
-                buildingBlock = letter
-                for postfix in ['P']:
-                    if buildingBlock[:2] + postfix in buildingBlockTopologies:
-                        buildingBlock = buildingBlock[:2] + postfix
-                        break
-                    pass
-                pass
-            elif isinstance(alphabet, Alphabet.RNAAlphabet):
-                pass
-            elif isinstance(alphabet, Alphabet.DNAAlphabet):
-                pass
-            else:
-                # TODO error message
-                assert(False)
-                pass
-
-        result[letter]['vertices'].update(
-                translate_atoms_to_vertices(
-                    buildingBlockTopologies[buildingBlock]['atoms']
-                )
-        )
-
-        if 'bonds' in buildingBlockTopologies[buildingBlock]:
-            result[letter]['bondEdges'].update(
+        if 'bonds' in buildingBlockTopologies[b]:
+            result[b]['bondEdges'].update(
                     translate_bonds_to_edges(
-                        buildingBlockTopologies[buildingBlock]['bonds'],
-                        buildingBlockTopologies[buildingBlock]['atoms'],
+                        buildingBlockTopologies[b]['bonds'],
+                        buildingBlockTopologies[b]['atoms'],
                         ffParams['bondtypes']
                     )
             )
 
             if inferAngles:
                 inferredAngles = infer_angles(
-                        buildingBlockTopologies[buildingBlock]['atoms'],
-                        buildingBlockTopologies[buildingBlock]['bonds'],
+                        buildingBlockTopologies[b]['atoms'],
+                        buildingBlockTopologies[b]['bonds'],
                         ffParams['angletypes'])
-                result[letter]['angleEdges'].update(
+                result[b]['angleEdges'].update(
                         translate_angles_to_edges(
                             inferredAngles,
-                            buildingBlockTopologies[buildingBlock]['atoms'],
+                            buildingBlockTopologies[b]['atoms'],
                             ffParams['bondtypes'],
                             ffParams['angletypes']
                         )
                 )
                 pass
             pass
-            if 'angles' in buildingBlockTopologies[buildingBlock]:
-                result[letter]['angleEdges'].update(translate_angles_to_edges(
-                    buildingBlockTopologies[buildingBlock]['angles'],
-                    buildingBlockTopologies[buildingBlock]['atoms'],
+            if 'angles' in buildingBlockTopologies[b]:
+                result[b]['angleEdges'].update(translate_angles_to_edges(
+                    buildingBlockTopologies[b]['angles'],
+                    buildingBlockTopologies[b]['atoms'],
                     ffParams['bondtypes'],
                     ffParams['angletypes']))
                 pass
 
-            # if inferImpropers:
-            #     inferredImpropers = infer_impropers()  # TODO
-            #     result[buildingBlock]['improperEdges'].update(translate_impropers_to_edges(
-            #         inferredImpropers,
-            #         result[letter]['angleEdges'],
-            #         result[letter]['bondEdges'],
-            #         buildingBlockTopologies[buildingBlock]['atoms'],
-            #         ffParams['dihedraltypes']))
-            #     pass
-
-            if 'impropers' in buildingBlockTopologies[buildingBlock]:
-                result[letter]['improperEdges'].update(
+            if inferImpropers:
+                raise NotImplementedError
+            if 'impropers' in buildingBlockTopologies[b]:
+                result[b]['improperEdges'].update(
                         translate_impropers_to_edges(
-                            buildingBlockTopologies[buildingBlock]['impropers'],
-                            result[letter]['angleEdges'],
-                            result[letter]['bondEdges'],
-                            buildingBlockTopologies[buildingBlock]['atoms'],
+                            buildingBlockTopologies[b]['impropers'],
+                            result[b]['angleEdges'],
+                            result[b]['bondEdges'],
+                            buildingBlockTopologies[b]['atoms'],
                             ffParams['dihedraltypes'])
                 )
             pass
         pass
+    return result
+
+
+# def generate(
+#         ffname,
+#         alphabet,
+#         inferAngles=True,
+#         # inferImpropers=False,  # not implemented
+#         topPath=topologyPath):
+#
+#     """
+#     Generate a topology dictionary (residue -> ('vertices' -> list(vertices), edgeTypes -> (atomPair -> distance)))
+#     """
+#
+#     # TODO ordering such that backbone atoms occur first in an ordered dict / order of ff is preserved?
+#
+#     residueTopologieFiles = []
+#     forceFieldParamFiles = []
+#
+#     if os.path.isdir(topPath):
+#         if os.path.isdir(topPath + ffname + '.ff'):
+#             residueTopologieFiles = [f for f in os.listdir(topPath + ffname + '.ff/') if f.endswith('.rtp')]
+#             forceFieldParamFiles.append(topPath + ffname + '.ff/ffbonded.itp')
+#             pass
+#         pass
+#
+#     ffParams = {}
+#     macros = {}
+#     for forceFieldParamFile in forceFieldParamFiles:
+#         ffP, m = parse_forcefield_params(forceFieldParamFile)
+#         ffParams.update(ffP)
+#         macros.update(m)
+#         pass
+#
+#     buildingBlockTopologies = {}
+#     assert(len(residueTopologieFiles) > 0)
+#     for residueTopologyFile in residueTopologieFiles:
+#         buildingBlockTopologies.update(parse_residue_topology(topPath + ffname + '.ff/' + residueTopologyFile, macros))
+#         pass
+#
+#     # TODO replace this with check on alphabet
+#     # for buildingBlock in buildingBlocks:
+#     #     if buildingBlock not in buildingBlockTopologies:
+#     #         # TODO more helpful error messages / warnings
+#     #         raise
+#     #     pass
+#
+#     result = {}
+#     # for buildingBlock in buildingBlockTopologies:
+#     for letter in alphabet.letters:
+#         result[letter] = {}
+#
+#         result[letter]['vertices'] = list()
+#         result[letter]['bondEdges'] = {}
+#         result[letter]['angleEdges'] = {}
+#         result[letter]['improperEdges'] = {}
+#         result[letter]['dihedralEdges'] = {}
+#
+#         # TODO translate letter to building block and vv
+#         # TODO handle termini
+#         buildingBlock = None
+#
+#         if letter in buildingBlockTopologies:
+#             buildingBlock = letter
+#         else:
+#             if isinstance(alphabet, Alphabet.ProteinAlphabet):
+#                 buildingBlock = Data.IUPACData.protein_letters_1to3_extended[letter]
+#                 if buildingBlock not in buildingBlockTopologies:
+#                     buildingBlock = buildingBlock.upper()
+#                     if buildingBlock not in buildingBlockTopologies:
+#                         # NOTE list is intended to catch meanings: [ beta, gamma, delta, epsilon, zeta, eta, protonated]
+#                         # for postfix in ['B', 'G', 'D', 'E', 'Z', 'H', 'P']:
+#                         # this is for protonated histidine
+#                         # for positivly charged AAs the fully protonated is chosen,
+#                         # for negatively charged ones the deprotonated ones
+#                         for postfix in ['P']:
+#                             if buildingBlock[:2] + postfix in buildingBlockTopologies:
+#                                 buildingBlock = buildingBlock[:2] + postfix
+#                                 break
+#                             pass
+#                         pass
+#                     pass
+#                 pass
+#             elif isinstance(alphabet, Alphabet.ThreeLetterProtein):
+#                 buildingBlock = letter
+#                 for postfix in ['P']:
+#                     if buildingBlock[:2] + postfix in buildingBlockTopologies:
+#                         buildingBlock = buildingBlock[:2] + postfix
+#                         break
+#                     pass
+#                 pass
+#             elif isinstance(alphabet, Alphabet.RNAAlphabet):
+#                 pass
+#             elif isinstance(alphabet, Alphabet.DNAAlphabet):
+#                 pass
+#             else:
+#                 # TODO error message
+#                 assert(False)
+#                 pass
+#
+#         result[letter]['vertices'].update(
+#                 translate_atoms_to_vertices(
+#                     buildingBlockTopologies[buildingBlock]['atoms']
+#                 )
+#         )
+#
+#         if 'bonds' in buildingBlockTopologies[buildingBlock]:
+#             result[letter]['bondEdges'].update(
+#                     translate_bonds_to_edges(
+#                         buildingBlockTopologies[buildingBlock]['bonds'],
+#                         buildingBlockTopologies[buildingBlock]['atoms'],
+#                         ffParams['bondtypes']
+#                     )
+#             )
+#
+#             if inferAngles:
+#                 inferredAngles = infer_angles(
+#                         buildingBlockTopologies[buildingBlock]['atoms'],
+#                         buildingBlockTopologies[buildingBlock]['bonds'],
+#                         ffParams['angletypes'])
+#                 result[letter]['angleEdges'].update(
+#                         translate_angles_to_edges(
+#                             inferredAngles,
+#                             buildingBlockTopologies[buildingBlock]['atoms'],
+#                             ffParams['bondtypes'],
+#                             ffParams['angletypes']
+#                         )
+#                 )
+#                 pass
+#             pass
+#             if 'angles' in buildingBlockTopologies[buildingBlock]:
+#                 result[letter]['angleEdges'].update(translate_angles_to_edges(
+#                     buildingBlockTopologies[buildingBlock]['angles'],
+#                     buildingBlockTopologies[buildingBlock]['atoms'],
+#                     ffParams['bondtypes'],
+#                     ffParams['angletypes']))
+#                 pass
+#
+#             # if inferImpropers:
+#             #     inferredImpropers = infer_impropers()  # TODO
+#             #     result[buildingBlock]['improperEdges'].update(translate_impropers_to_edges(
+#             #         inferredImpropers,
+#             #         result[letter]['angleEdges'],
+#             #         result[letter]['bondEdges'],
+#             #         buildingBlockTopologies[buildingBlock]['atoms'],
+#             #         ffParams['dihedraltypes']))
+#             #     pass
+#
+#             if 'impropers' in buildingBlockTopologies[buildingBlock]:
+#                 result[letter]['improperEdges'].update(
+#                         translate_impropers_to_edges(
+#                             buildingBlockTopologies[buildingBlock]['impropers'],
+#                             result[letter]['angleEdges'],
+#                             result[letter]['bondEdges'],
+#                             buildingBlockTopologies[buildingBlock]['atoms'],
+#                             ffParams['dihedraltypes'])
+#                 )
+#             pass
+#         pass
+#     return result
+
+
+def generate(
+        ffName,
+        alphabet=None,
+        inferAngles=True,
+        inferImpropers=False,
+        topPath=topologyPath):
+    result = {}
+    ffDir = topPath + ffName + ".ff/"
+
+    residueTopologyFiles = [ffDir + f for f in os.listdir(ffDir) if f.endswith('.rtp')]
+    forceFieldParamFiles = [ffDir + "ffbonded.itp"]
+
+    params = {}
+    macros = {}
+    for f in forceFieldParamFiles:
+        p, m = parse_forcefield_params(f)
+        params.update(p)
+        macros.update(m)
+        pass
+
+    buildingBlockTopologies = {}
+    for f in residueTopologyFiles:
+        buildingBlockTopologies.update(parse_residue_topology(f, macros))
+        pass
+
+    result = translate(
+            buildingBlockTopologies,
+            params,
+            inferAngles=inferAngles,
+            inferImpropers=inferImpropers
+            )
+
+    # NOTE translate residue names
+    # NOTE uses the charged version of an AA (where applicable)
+    # TODO check length of letter instead of alphabet to be more flexible?
+    for letter in alphabet.letters:
+        buildingBlock = letter
+        if letter not in result:
+            if isinstance(alphabet, Alphabet.ProteinAlphabet):
+                if alphabet.size == 1:
+                    buildingBlock = IUPACData.protein_letters_1to3_extended[letter]
+                    pass
+                buildingBlock = buildingBlock.upper()
+                if buildingBlock not in result:
+                    buildingBlock = buildingBlock[:2] + 'P'  # positively charged histidine
+                    pass
+                if buildingBlock not in result:
+                    raise KeyError("Could not find " + letter + " in the residue database.")
+                pass
+            elif isinstance(alphabet, Alphabet.DNAAlphabet):
+                if alphabet.size == 1:
+                    buildingBlock = 'D' + letter
+                    pass
+                if buildingBlock not in result:
+                    # NOTE should find all unambiguous residues
+                    raise KeyError("Could not find " + letter + " in the residue database.")
+                raise
+            elif isinstance(alphabet, Alphabet.RNAAlphabet):
+                if alphabet.size == 1:
+                    buildingBlock = 'R' + letter
+                    pass
+                if buildingBlock not in result:
+                    # NOTE should find all unambiguous residues
+                    raise KeyError("Could not find " + letter + " in the residue database.")
+                pass
+            else:
+                raise Exception("Alphabet too generic.")
+            result[letter] = result[buildingBlock]
+            pass
+        # TODO translate atom names
+        # TODO reorder atoms so backbone comes first
+        pass
+    # NOTE remove unneeded building blocks
+    toDelete = set(result.keys()) - set(alphabet.letters)
+    for l in toDelete:
+        result.pop(l)
+        pass
+
     return result

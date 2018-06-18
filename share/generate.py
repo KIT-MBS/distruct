@@ -9,29 +9,24 @@
 #
 # Creation Date : Tue 05 Dec 2017 08:08:18 PM CET
 #
-# Last Modified : Sun 17 Dec 2017 11:42:38 PM CET
+# Last Modified : Mon 18 Jun 2018 04:19:37 PM CEST
 #
 #####################################
 
-import MOBi
+from MOBi.tools.ffparsergmx import generate
+from MOBi.data import AAalphabet, DNAalphabet, RNAalphabet, alphabet
+from MOBi.fileio import write_topology_database
 
-forcefields = ['amber99sb-ildn']
+ff = "amber99sb-ildn"
+topPath = "/usr/share/gromacs/top/"
 
-# TODO add RNA
-for ff in forcefields:
-    topDB = MOBi.tools.ffparsergmx.generate_chemical_primary_edge_database(ff, MOBi.data.PDBReducedProtein)
+AAtopDB = generate(ff, AAalphabet, topPath)
+RNAtopDB = generate(ff, RNAalphabet, topPath)
+DNAtopDB = generate(ff, DNAalphabet, topPath)
 
-    databaseName = ff + "_protein"
-    MOBi.fileio.write_primary_edge_database(topDB, databaseName)
+topDB = {}
+topDB.update(AAtopDB)
+topDB.update(RNAtopDB)
+topDB.update(DNAtopDB)
 
-    topDB2 = MOBi.tools.ffparsergmx.generate_chemical_primary_edge_database(ff, MOBi.data.PDBRNAalphabet)
-
-    databaseName = ff + "_rna"
-    MOBi.fileio.write_primary_edge_database(topDB, databaseName)
-
-    topDB.update(topDB2)
-
-    databaseName = ff
-    MOBi.fileio.write_primary_edge_database(topDB, databaseName)
-
-    pass
+write_topology_database(topDB, ff)

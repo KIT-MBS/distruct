@@ -9,44 +9,41 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Wed 13 Jun 2018 06:07:22 PM CEST
+# Last Modified : Mon 18 Jun 2018 03:50:58 PM CEST
 #
 #####################################
+
+import os
+
 
 from Bio.Alphabet import IUPAC
 from Bio import Alphabet
 from Bio.Data import IUPACData
 from math import pi
-# TODO handle alphabets here
-# use generic base stuff and IUPAC
-# {'ALA', 'Ala', 'A', 'a'}
-# extended
 
-# PDBAAs = ['ALA', 'GLY', 'SER', 'THR', 'LEU', 'ILE', 'VAL', 'ASN', 'GLN', 'ARG', 'HIS', 'TRP', 'PHE', 'TYR', 'GLU', 'ASP', 'LYS', 'PRO', 'CYS', 'MET']
-# # RNAs = ['RA', 'RG', 'RC', 'RU']  # names as they appear in gromacs' amber99sb-ildn
-# PDBRNAs = ['A', 'G', 'C', 'U']  # names as they appear in the PDB
-# PDBDNAs = ['DA', 'DG', 'DC', 'DT']
-
-# NOTE Alphabets as they occur in PDB entries. Things like extended alphabets are not considered for now.
+# NOTE Alphabets as they occur in PDB entries.
+# NOTE Things like extended alphabets are not considered for now.
 # NOTE Ambiguities are not useful in this context. Extensions might be.
 AALetters = [IUPACData.protein_letters_1to3[letter].upper() for letter in IUPACData.protein_letters]
 DNALetters = ['D' + letter for letter in IUPACData.unambiguous_dna_letters]
 RNALetters = [letter for letter in IUPACData.unambiguous_rna_letters]
 
-class AAAlphabet(Alphabet.ThreeLetterProtein):
+class AAAlphabet(IUPAC.IUPACProtein):
     letters = AALetters
+    size = 3
     pass
 
-class DNAAlphabet(Alphabet.DNAAlphabet):
+class DNAAlphabet(IUPAC.IUPACUnambiguousDNA):
     letters = DNALetters
     size = 2
     pass
 
-class RNAAlphabet(Alphabet.RNAAlphabet):
+class RNAAlphabet(IUPAC.IUPACUnambiguousRNA):
     letters = RNALetters
+    size = 1
     pass
 
-class MoleculeAlphabet(Alphabet.Alphabet()):
+class MoleculeAlphabet(Alphabet.Alphabet):
     letters = AALetters + DNALetters + RNALetters
     pass
 
@@ -56,13 +53,6 @@ RNAalphabet = RNAAlphabet()
 alphabet = MoleculeAlphabet()
 
 # TODO secondary structure
-
-# TODO handle terminals (C,N,3', and 5')
-# TODO put in translation for ff names and other conventions
-# NOTE for now the maximally protonated residues are used
-# NOTE amber knows HISD, HISE and HISH but not HIS (and calls them HID, HIE and HIP)
-# amberAAs = ['ALA', 'GLY', 'SER', 'THR', 'LEU', 'ILE', 'VAL', 'ASN', 'GLN', 'ARG', 'HIP', 'TRP', 'PHE', 'TYR', 'GLU', 'ASP', 'LYS', 'PRO', 'CYS', 'MET']
-# amberAAts = ['C' + AA for AA in amberAAs] + ['N' + AA for AA in amberAAs]
 
 # NOTE default values to determine edges for secondary structure
 # TODO improve and cite these
@@ -75,5 +65,8 @@ hangle = 180. * pi / 180.  # angle donor-hydrogen-acceptor
 
 # TODO default omega value
 
-from .fileio import read_topology_file
-defaultTopologyDB = read_topology_file("amber99sb-ildn")
+defaultTopologyDB = None
+from .config import data_path
+if os.path.isfile(data_path + "amber99sb-ildn.xml"):
+    from .fileio import read_topology_database
+    defaultTopologyDB = read_topology_database("amber99sb-ildn")

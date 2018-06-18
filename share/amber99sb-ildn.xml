@@ -1,0 +1,2557 @@
+<amber99sb-ildn>
+  <ALA>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="HB3"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB3')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB3')"/>
+      <edge distance="1.78028" vertices="('HB2', 'HB3')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB3')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </ALA>
+  <CYS>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="SG"/>
+      <atom name="HG"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.71417" vertices="('CA', 'SG')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.35935" vertices="('CB', 'HG')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="2.40444" vertices="('HB1', 'SG')"/>
+      <edge distance="2.40444" vertices="('HB2', 'SG')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.81000" vertices="('CB', 'SG')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.33600" vertices="('HG', 'SG')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </CYS>
+  <ASP>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="OD1"/>
+      <atom name="OD2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.51344" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.36779" vertices="('CB', 'OD1')"/>
+      <edge distance="2.36779" vertices="('CB', 'OD2')"/>
+      <edge distance="2.14759" vertices="('CG', 'HB1')"/>
+      <edge distance="2.14759" vertices="('CG', 'HB2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="2.22752" vertices="('OD1', 'OD2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52200" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.25000" vertices="('CG', 'OD1')"/>
+      <edge distance="1.25000" vertices="('CG', 'OD2')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </ASP>
+  <GLU>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="HG1"/>
+      <atom name="HG2"/>
+      <atom name="CD"/>
+      <atom name="OE1"/>
+      <atom name="OE2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.51344" vertices="('CB', 'CD')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG2')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.14759" vertices="('CD', 'HG1')"/>
+      <edge distance="2.14759" vertices="('CD', 'HG2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.36779" vertices="('CG', 'OE1')"/>
+      <edge distance="2.36779" vertices="('CG', 'OE2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HG1', 'HG2')"/>
+      <edge distance="2.22752" vertices="('OE1', 'OE2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.52200" vertices="('CD', 'CG')"/>
+      <edge distance="1.25000" vertices="('CD', 'OE1')"/>
+      <edge distance="1.25000" vertices="('CD', 'OE2')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG2')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </GLU>
+  <PHE>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="CD1"/>
+      <atom name="HD1"/>
+      <atom name="CE1"/>
+      <atom name="HE1"/>
+      <atom name="CZ"/>
+      <atom name="HZ"/>
+      <atom name="CE2"/>
+      <atom name="HE2"/>
+      <atom name="CD2"/>
+      <atom name="HD2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.54622" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.52073" vertices="('CB', 'CD1')"/>
+      <edge distance="2.52073" vertices="('CB', 'CD2')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.42487" vertices="('CD1', 'CD2')"/>
+      <edge distance="2.42487" vertices="('CD1', 'CZ')"/>
+      <edge distance="2.15369" vertices="('CD1', 'HE1')"/>
+      <edge distance="2.42487" vertices="('CD2', 'CZ')"/>
+      <edge distance="2.15369" vertices="('CD2', 'HE2')"/>
+      <edge distance="2.42487" vertices="('CE1', 'CE2')"/>
+      <edge distance="2.42487" vertices="('CE1', 'CG')"/>
+      <edge distance="2.15369" vertices="('CE1', 'HD1')"/>
+      <edge distance="2.15369" vertices="('CE1', 'HZ')"/>
+      <edge distance="2.42487" vertices="('CE2', 'CG')"/>
+      <edge distance="2.15369" vertices="('CE2', 'HD2')"/>
+      <edge distance="2.15369" vertices="('CE2', 'HZ')"/>
+      <edge distance="2.13706" vertices="('CG', 'HB1')"/>
+      <edge distance="2.13706" vertices="('CG', 'HB2')"/>
+      <edge distance="2.15369" vertices="('CG', 'HD1')"/>
+      <edge distance="2.15369" vertices="('CG', 'HD2')"/>
+      <edge distance="2.15369" vertices="('CZ', 'HE1')"/>
+      <edge distance="2.15369" vertices="('CZ', 'HE2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.51000" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.40000" vertices="('CD1', 'CE1')"/>
+      <edge distance="1.40000" vertices="('CD1', 'CG')"/>
+      <edge distance="1.08000" vertices="('CD1', 'HD1')"/>
+      <edge distance="1.40000" vertices="('CD2', 'CE2')"/>
+      <edge distance="1.40000" vertices="('CD2', 'CG')"/>
+      <edge distance="1.08000" vertices="('CD2', 'HD2')"/>
+      <edge distance="1.40000" vertices="('CE1', 'CZ')"/>
+      <edge distance="1.08000" vertices="('CE1', 'HE1')"/>
+      <edge distance="1.40000" vertices="('CE2', 'CZ')"/>
+      <edge distance="1.08000" vertices="('CE2', 'HE2')"/>
+      <edge distance="1.08000" vertices="('CZ', 'HZ')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </PHE>
+  <GLY>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA1"/>
+      <atom name="HA2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.14759" vertices="('C', 'HA1')"/>
+      <edge distance="2.14759" vertices="('C', 'HA2')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="1.78028" vertices="('HA1', 'HA2')"/>
+      <edge distance="2.08378" vertices="('HA1', 'N')"/>
+      <edge distance="2.08378" vertices="('HA2', 'N')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA1')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA2')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </GLY>
+  <HIS>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="ND1"/>
+      <atom name="HD1"/>
+      <atom name="CE1"/>
+      <atom name="HE1"/>
+      <atom name="NE2"/>
+      <atom name="HE2"/>
+      <atom name="CD2"/>
+      <atom name="HD2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.52816" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.49071" vertices="('CB', 'CD2')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.50265" vertices="('CB', 'ND1')"/>
+      <edge distance="2.35913" vertices="('CD2', 'CE1')"/>
+      <edge distance="2.07896" vertices="('CD2', 'HE2')"/>
+      <edge distance="2.38678" vertices="('CD2', 'ND1')"/>
+      <edge distance="2.36261" vertices="('CE1', 'CG')"/>
+      <edge distance="2.04455" vertices="('CE1', 'HD1')"/>
+      <edge distance="2.04455" vertices="('CE1', 'HE2')"/>
+      <edge distance="2.13180" vertices="('CG', 'HB1')"/>
+      <edge distance="2.13180" vertices="('CG', 'HB2')"/>
+      <edge distance="2.08259" vertices="('CG', 'HD1')"/>
+      <edge distance="2.12761" vertices="('CG', 'HD2')"/>
+      <edge distance="2.38331" vertices="('CG', 'NE2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="2.13660" vertices="('HD2', 'NE2')"/>
+      <edge distance="2.10250" vertices="('HE1', 'ND1')"/>
+      <edge distance="2.10250" vertices="('HE1', 'NE2')"/>
+      <edge distance="2.32614" vertices="('ND1', 'NE2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.50400" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.37100" vertices="('CD2', 'CG')"/>
+      <edge distance="1.08000" vertices="('CD2', 'HD2')"/>
+      <edge distance="1.38100" vertices="('CD2', 'NE2')"/>
+      <edge distance="1.08000" vertices="('CE1', 'HE1')"/>
+      <edge distance="1.34300" vertices="('CE1', 'ND1')"/>
+      <edge distance="1.34300" vertices="('CE1', 'NE2')"/>
+      <edge distance="1.38500" vertices="('CG', 'ND1')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.01000" vertices="('HD1', 'ND1')"/>
+      <edge distance="1.01000" vertices="('HE2', 'NE2')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </HIS>
+  <ILE>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB"/>
+      <atom name="CG2"/>
+      <atom name="HG21"/>
+      <atom name="HG22"/>
+      <atom name="HG23"/>
+      <atom name="CG1"/>
+      <atom name="HG11"/>
+      <atom name="HG12"/>
+      <atom name="CD"/>
+      <atom name="HD1"/>
+      <atom name="HD2"/>
+      <atom name="HD3"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG1')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG2')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG11')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG12')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG21')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG22')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG23')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG11')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG12')"/>
+      <edge distance="2.49239" vertices="('CG1', 'CG2')"/>
+      <edge distance="2.15110" vertices="('CG1', 'HB')"/>
+      <edge distance="2.15110" vertices="('CG1', 'HD1')"/>
+      <edge distance="2.15110" vertices="('CG1', 'HD2')"/>
+      <edge distance="2.15110" vertices="('CG1', 'HD3')"/>
+      <edge distance="2.15110" vertices="('CG2', 'HB')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HD1', 'HD2')"/>
+      <edge distance="1.78028" vertices="('HD1', 'HD3')"/>
+      <edge distance="1.78028" vertices="('HD2', 'HD3')"/>
+      <edge distance="1.78028" vertices="('HG11', 'HG12')"/>
+      <edge distance="1.78028" vertices="('HG21', 'HG22')"/>
+      <edge distance="1.78028" vertices="('HG21', 'HG23')"/>
+      <edge distance="1.78028" vertices="('HG22', 'HG23')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG1')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG2')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB')"/>
+      <edge distance="1.52600" vertices="('CD', 'CG1')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD1')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD2')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD3')"/>
+      <edge distance="1.09000" vertices="('CG1', 'HG11')"/>
+      <edge distance="1.09000" vertices="('CG1', 'HG12')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG21')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG22')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG23')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </ILE>
+  <LYS>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="HG1"/>
+      <atom name="HG2"/>
+      <atom name="CD"/>
+      <atom name="HD1"/>
+      <atom name="HD2"/>
+      <atom name="CE"/>
+      <atom name="HE1"/>
+      <atom name="HE2"/>
+      <atom name="NZ"/>
+      <atom name="HZ1"/>
+      <atom name="HZ2"/>
+      <atom name="HZ3"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG2')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.15110" vertices="('CD', 'HE1')"/>
+      <edge distance="2.15110" vertices="('CD', 'HE2')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG2')"/>
+      <edge distance="2.47306" vertices="('CD', 'NZ')"/>
+      <edge distance="2.49239" vertices="('CE', 'CG')"/>
+      <edge distance="2.15110" vertices="('CE', 'HD1')"/>
+      <edge distance="2.15110" vertices="('CE', 'HD2')"/>
+      <edge distance="2.04348" vertices="('CE', 'HZ1')"/>
+      <edge distance="2.04348" vertices="('CE', 'HZ2')"/>
+      <edge distance="2.04348" vertices="('CE', 'HZ3')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HD1', 'HD2')"/>
+      <edge distance="1.78028" vertices="('HE1', 'HE2')"/>
+      <edge distance="2.10295" vertices="('HE1', 'NZ')"/>
+      <edge distance="2.10295" vertices="('HE2', 'NZ')"/>
+      <edge distance="1.78028" vertices="('HG1', 'HG2')"/>
+      <edge distance="1.64962" vertices="('HZ1', 'HZ2')"/>
+      <edge distance="1.64962" vertices="('HZ1', 'HZ3')"/>
+      <edge distance="1.64962" vertices="('HZ2', 'HZ3')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.52600" vertices="('CD', 'CE')"/>
+      <edge distance="1.52600" vertices="('CD', 'CG')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD1')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD2')"/>
+      <edge distance="1.09000" vertices="('CE', 'HE1')"/>
+      <edge distance="1.09000" vertices="('CE', 'HE2')"/>
+      <edge distance="1.47100" vertices="('CE', 'NZ')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG2')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.01000" vertices="('HZ1', 'NZ')"/>
+      <edge distance="1.01000" vertices="('HZ2', 'NZ')"/>
+      <edge distance="1.01000" vertices="('HZ3', 'NZ')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </LYS>
+  <LEU>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="HG"/>
+      <atom name="CD1"/>
+      <atom name="HD11"/>
+      <atom name="HD12"/>
+      <atom name="HD13"/>
+      <atom name="CD2"/>
+      <atom name="HD21"/>
+      <atom name="HD22"/>
+      <atom name="HD23"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD1')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD2')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.49239" vertices="('CD1', 'CD2')"/>
+      <edge distance="2.15110" vertices="('CD1', 'HG')"/>
+      <edge distance="2.15110" vertices="('CD2', 'HG')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD11')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD12')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD13')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD21')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD22')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD23')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HD11', 'HD12')"/>
+      <edge distance="1.78028" vertices="('HD11', 'HD13')"/>
+      <edge distance="1.78028" vertices="('HD12', 'HD13')"/>
+      <edge distance="1.78028" vertices="('HD21', 'HD22')"/>
+      <edge distance="1.78028" vertices="('HD21', 'HD23')"/>
+      <edge distance="1.78028" vertices="('HD22', 'HD23')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.52600" vertices="('CD1', 'CG')"/>
+      <edge distance="1.09000" vertices="('CD1', 'HD11')"/>
+      <edge distance="1.09000" vertices="('CD1', 'HD12')"/>
+      <edge distance="1.09000" vertices="('CD1', 'HD13')"/>
+      <edge distance="1.52600" vertices="('CD2', 'CG')"/>
+      <edge distance="1.09000" vertices="('CD2', 'HD21')"/>
+      <edge distance="1.09000" vertices="('CD2', 'HD22')"/>
+      <edge distance="1.09000" vertices="('CD2', 'HD23')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </LEU>
+  <MET>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="HG1"/>
+      <atom name="HG2"/>
+      <atom name="SD"/>
+      <atom name="CE"/>
+      <atom name="HE1"/>
+      <atom name="HE2"/>
+      <atom name="HE3"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG2')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.81303" vertices="('CB', 'SD')"/>
+      <edge distance="2.75062" vertices="('CE', 'CG')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HE1', 'HE2')"/>
+      <edge distance="1.78028" vertices="('HE1', 'HE3')"/>
+      <edge distance="2.40444" vertices="('HE1', 'SD')"/>
+      <edge distance="1.78028" vertices="('HE2', 'HE3')"/>
+      <edge distance="2.40444" vertices="('HE2', 'SD')"/>
+      <edge distance="2.40444" vertices="('HE3', 'SD')"/>
+      <edge distance="1.78028" vertices="('HG1', 'HG2')"/>
+      <edge distance="2.40444" vertices="('HG1', 'SD')"/>
+      <edge distance="2.40444" vertices="('HG2', 'SD')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.09000" vertices="('CE', 'HE1')"/>
+      <edge distance="1.09000" vertices="('CE', 'HE2')"/>
+      <edge distance="1.09000" vertices="('CE', 'HE3')"/>
+      <edge distance="1.81000" vertices="('CE', 'SD')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG2')"/>
+      <edge distance="1.81000" vertices="('CG', 'SD')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </MET>
+  <ASN>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="OD1"/>
+      <atom name="ND2"/>
+      <atom name="HD21"/>
+      <atom name="HD22"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.51344" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.43275" vertices="('CB', 'ND2')"/>
+      <edge distance="2.39166" vertices="('CB', 'OD1')"/>
+      <edge distance="2.14759" vertices="('CG', 'HB1')"/>
+      <edge distance="2.14759" vertices="('CG', 'HB2')"/>
+      <edge distance="2.03732" vertices="('CG', 'HD21')"/>
+      <edge distance="2.03732" vertices="('CG', 'HD22')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.74937" vertices="('HD21', 'HD22')"/>
+      <edge distance="2.25279" vertices="('ND2', 'OD1')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52200" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.33500" vertices="('CG', 'ND2')"/>
+      <edge distance="1.22900" vertices="('CG', 'OD1')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.01000" vertices="('HD21', 'ND2')"/>
+      <edge distance="1.01000" vertices="('HD22', 'ND2')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </ASN>
+  <PRO>
+    <vertices>
+      <atom name="N"/>
+      <atom name="CD"/>
+      <atom name="HD1"/>
+      <atom name="HD2"/>
+      <atom name="CG"/>
+      <atom name="HG1"/>
+      <atom name="HG2"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.43439" vertices="('-C', 'CD')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.48407" vertices="('CA', 'CD')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG2')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD2')"/>
+      <edge distance="2.43291" vertices="('CG', 'N')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HD1', 'HD2')"/>
+      <edge distance="2.08378" vertices="('HD1', 'N')"/>
+      <edge distance="2.08378" vertices="('HD2', 'N')"/>
+      <edge distance="1.78028" vertices="('HG1', 'HG2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.52600" vertices="('CD', 'CG')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD1')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD2')"/>
+      <edge distance="1.44900" vertices="('CD', 'N')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG2')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </PRO>
+  <GLN>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="HG1"/>
+      <atom name="HG2"/>
+      <atom name="CD"/>
+      <atom name="OE1"/>
+      <atom name="NE2"/>
+      <atom name="HE21"/>
+      <atom name="HE22"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.51344" vertices="('CB', 'CD')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG2')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.03732" vertices="('CD', 'HE21')"/>
+      <edge distance="2.03732" vertices="('CD', 'HE22')"/>
+      <edge distance="2.14759" vertices="('CD', 'HG1')"/>
+      <edge distance="2.14759" vertices="('CD', 'HG2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.43275" vertices="('CG', 'NE2')"/>
+      <edge distance="2.39166" vertices="('CG', 'OE1')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.74937" vertices="('HE21', 'HE22')"/>
+      <edge distance="1.78028" vertices="('HG1', 'HG2')"/>
+      <edge distance="2.25279" vertices="('NE2', 'OE1')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.52200" vertices="('CD', 'CG')"/>
+      <edge distance="1.33500" vertices="('CD', 'NE2')"/>
+      <edge distance="1.22900" vertices="('CD', 'OE1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG2')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.01000" vertices="('HE21', 'NE2')"/>
+      <edge distance="1.01000" vertices="('HE22', 'NE2')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </GLN>
+  <ARG>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="HG1"/>
+      <atom name="HG2"/>
+      <atom name="CD"/>
+      <atom name="HD1"/>
+      <atom name="HD2"/>
+      <atom name="NE"/>
+      <atom name="HE"/>
+      <atom name="CZ"/>
+      <atom name="NH1"/>
+      <atom name="HH11"/>
+      <atom name="HH12"/>
+      <atom name="NH2"/>
+      <atom name="HH21"/>
+      <atom name="HH22"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG2')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.46635" vertices="('CD', 'CZ')"/>
+      <edge distance="2.13683" vertices="('CD', 'HE')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CD', 'HG2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HB2')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD1')"/>
+      <edge distance="2.15110" vertices="('CG', 'HD2')"/>
+      <edge distance="2.46652" vertices="('CG', 'NE')"/>
+      <edge distance="2.04184" vertices="('CZ', 'HE')"/>
+      <edge distance="2.04184" vertices="('CZ', 'HH11')"/>
+      <edge distance="2.04184" vertices="('CZ', 'HH12')"/>
+      <edge distance="2.04184" vertices="('CZ', 'HH21')"/>
+      <edge distance="2.04184" vertices="('CZ', 'HH22')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="1.78028" vertices="('HD1', 'HD2')"/>
+      <edge distance="2.09597" vertices="('HD1', 'NE')"/>
+      <edge distance="2.09597" vertices="('HD2', 'NE')"/>
+      <edge distance="1.78028" vertices="('HG1', 'HG2')"/>
+      <edge distance="1.74937" vertices="('HH11', 'HH12')"/>
+      <edge distance="1.74937" vertices="('HH21', 'HH22')"/>
+      <edge distance="2.32095" vertices="('NE', 'NH1')"/>
+      <edge distance="2.32095" vertices="('NE', 'NH2')"/>
+      <edge distance="2.32095" vertices="('NH1', 'NH2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.52600" vertices="('CD', 'CG')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD1')"/>
+      <edge distance="1.09000" vertices="('CD', 'HD2')"/>
+      <edge distance="1.46300" vertices="('CD', 'NE')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG1')"/>
+      <edge distance="1.09000" vertices="('CG', 'HG2')"/>
+      <edge distance="1.34000" vertices="('CZ', 'NE')"/>
+      <edge distance="1.34000" vertices="('CZ', 'NH1')"/>
+      <edge distance="1.34000" vertices="('CZ', 'NH2')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.01000" vertices="('HE', 'NE')"/>
+      <edge distance="1.01000" vertices="('HH11', 'NH1')"/>
+      <edge distance="1.01000" vertices="('HH12', 'NH1')"/>
+      <edge distance="1.01000" vertices="('HH21', 'NH2')"/>
+      <edge distance="1.01000" vertices="('HH22', 'NH2')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </ARG>
+  <SER>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="OG"/>
+      <atom name="HG"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.39859" vertices="('CA', 'OG')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="1.94132" vertices="('CB', 'HG')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="2.04994" vertices="('HB1', 'OG')"/>
+      <edge distance="2.04994" vertices="('HB2', 'OG')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.41000" vertices="('CB', 'OG')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="0.96000" vertices="('HG', 'OG')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </SER>
+  <THR>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB"/>
+      <atom name="CG2"/>
+      <atom name="HG21"/>
+      <atom name="HG22"/>
+      <atom name="HG23"/>
+      <atom name="OG1"/>
+      <atom name="HG1"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG2')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.39859" vertices="('CA', 'OG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="1.94132" vertices="('CB', 'HG1')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG21')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG22')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG23')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.15110" vertices="('CG2', 'HB')"/>
+      <edge distance="2.39859" vertices="('CG2', 'OG1')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="2.04994" vertices="('HB', 'OG1')"/>
+      <edge distance="1.78028" vertices="('HG21', 'HG22')"/>
+      <edge distance="1.78028" vertices="('HG21', 'HG23')"/>
+      <edge distance="1.78028" vertices="('HG22', 'HG23')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG2')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB')"/>
+      <edge distance="1.41000" vertices="('CB', 'OG1')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG21')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG22')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG23')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="0.96000" vertices="('HG1', 'OG1')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </THR>
+  <VAL>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB"/>
+      <atom name="CG1"/>
+      <atom name="HG11"/>
+      <atom name="HG12"/>
+      <atom name="HG13"/>
+      <atom name="CG2"/>
+      <atom name="HG21"/>
+      <atom name="HG22"/>
+      <atom name="HG23"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG1')"/>
+      <edge distance="2.49239" vertices="('CA', 'CG2')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG11')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG12')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG13')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG21')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG22')"/>
+      <edge distance="2.15110" vertices="('CB', 'HG23')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.49239" vertices="('CG1', 'CG2')"/>
+      <edge distance="2.15110" vertices="('CG1', 'HB')"/>
+      <edge distance="2.15110" vertices="('CG2', 'HB')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HG11', 'HG12')"/>
+      <edge distance="1.78028" vertices="('HG11', 'HG13')"/>
+      <edge distance="1.78028" vertices="('HG12', 'HG13')"/>
+      <edge distance="1.78028" vertices="('HG21', 'HG22')"/>
+      <edge distance="1.78028" vertices="('HG21', 'HG23')"/>
+      <edge distance="1.78028" vertices="('HG22', 'HG23')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG1')"/>
+      <edge distance="1.52600" vertices="('CB', 'CG2')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB')"/>
+      <edge distance="1.09000" vertices="('CG1', 'HG11')"/>
+      <edge distance="1.09000" vertices="('CG1', 'HG12')"/>
+      <edge distance="1.09000" vertices="('CG1', 'HG13')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG21')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG22')"/>
+      <edge distance="1.09000" vertices="('CG2', 'HG23')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </VAL>
+  <TRP>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="CD1"/>
+      <atom name="HD1"/>
+      <atom name="NE1"/>
+      <atom name="HE1"/>
+      <atom name="CE2"/>
+      <atom name="CZ2"/>
+      <atom name="HZ2"/>
+      <atom name="CH2"/>
+      <atom name="HH2"/>
+      <atom name="CZ3"/>
+      <atom name="HZ3"/>
+      <atom name="CE3"/>
+      <atom name="HE3"/>
+      <atom name="CD2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.55640" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.52618" vertices="('CB', 'CD1')"/>
+      <edge distance="2.66183" vertices="('CB', 'CD2')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.25177" vertices="('CD1', 'CD2')"/>
+      <edge distance="2.28357" vertices="('CD1', 'CE2')"/>
+      <edge distance="2.07896" vertices="('CD1', 'HE1')"/>
+      <edge distance="2.47387" vertices="('CD2', 'CZ2')"/>
+      <edge distance="2.42834" vertices="('CD2', 'CZ3')"/>
+      <edge distance="2.15730" vertices="('CD2', 'HE3')"/>
+      <edge distance="2.21177" vertices="('CD2', 'NE1')"/>
+      <edge distance="2.39666" vertices="('CE2', 'CE3')"/>
+      <edge distance="2.34022" vertices="('CE2', 'CG')"/>
+      <edge distance="2.42487" vertices="('CE2', 'CH2')"/>
+      <edge distance="2.10875" vertices="('CE2', 'HE1')"/>
+      <edge distance="2.15369" vertices="('CE2', 'HZ2')"/>
+      <edge distance="2.64419" vertices="('CE3', 'CG')"/>
+      <edge distance="2.42487" vertices="('CE3', 'CH2')"/>
+      <edge distance="2.15369" vertices="('CE3', 'HZ3')"/>
+      <edge distance="2.12392" vertices="('CG', 'HB1')"/>
+      <edge distance="2.12392" vertices="('CG', 'HB2')"/>
+      <edge distance="2.11056" vertices="('CG', 'HD1')"/>
+      <edge distance="2.22088" vertices="('CG', 'NE1')"/>
+      <edge distance="2.15369" vertices="('CH2', 'HZ2')"/>
+      <edge distance="2.15369" vertices="('CH2', 'HZ3')"/>
+      <edge distance="2.42487" vertices="('CZ2', 'CZ3')"/>
+      <edge distance="2.15369" vertices="('CZ2', 'HH2')"/>
+      <edge distance="2.54750" vertices="('CZ2', 'NE1')"/>
+      <edge distance="2.15369" vertices="('CZ3', 'HE3')"/>
+      <edge distance="2.15369" vertices="('CZ3', 'HH2')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+      <edge distance="2.13660" vertices="('HD1', 'NE1')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.49500" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.35200" vertices="('CD1', 'CG')"/>
+      <edge distance="1.08000" vertices="('CD1', 'HD1')"/>
+      <edge distance="1.38100" vertices="('CD1', 'NE1')"/>
+      <edge distance="1.41900" vertices="('CD2', 'CE2')"/>
+      <edge distance="1.40400" vertices="('CD2', 'CE3')"/>
+      <edge distance="1.45900" vertices="('CD2', 'CG')"/>
+      <edge distance="1.40000" vertices="('CE2', 'CZ2')"/>
+      <edge distance="1.38000" vertices="('CE2', 'NE1')"/>
+      <edge distance="1.40000" vertices="('CE3', 'CZ3')"/>
+      <edge distance="1.08000" vertices="('CE3', 'HE3')"/>
+      <edge distance="1.40000" vertices="('CH2', 'CZ2')"/>
+      <edge distance="1.40000" vertices="('CH2', 'CZ3')"/>
+      <edge distance="1.08000" vertices="('CH2', 'HH2')"/>
+      <edge distance="1.08000" vertices="('CZ2', 'HZ2')"/>
+      <edge distance="1.08000" vertices="('CZ3', 'HZ3')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="1.01000" vertices="('HE1', 'NE1')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </TRP>
+  <TYR>
+    <vertices>
+      <atom name="N"/>
+      <atom name="H"/>
+      <atom name="CA"/>
+      <atom name="HA"/>
+      <atom name="CB"/>
+      <atom name="HB1"/>
+      <atom name="HB2"/>
+      <atom name="CG"/>
+      <atom name="CD1"/>
+      <atom name="HD1"/>
+      <atom name="CE1"/>
+      <atom name="HE1"/>
+      <atom name="CZ"/>
+      <atom name="OH"/>
+      <atom name="HH"/>
+      <atom name="CE2"/>
+      <atom name="HE2"/>
+      <atom name="CD2"/>
+      <atom name="HD2"/>
+      <atom name="C"/>
+      <atom name="O"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.43275" vertices="('+N', 'CA')"/>
+      <edge distance="2.25279" vertices="('+N', 'O')"/>
+      <edge distance="2.43439" vertices="('-C', 'CA')"/>
+      <edge distance="2.03732" vertices="('-C', 'H')"/>
+      <edge distance="2.51344" vertices="('C', 'CB')"/>
+      <edge distance="2.14759" vertices="('C', 'HA')"/>
+      <edge distance="2.43555" vertices="('C', 'N')"/>
+      <edge distance="2.54622" vertices="('CA', 'CG')"/>
+      <edge distance="2.12029" vertices="('CA', 'H')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB1')"/>
+      <edge distance="2.15110" vertices="('CA', 'HB2')"/>
+      <edge distance="2.39166" vertices="('CA', 'O')"/>
+      <edge distance="2.52073" vertices="('CB', 'CD1')"/>
+      <edge distance="2.52073" vertices="('CB', 'CD2')"/>
+      <edge distance="2.15110" vertices="('CB', 'HA')"/>
+      <edge distance="2.43291" vertices="('CB', 'N')"/>
+      <edge distance="2.42487" vertices="('CD1', 'CD2')"/>
+      <edge distance="2.43267" vertices="('CD1', 'CZ')"/>
+      <edge distance="2.15369" vertices="('CD1', 'HE1')"/>
+      <edge distance="2.43267" vertices="('CD2', 'CZ')"/>
+      <edge distance="2.15369" vertices="('CD2', 'HE2')"/>
+      <edge distance="2.44046" vertices="('CE1', 'CE2')"/>
+      <edge distance="2.42487" vertices="('CE1', 'CG')"/>
+      <edge distance="2.15369" vertices="('CE1', 'HD1')"/>
+      <edge distance="2.40159" vertices="('CE1', 'OH')"/>
+      <edge distance="2.42487" vertices="('CE2', 'CG')"/>
+      <edge distance="2.15369" vertices="('CE2', 'HD2')"/>
+      <edge distance="2.40159" vertices="('CE2', 'OH')"/>
+      <edge distance="2.13706" vertices="('CG', 'HB1')"/>
+      <edge distance="2.13706" vertices="('CG', 'HB2')"/>
+      <edge distance="2.15369" vertices="('CG', 'HD1')"/>
+      <edge distance="2.15369" vertices="('CG', 'HD2')"/>
+      <edge distance="2.16181" vertices="('CZ', 'HE1')"/>
+      <edge distance="2.16181" vertices="('CZ', 'HE2')"/>
+      <edge distance="1.95074" vertices="('CZ', 'HH')"/>
+      <edge distance="2.08378" vertices="('HA', 'N')"/>
+      <edge distance="1.78028" vertices="('HB1', 'HB2')"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.33500" vertices="('-C', 'N')"/>
+      <edge distance="1.52200" vertices="('C', 'CA')"/>
+      <edge distance="1.22900" vertices="('C', 'O')"/>
+      <edge distance="1.52600" vertices="('CA', 'CB')"/>
+      <edge distance="1.09000" vertices="('CA', 'HA')"/>
+      <edge distance="1.44900" vertices="('CA', 'N')"/>
+      <edge distance="1.51000" vertices="('CB', 'CG')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB1')"/>
+      <edge distance="1.09000" vertices="('CB', 'HB2')"/>
+      <edge distance="1.40000" vertices="('CD1', 'CE1')"/>
+      <edge distance="1.40000" vertices="('CD1', 'CG')"/>
+      <edge distance="1.08000" vertices="('CD1', 'HD1')"/>
+      <edge distance="1.40000" vertices="('CD2', 'CE2')"/>
+      <edge distance="1.40000" vertices="('CD2', 'CG')"/>
+      <edge distance="1.08000" vertices="('CD2', 'HD2')"/>
+      <edge distance="1.40900" vertices="('CE1', 'CZ')"/>
+      <edge distance="1.08000" vertices="('CE1', 'HE1')"/>
+      <edge distance="1.40900" vertices="('CE2', 'CZ')"/>
+      <edge distance="1.08000" vertices="('CE2', 'HE2')"/>
+      <edge distance="1.36400" vertices="('CZ', 'OH')"/>
+      <edge distance="1.01000" vertices="('H', 'N')"/>
+      <edge distance="0.96000" vertices="('HH', 'OH')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </TYR>
+  <DG>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N9"/>
+      <atom name="C8"/>
+      <atom name="H8"/>
+      <atom name="N7"/>
+      <atom name="C5"/>
+      <atom name="C6"/>
+      <atom name="O6"/>
+      <atom name="N1"/>
+      <atom name="H1"/>
+      <atom name="C2"/>
+      <atom name="N2"/>
+      <atom name="H21"/>
+      <atom name="H22"/>
+      <atom name="N3"/>
+      <atom name="C4"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="H2'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.56701" vertices="(&quot;C1'&quot;, 'C8')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.23524" vertices="('C2', 'C4')"/>
+      <edge distance="2.45836" vertices="('C2', 'C6')"/>
+      <edge distance="2.05838" vertices="('C2', 'H1')"/>
+      <edge distance="2.04184" vertices="('C2', 'H21')"/>
+      <edge distance="2.04184" vertices="('C2', 'H22')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N9')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.40568" vertices="('C4', 'C6')"/>
+      <edge distance="2.18358" vertices="('C4', 'C8')"/>
+      <edge distance="2.26722" vertices="('C4', 'N7')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.12147" vertices="('C5', 'C8')"/>
+      <edge distance="2.31754" vertices="('C5', 'N1')"/>
+      <edge distance="2.44519" vertices="('C5', 'N3')"/>
+      <edge distance="2.19434" vertices="('C5', 'N9')"/>
+      <edge distance="2.38946" vertices="('C5', 'O6')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.05202" vertices="('C6', 'H1')"/>
+      <edge distance="2.54675" vertices="('C6', 'N7')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N9')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H2'1&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="1.74937" vertices="('H21', 'H22')"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.09832" vertices="('H8', 'N7')"/>
+      <edge distance="2.15895" vertices="('H8', 'N9')"/>
+      <edge distance="2.30764" vertices="('N1', 'N2')"/>
+      <edge distance="2.39386" vertices="('N1', 'N3')"/>
+      <edge distance="2.27457" vertices="('N1', 'O6')"/>
+      <edge distance="2.31186" vertices="('N2', 'N3')"/>
+      <edge distance="2.43284" vertices="('N3', 'N9')"/>
+      <edge distance="2.24247" vertices="('N7', 'N9')"/>
+      <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N9')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.38100" vertices="('C2', 'N1')"/>
+      <edge distance="1.34000" vertices="('C2', 'N2')"/>
+      <edge distance="1.33900" vertices="('C2', 'N3')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.37000" vertices="('C4', 'C5')"/>
+      <edge distance="1.35400" vertices="('C4', 'N3')"/>
+      <edge distance="1.37400" vertices="('C4', 'N9')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.41900" vertices="('C5', 'C6')"/>
+      <edge distance="1.39100" vertices="('C5', 'N7')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.38800" vertices="('C6', 'N1')"/>
+      <edge distance="1.22900" vertices="('C6', 'O6')"/>
+      <edge distance="1.08000" vertices="('C8', 'H8')"/>
+      <edge distance="1.30400" vertices="('C8', 'N7')"/>
+      <edge distance="1.37100" vertices="('C8', 'N9')"/>
+      <edge distance="1.01000" vertices="('H1', 'N1')"/>
+      <edge distance="1.01000" vertices="('H21', 'N2')"/>
+      <edge distance="1.01000" vertices="('H22', 'N2')"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </DG>
+  <DA>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N9"/>
+      <atom name="C8"/>
+      <atom name="H8"/>
+      <atom name="N7"/>
+      <atom name="C5"/>
+      <atom name="C6"/>
+      <atom name="N6"/>
+      <atom name="H61"/>
+      <atom name="H62"/>
+      <atom name="N1"/>
+      <atom name="C2"/>
+      <atom name="H2"/>
+      <atom name="N3"/>
+      <atom name="C4"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="H2'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.56701" vertices="(&quot;C1'&quot;, 'C8')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.20708" vertices="('C2', 'C4')"/>
+      <edge distance="2.28980" vertices="('C2', 'C6')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N9')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.36908" vertices="('C4', 'C6')"/>
+      <edge distance="2.18358" vertices="('C4', 'C8')"/>
+      <edge distance="2.26722" vertices="('C4', 'N7')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.12147" vertices="('C5', 'C8')"/>
+      <edge distance="2.34278" vertices="('C5', 'N1')"/>
+      <edge distance="2.44519" vertices="('C5', 'N3')"/>
+      <edge distance="2.41735" vertices="('C5', 'N6')"/>
+      <edge distance="2.19434" vertices="('C5', 'N9')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.04184" vertices="('C6', 'H61')"/>
+      <edge distance="2.04184" vertices="('C6', 'H62')"/>
+      <edge distance="2.55732" vertices="('C6', 'N7')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N9')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.03674" vertices="('H2', 'N1')"/>
+      <edge distance="2.03674" vertices="('H2', 'N3')"/>
+      <edge distance="1.78028" vertices="(&quot;H2'1&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.74937" vertices="('H61', 'H62')"/>
+      <edge distance="2.09832" vertices="('H8', 'N7')"/>
+      <edge distance="2.15895" vertices="('H8', 'N9')"/>
+      <edge distance="2.39104" vertices="('N1', 'N3')"/>
+      <edge distance="2.31186" vertices="('N1', 'N6')"/>
+      <edge distance="2.43284" vertices="('N3', 'N9')"/>
+      <edge distance="2.24247" vertices="('N7', 'N9')"/>
+      <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N9')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.08000" vertices="('C2', 'H2')"/>
+      <edge distance="1.32400" vertices="('C2', 'N1')"/>
+      <edge distance="1.32400" vertices="('C2', 'N3')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.37000" vertices="('C4', 'C5')"/>
+      <edge distance="1.35400" vertices="('C4', 'N3')"/>
+      <edge distance="1.37400" vertices="('C4', 'N9')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.40400" vertices="('C5', 'C6')"/>
+      <edge distance="1.39100" vertices="('C5', 'N7')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.33900" vertices="('C6', 'N1')"/>
+      <edge distance="1.34000" vertices="('C6', 'N6')"/>
+      <edge distance="1.08000" vertices="('C8', 'H8')"/>
+      <edge distance="1.30400" vertices="('C8', 'N7')"/>
+      <edge distance="1.37100" vertices="('C8', 'N9')"/>
+      <edge distance="1.01000" vertices="('H61', 'N6')"/>
+      <edge distance="1.01000" vertices="('H62', 'N6')"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </DA>
+  <DT>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N1"/>
+      <atom name="C6"/>
+      <atom name="H6"/>
+      <atom name="C5"/>
+      <atom name="C7"/>
+      <atom name="H71"/>
+      <atom name="H72"/>
+      <atom name="H73"/>
+      <atom name="C4"/>
+      <atom name="O4"/>
+      <atom name="N3"/>
+      <atom name="H3"/>
+      <atom name="C2"/>
+      <atom name="O2"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="H2'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.47484" vertices="(&quot;C1'&quot;, 'C6')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.47782" vertices="('C2', 'C4')"/>
+      <edge distance="2.39881" vertices="('C2', 'C6')"/>
+      <edge distance="2.05202" vertices="('C2', 'H3')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N1')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.42861" vertices="('C4', 'C6')"/>
+      <edge distance="2.55458" vertices="('C4', 'C7')"/>
+      <edge distance="2.05202" vertices="('C4', 'H3')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.10563" vertices="('C5', 'H6')"/>
+      <edge distance="2.13706" vertices="('C5', 'H71')"/>
+      <edge distance="2.13706" vertices="('C5', 'H72')"/>
+      <edge distance="2.13706" vertices="('C5', 'H73')"/>
+      <edge distance="2.36536" vertices="('C5', 'N1')"/>
+      <edge distance="2.37666" vertices="('C5', 'N3')"/>
+      <edge distance="2.37626" vertices="('C5', 'O4')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.47439" vertices="('C6', 'C7')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N1')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H2'1&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.11271" vertices="('H6', 'N1')"/>
+      <edge distance="1.78028" vertices="('H71', 'H72')"/>
+      <edge distance="1.78028" vertices="('H71', 'H73')"/>
+      <edge distance="1.78028" vertices="('H72', 'H73')"/>
+      <edge distance="2.34222" vertices="('N1', 'N3')"/>
+      <edge distance="2.27351" vertices="('N1', 'O2')"/>
+      <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
+      <edge distance="2.27457" vertices="('N3', 'O2')"/>
+      <edge distance="2.27457" vertices="('N3', 'O4')"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N1')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.38300" vertices="('C2', 'N1')"/>
+      <edge distance="1.38800" vertices="('C2', 'N3')"/>
+      <edge distance="1.22900" vertices="('C2', 'O2')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.44400" vertices="('C4', 'C5')"/>
+      <edge distance="1.38800" vertices="('C4', 'N3')"/>
+      <edge distance="1.22900" vertices="('C4', 'O4')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.35000" vertices="('C5', 'C6')"/>
+      <edge distance="1.51000" vertices="('C5', 'C7')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.08000" vertices="('C6', 'H6')"/>
+      <edge distance="1.36500" vertices="('C6', 'N1')"/>
+      <edge distance="1.09000" vertices="('C7', 'H71')"/>
+      <edge distance="1.09000" vertices="('C7', 'H72')"/>
+      <edge distance="1.09000" vertices="('C7', 'H73')"/>
+      <edge distance="1.01000" vertices="('H3', 'N3')"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </DT>
+  <DC>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N1"/>
+      <atom name="C6"/>
+      <atom name="H6"/>
+      <atom name="C5"/>
+      <atom name="H5"/>
+      <atom name="C4"/>
+      <atom name="N4"/>
+      <atom name="H41"/>
+      <atom name="H42"/>
+      <atom name="N3"/>
+      <atom name="C2"/>
+      <atom name="O2"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="H2'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.47484" vertices="(&quot;C1'&quot;, 'C6')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.34155" vertices="('C2', 'C4')"/>
+      <edge distance="2.39881" vertices="('C2', 'C6')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N1')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.37329" vertices="('C4', 'C6')"/>
+      <edge distance="2.04184" vertices="('C4', 'H41')"/>
+      <edge distance="2.04184" vertices="('C4', 'H42')"/>
+      <edge distance="2.21794" vertices="('C4', 'H5')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.10563" vertices="('C5', 'H6')"/>
+      <edge distance="2.36536" vertices="('C5', 'N1')"/>
+      <edge distance="2.41900" vertices="('C5', 'N3')"/>
+      <edge distance="2.40315" vertices="('C5', 'N4')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.10563" vertices="('C6', 'H5')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N1')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H2'1&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.74937" vertices="('H41', 'H42')"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.11271" vertices="('H6', 'N1')"/>
+      <edge distance="2.35689" vertices="('N1', 'N3')"/>
+      <edge distance="2.27351" vertices="('N1', 'O2')"/>
+      <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
+      <edge distance="2.31186" vertices="('N3', 'N4')"/>
+      <edge distance="2.26894" vertices="('N3', 'O2')"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N1')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.38300" vertices="('C2', 'N1')"/>
+      <edge distance="1.35800" vertices="('C2', 'N3')"/>
+      <edge distance="1.22900" vertices="('C2', 'O2')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'2&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.43300" vertices="('C4', 'C5')"/>
+      <edge distance="1.33900" vertices="('C4', 'N3')"/>
+      <edge distance="1.34000" vertices="('C4', 'N4')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.35000" vertices="('C5', 'C6')"/>
+      <edge distance="1.08000" vertices="('C5', 'H5')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.08000" vertices="('C6', 'H6')"/>
+      <edge distance="1.36500" vertices="('C6', 'N1')"/>
+      <edge distance="1.01000" vertices="('H41', 'N4')"/>
+      <edge distance="1.01000" vertices="('H42', 'N4')"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </DC>
+  <G>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N9"/>
+      <atom name="C8"/>
+      <atom name="H8"/>
+      <atom name="N7"/>
+      <atom name="C5"/>
+      <atom name="C6"/>
+      <atom name="O6"/>
+      <atom name="N1"/>
+      <atom name="H1"/>
+      <atom name="C2"/>
+      <atom name="N2"/>
+      <atom name="H21"/>
+      <atom name="H22"/>
+      <atom name="N3"/>
+      <atom name="C4"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="O2'"/>
+      <atom name="HO'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.56701" vertices="(&quot;C1'&quot;, 'C8')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C1'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.23524" vertices="('C2', 'C4')"/>
+      <edge distance="2.45836" vertices="('C2', 'C6')"/>
+      <edge distance="2.05838" vertices="('C2', 'H1')"/>
+      <edge distance="2.04184" vertices="('C2', 'H21')"/>
+      <edge distance="2.04184" vertices="('C2', 'H22')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.94132" vertices="(&quot;C2'&quot;, &quot;HO'2&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N9')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.40568" vertices="('C4', 'C6')"/>
+      <edge distance="2.18358" vertices="('C4', 'C8')"/>
+      <edge distance="2.26722" vertices="('C4', 'N7')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.12147" vertices="('C5', 'C8')"/>
+      <edge distance="2.31754" vertices="('C5', 'N1')"/>
+      <edge distance="2.44519" vertices="('C5', 'N3')"/>
+      <edge distance="2.19434" vertices="('C5', 'N9')"/>
+      <edge distance="2.38946" vertices="('C5', 'O6')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.05202" vertices="('C6', 'H1')"/>
+      <edge distance="2.54675" vertices="('C6', 'N7')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N9')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H2'1&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.74937" vertices="('H21', 'H22')"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.09832" vertices="('H8', 'N7')"/>
+      <edge distance="2.15895" vertices="('H8', 'N9')"/>
+      <edge distance="2.30764" vertices="('N1', 'N2')"/>
+      <edge distance="2.39386" vertices="('N1', 'N3')"/>
+      <edge distance="2.27457" vertices="('N1', 'O6')"/>
+      <edge distance="2.31186" vertices="('N2', 'N3')"/>
+      <edge distance="2.43284" vertices="('N3', 'N9')"/>
+      <edge distance="2.24247" vertices="('N7', 'N9')"/>
+      <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N9')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.38100" vertices="('C2', 'N1')"/>
+      <edge distance="1.34000" vertices="('C2', 'N2')"/>
+      <edge distance="1.33900" vertices="('C2', 'N3')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C2'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.37000" vertices="('C4', 'C5')"/>
+      <edge distance="1.35400" vertices="('C4', 'N3')"/>
+      <edge distance="1.37400" vertices="('C4', 'N9')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.41900" vertices="('C5', 'C6')"/>
+      <edge distance="1.39100" vertices="('C5', 'N7')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.38800" vertices="('C6', 'N1')"/>
+      <edge distance="1.22900" vertices="('C6', 'O6')"/>
+      <edge distance="1.08000" vertices="('C8', 'H8')"/>
+      <edge distance="1.30400" vertices="('C8', 'N7')"/>
+      <edge distance="1.37100" vertices="('C8', 'N9')"/>
+      <edge distance="1.01000" vertices="('H1', 'N1')"/>
+      <edge distance="1.01000" vertices="('H21', 'N2')"/>
+      <edge distance="1.01000" vertices="('H22', 'N2')"/>
+      <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </G>
+  <A>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N9"/>
+      <atom name="C8"/>
+      <atom name="H8"/>
+      <atom name="N7"/>
+      <atom name="C5"/>
+      <atom name="C6"/>
+      <atom name="N6"/>
+      <atom name="H61"/>
+      <atom name="H62"/>
+      <atom name="N1"/>
+      <atom name="C2"/>
+      <atom name="H2"/>
+      <atom name="N3"/>
+      <atom name="C4"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="O2'"/>
+      <atom name="HO'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.56701" vertices="(&quot;C1'&quot;, 'C8')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C1'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.20708" vertices="('C2', 'C4')"/>
+      <edge distance="2.28980" vertices="('C2', 'C6')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.94132" vertices="(&quot;C2'&quot;, &quot;HO'2&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N9')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.36908" vertices="('C4', 'C6')"/>
+      <edge distance="2.18358" vertices="('C4', 'C8')"/>
+      <edge distance="2.26722" vertices="('C4', 'N7')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.12147" vertices="('C5', 'C8')"/>
+      <edge distance="2.34278" vertices="('C5', 'N1')"/>
+      <edge distance="2.44519" vertices="('C5', 'N3')"/>
+      <edge distance="2.41735" vertices="('C5', 'N6')"/>
+      <edge distance="2.19434" vertices="('C5', 'N9')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.04184" vertices="('C6', 'H61')"/>
+      <edge distance="2.04184" vertices="('C6', 'H62')"/>
+      <edge distance="2.55732" vertices="('C6', 'N7')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N9')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.03674" vertices="('H2', 'N1')"/>
+      <edge distance="2.03674" vertices="('H2', 'N3')"/>
+      <edge distance="2.04994" vertices="(&quot;H2'1&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.74937" vertices="('H61', 'H62')"/>
+      <edge distance="2.09832" vertices="('H8', 'N7')"/>
+      <edge distance="2.15895" vertices="('H8', 'N9')"/>
+      <edge distance="2.39104" vertices="('N1', 'N3')"/>
+      <edge distance="2.31186" vertices="('N1', 'N6')"/>
+      <edge distance="2.43284" vertices="('N3', 'N9')"/>
+      <edge distance="2.24247" vertices="('N7', 'N9')"/>
+      <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N9')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.08000" vertices="('C2', 'H2')"/>
+      <edge distance="1.32400" vertices="('C2', 'N1')"/>
+      <edge distance="1.32400" vertices="('C2', 'N3')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C2'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.37000" vertices="('C4', 'C5')"/>
+      <edge distance="1.35400" vertices="('C4', 'N3')"/>
+      <edge distance="1.37400" vertices="('C4', 'N9')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.40400" vertices="('C5', 'C6')"/>
+      <edge distance="1.39100" vertices="('C5', 'N7')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.33900" vertices="('C6', 'N1')"/>
+      <edge distance="1.34000" vertices="('C6', 'N6')"/>
+      <edge distance="1.08000" vertices="('C8', 'H8')"/>
+      <edge distance="1.30400" vertices="('C8', 'N7')"/>
+      <edge distance="1.37100" vertices="('C8', 'N9')"/>
+      <edge distance="1.01000" vertices="('H61', 'N6')"/>
+      <edge distance="1.01000" vertices="('H62', 'N6')"/>
+      <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </A>
+  <U>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N1"/>
+      <atom name="C6"/>
+      <atom name="H6"/>
+      <atom name="C5"/>
+      <atom name="H5"/>
+      <atom name="C4"/>
+      <atom name="O4"/>
+      <atom name="N3"/>
+      <atom name="H3"/>
+      <atom name="C2"/>
+      <atom name="O2"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="O2'"/>
+      <atom name="HO'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.47484" vertices="(&quot;C1'&quot;, 'C6')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C1'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.47782" vertices="('C2', 'C4')"/>
+      <edge distance="2.39881" vertices="('C2', 'C6')"/>
+      <edge distance="2.05202" vertices="('C2', 'H3')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.94132" vertices="(&quot;C2'&quot;, &quot;HO'2&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N1')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.42861" vertices="('C4', 'C6')"/>
+      <edge distance="2.05202" vertices="('C4', 'H3')"/>
+      <edge distance="2.19018" vertices="('C4', 'H5')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.10563" vertices="('C5', 'H6')"/>
+      <edge distance="2.36536" vertices="('C5', 'N1')"/>
+      <edge distance="2.37666" vertices="('C5', 'N3')"/>
+      <edge distance="2.37626" vertices="('C5', 'O4')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.10563" vertices="('C6', 'H5')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N1')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H2'1&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.11271" vertices="('H6', 'N1')"/>
+      <edge distance="2.34222" vertices="('N1', 'N3')"/>
+      <edge distance="2.27351" vertices="('N1', 'O2')"/>
+      <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
+      <edge distance="2.27457" vertices="('N3', 'O2')"/>
+      <edge distance="2.27457" vertices="('N3', 'O4')"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N1')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.38300" vertices="('C2', 'N1')"/>
+      <edge distance="1.38800" vertices="('C2', 'N3')"/>
+      <edge distance="1.22900" vertices="('C2', 'O2')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C2'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.44400" vertices="('C4', 'C5')"/>
+      <edge distance="1.38800" vertices="('C4', 'N3')"/>
+      <edge distance="1.22900" vertices="('C4', 'O4')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.35000" vertices="('C5', 'C6')"/>
+      <edge distance="1.08000" vertices="('C5', 'H5')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.08000" vertices="('C6', 'H6')"/>
+      <edge distance="1.36500" vertices="('C6', 'N1')"/>
+      <edge distance="1.01000" vertices="('H3', 'N3')"/>
+      <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </U>
+  <C>
+    <vertices>
+      <atom name="P"/>
+      <atom name="O1P"/>
+      <atom name="O2P"/>
+      <atom name="O5'"/>
+      <atom name="C5'"/>
+      <atom name="H5'1"/>
+      <atom name="H5'2"/>
+      <atom name="C4'"/>
+      <atom name="H4'"/>
+      <atom name="O4'"/>
+      <atom name="C1'"/>
+      <atom name="H1'"/>
+      <atom name="N1"/>
+      <atom name="C6"/>
+      <atom name="H6"/>
+      <atom name="C5"/>
+      <atom name="H5"/>
+      <atom name="C4"/>
+      <atom name="N4"/>
+      <atom name="H41"/>
+      <atom name="H42"/>
+      <atom name="N3"/>
+      <atom name="C2"/>
+      <atom name="O2"/>
+      <atom name="C3'"/>
+      <atom name="H3'"/>
+      <atom name="C2'"/>
+      <atom name="H2'1"/>
+      <atom name="O2'"/>
+      <atom name="HO'2"/>
+      <atom name="O3'"/>
+    </vertices>
+    <angleEdges>
+      <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
+      <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="2.30293" vertices="(&quot;C1'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.47484" vertices="(&quot;C1'&quot;, 'C6')"/>
+      <edge distance="2.15110" vertices="(&quot;C1'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C1'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.34155" vertices="('C2', 'C4')"/>
+      <edge distance="2.39881" vertices="('C2', 'C6')"/>
+      <edge distance="2.49239" vertices="(&quot;C2'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C2'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.94132" vertices="(&quot;C2'&quot;, &quot;HO'2&quot;)"/>
+      <edge distance="2.45092" vertices="(&quot;C2'&quot;, 'N1')"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C2'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.49239" vertices="(&quot;C3'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C3'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C3'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.37329" vertices="('C4', 'C6')"/>
+      <edge distance="2.04184" vertices="('C4', 'H41')"/>
+      <edge distance="2.04184" vertices="('C4', 'H42')"/>
+      <edge distance="2.21794" vertices="('C4', 'H5')"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="2.15110" vertices="(&quot;C4'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C4'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.10563" vertices="('C5', 'H6')"/>
+      <edge distance="2.36536" vertices="('C5', 'N1')"/>
+      <edge distance="2.41900" vertices="('C5', 'N3')"/>
+      <edge distance="2.40315" vertices="('C5', 'N4')"/>
+      <edge distance="2.15110" vertices="(&quot;C5'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="2.39859" vertices="(&quot;C5'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.62384" vertices="(&quot;C5'&quot;, 'P')"/>
+      <edge distance="2.10563" vertices="('C6', 'H5')"/>
+      <edge distance="2.10644" vertices="(&quot;H1'&quot;, 'N1')"/>
+      <edge distance="2.04994" vertices="(&quot;H1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H2'1&quot;, &quot;O2'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.74937" vertices="('H41', 'H42')"/>
+      <edge distance="1.78028" vertices="(&quot;H5'1&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'1&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.04994" vertices="(&quot;H5'2&quot;, &quot;O5'&quot;)"/>
+      <edge distance="2.11271" vertices="('H6', 'N1')"/>
+      <edge distance="2.35689" vertices="('N1', 'N3')"/>
+      <edge distance="2.27351" vertices="('N1', 'O2')"/>
+      <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
+      <edge distance="2.31186" vertices="('N3', 'N4')"/>
+      <edge distance="2.26894" vertices="('N3', 'O2')"/>
+      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
+      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+    </angleEdges>
+    <bondEdges>
+      <edge distance="1.61000" vertices="(&quot;-O3'&quot;, 'P')"/>
+      <edge distance="1.52600" vertices="(&quot;C1'&quot;, &quot;C2'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C1'&quot;, &quot;H1'&quot;)"/>
+      <edge distance="1.47500" vertices="(&quot;C1'&quot;, 'N1')"/>
+      <edge distance="1.41000" vertices="(&quot;C1'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.38300" vertices="('C2', 'N1')"/>
+      <edge distance="1.35800" vertices="('C2', 'N3')"/>
+      <edge distance="1.22900" vertices="('C2', 'O2')"/>
+      <edge distance="1.52600" vertices="(&quot;C2'&quot;, &quot;C3'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C2'&quot;, &quot;H2'1&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C2'&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.52600" vertices="(&quot;C3'&quot;, &quot;C4'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C3'&quot;, &quot;H3'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C3'&quot;, &quot;O3'&quot;)"/>
+      <edge distance="1.43300" vertices="('C4', 'C5')"/>
+      <edge distance="1.33900" vertices="('C4', 'N3')"/>
+      <edge distance="1.34000" vertices="('C4', 'N4')"/>
+      <edge distance="1.52600" vertices="(&quot;C4'&quot;, &quot;C5'&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C4'&quot;, &quot;H4'&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C4'&quot;, &quot;O4'&quot;)"/>
+      <edge distance="1.35000" vertices="('C5', 'C6')"/>
+      <edge distance="1.08000" vertices="('C5', 'H5')"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'1&quot;)"/>
+      <edge distance="1.09000" vertices="(&quot;C5'&quot;, &quot;H5'2&quot;)"/>
+      <edge distance="1.41000" vertices="(&quot;C5'&quot;, &quot;O5'&quot;)"/>
+      <edge distance="1.08000" vertices="('C6', 'H6')"/>
+      <edge distance="1.36500" vertices="('C6', 'N1')"/>
+      <edge distance="1.01000" vertices="('H41', 'N4')"/>
+      <edge distance="1.01000" vertices="('H42', 'N4')"/>
+      <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
+      <edge distance="1.48000" vertices="('O1P', 'P')"/>
+      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
+    </bondEdges>
+    <dihedralEdges/>
+    <improperEdges/>
+  </C>
+</amber99sb-ildn>
