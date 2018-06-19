@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 18 Jun 2018 03:36:38 PM CEST
+# Last Modified : Mon 18 Jun 2018 05:34:21 PM CEST
 #
 #####################################
 
@@ -29,7 +29,6 @@ topologyPath = config.gromacs_topology_path
 # TODO add omega to topologies
 
 
-# TODO inconsistent naming
 def read_atomtypes(line):
     parts = line.split()
     name = parts[0]
