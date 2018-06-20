@@ -207,6 +207,7 @@ class Distructure(Structure):
     Also maintains a list of contacts and corresponding edges between vertices (atoms).
     """
 
+    # TODO the sequences i.e. chains might have user supplies ids
     def __init__(self, id, sequences = [], resIDLists = [], SSsequences = None, topologyDB=data.defaultTopologyDB):
         """
         Initialize Distructure object.
@@ -262,7 +263,7 @@ class Distructure(Structure):
         self._tertiaryContacts = list()
         return
 
-    def _chain_count2ID(count):
+    def _chain_count2ID(self, count):
         ID = ''
 
         base26 = []
@@ -283,8 +284,6 @@ class Distructure(Structure):
                 pass
             pass
         return ID
-
-    # TODO Distructure builder
 
     def _get_entity(self, fullID):
         """
