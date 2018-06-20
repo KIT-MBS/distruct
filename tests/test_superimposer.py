@@ -9,7 +9,7 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Wed 20 Jun 2018 03:15:18 PM CEST
+# Last Modified : Wed 20 Jun 2018 03:24:11 PM CEST
 #
 #####################################
 
@@ -19,6 +19,7 @@ from pytest import approx
 
 
 from MOBi import config
+from MOBi import Superimposer
 
 testFilePath = config.data_path + "tests/"
 
@@ -38,7 +39,7 @@ def test_superimposer():
     # y = np.array([[0., 1., 0.],
     #              [0., -1., 0.]], 'f')
 
-    sup = MOBi.Superimposer()
+    sup = Superimposer()
     sup.set_coords(x, y)
     # TODO is this really that bad??
     assert sup.rms == approx(0., abs=1e-2)
@@ -57,8 +58,8 @@ def test_superimposer_molecule():
 
     # TODO transform moving
 
-    sup = MOBi.Superimposer()
-    sup.set_coords(fixed, moving)
+    sup = Superimposer()
+    sup.set_atoms(list(fixedS.get_atoms()), list(movingS.get_atoms()))
 
     assert sup.rms == approx(0.)
     return
