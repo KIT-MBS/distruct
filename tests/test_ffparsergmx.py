@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Tue 19 Jun 2018 03:57:13 PM CEST
+# Last Modified : Wed 20 Jun 2018 01:32:41 PM CEST
 #
 #####################################
 
@@ -62,12 +62,10 @@ def test_read_impropers():
 def test_parse_residue_topology():
     fileName = testFilePath + 'test.ff/buildingblocks.rtp'
     macros = {'A1-4_improper': '0.0'}
-    # buildingBlocks = ['BB']
     ignoredDirectives = {'bondedtypes'}
     result = ffparsergmx.parse_residue_topology(
             fileName,
             macros,
-            # buildingBlocks,
             ignoredDirectives = ignoredDirectives)
     assert result['BB']['atoms'] == {'A1': 'A1', 'A2': 'A2', 'A3': 'A3', 'A4': 'A4'}
     assert result['BB']['bonds'] == {('A1', 'A2'): None, ('A2', 'A3'): None, ('A3', 'A4'): None, ('A2', 'A1'): None, ('A3', 'A2'): None, ('A4', 'A3'): None}
@@ -141,13 +139,6 @@ def test_infer_angles():
     return
 
 
-# def test_translate_atoms_to_vertices():
-#     atoms = {'C': 'CT', 'H1': 'H', 'H2': 'H', 'H3': 'H', 'H4': 'H'}
-#     result = ffparsergmx.translate_atoms_to_vertices(atoms)
-#     assert result == {'C', 'H1', 'H2', 'H3', 'H4'}
-#     return
-
-
 def test_translate_bonds_to_edges():
     bonds = {('A1', 'A2'): None, ('A2', 'A3'): 1.2}
     atomTypes = {'A1': 'AT1', 'A2': 'AT2', 'A3': 'AT3'}
@@ -163,8 +154,6 @@ def test_translate_angles_to_edges():
     bondTypes = {('AT1', 'AT2'): 1.2, ('AT2', 'AT3'): 1.0, ('AT3', 'AT4'): 1.1, }
     angleTypes = {('AT2', 'AT3', 'AT4'): 115. * pi/180.}
     result = ffparsergmx.translate_angles_to_edges(angles, atomTypes, bondTypes, angleTypes)
-    # assert math.isclose(result[('A1', 'A3')], 1.90787884028338913, rel_tol=1e-5)
-    # assert math.isclose(result[('A2', 'A4')], 1.7719368430701863, rel_tol=1e-5)
 
     assert result[('A1', 'A3')] == approx(1.90787884028338913, rel=1e-5)
     assert result[('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
@@ -200,12 +189,6 @@ def test_generate():
 
     result = ffparsergmx.generate(ffname, alphabet, inferAngles, topPath=topPath)
     assert result['BB']['vertices'] == ['A1', 'A2', 'A3', 'A4']
-    # assert math.isclose(result['BB']['bondEdges'][('A1', 'A2')], 1.2)
-    # assert math.isclose(result['BB']['bondEdges'][('A2', 'A3')], 1.0)
-    # assert math.isclose(result['BB']['bondEdges'][('A3', 'A4')], 1.1)
-    # assert math.isclose(result['BB']['angleEdges'][('A1', 'A3')], 1.90787884028338913, rel_tol=1e-5)
-    # assert math.isclose(result['BB']['angleEdges'][('A2', 'A4')], 1.7719368430701863, rel_tol=1e-5)
-    # assert math.isclose(result['BB']['improperEdges']['A1', 'A4'], 2.065313144262336)
 
     assert result['BB']['bondEdges'][('A1', 'A2')] == approx(1.2)
     assert result['BB']['bondEdges'][('A2', 'A3')] == approx(1.0)
