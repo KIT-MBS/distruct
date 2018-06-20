@@ -9,15 +9,18 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Mon 28 May 2018 10:11:21 AM CEST
+# Last Modified : Wed 20 Jun 2018 03:15:18 PM CEST
 #
 #####################################
 
 
 import numpy as np
+from pytest import approx
 
 
-import MOBi
+from MOBi import config
+
+testFilePath = config.data_path + "tests/"
 
 
 def test_superimposer():
@@ -37,9 +40,28 @@ def test_superimposer():
 
     sup = MOBi.Superimposer()
     sup.set_coords(x, y)
-    from pytest import approx
     # TODO is this really that bad??
     assert sup.rms == approx(0., abs=1e-2)
+    return
+
+
+def test_superimposer_molecule():
+
+    from Bio.PDB.PDBParser import PDBParser
+
+    code = '1ptq'
+    fileName = testFilePath + code + '.pdb'
+
+    fixedS = PDBParser().get_structure(code, fileName)
+    movingS = PDBParser().get_structure(code, fileName)
+
+    # TODO transform moving
+
+    sup = MOBi.Superimposer()
+    sup.set_coords(fixed, moving)
+
+    assert sup.rms == approx(0.)
+    return
 
 
 def test_compare():
