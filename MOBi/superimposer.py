@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 17 May 2018 07:39:39 PM CEST
 #
-# Last Modified : Wed 23 May 2018 03:47:12 PM CEST
+# Last Modified : Wed 20 Jun 2018 03:20:37 PM CEST
 #
 #####################################
 
@@ -19,7 +19,6 @@ import numpy as np
 from Bio.PDB.PDBExceptions import PDBException
 
 
-# TODO put this in C? might be necessary for large structures.
 class Superimposer(object):
     """
     Rotate/translate/mirror one set of atoms op top of another to minimize RMSD.
