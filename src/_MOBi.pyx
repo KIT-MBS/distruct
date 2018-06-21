@@ -201,7 +201,7 @@ from itertools import zip_longest
 
 class Distructure(Structure):
     """
-    Interface between hierarchical Bio.Structure representation of a molecule and a graph.
+    Interface between hierarchical Bio.PDB.Structure representation of a molecule and a graph.
 
     Contains Structure, Model, Chain and Residue objects.
     Also maintains a list of contacts and corresponding edges between vertices (atoms).
@@ -225,6 +225,8 @@ class Distructure(Structure):
             chainCounter = 1
             atomCounter = 0  # NOTE atomCount starts at 0 since graph vertices do
             for sequence, resIDs in zip_longest(sequences, resIDLists, fillvalue=list()):
+                topologyDB.switch(sequence.alphabet)
+
                 chainID = self._chain_count2ID(chainCounter)
                 resCounter = 1
                 chainCounter += 1
@@ -239,16 +241,15 @@ class Distructure(Structure):
                     chain.add(residue)
                     resCounter += 1
 
-                    # TODO use ordered dict for vertices
-                    for vertex in topologyDB[resName]['vertices']:
-                        atomName = vertex
+                    for atomName, element in topologyDB[resName]['vertices']:
+                        # atomName = vertex
                         coord = np.full(3, np.nan)
                         bFactor = 0.
                         occupancy = 1.
                         altloc = " "
                         fullName = vertex  # TODO get the coorect full name from somewhere
                         serialNumber = atomCounter
-                        element = atomName = [0]  # TODO get from top db
+                        # element = atomName = [0]  # TODO get from top db
                         atom = Atom(atomName, coord, bFactor, occupancy, altloc, fullName, serialNumber, element)
                         residue.add(atom)
                         atomCounter += 1

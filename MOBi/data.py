@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Mon 18 Jun 2018 03:50:58 PM CEST
+# Last Modified : Thu 21 Jun 2018 11:00:24 AM CEST
 #
 #####################################
 
@@ -69,4 +69,6 @@ defaultTopologyDB = None
 from .config import data_path
 if os.path.isfile(data_path + "amber99sb-ildn.xml"):
     from .fileio import read_topology_database
+    assert False
+    # TODO redo topdict generation, letterma, atom parse, omega...
     defaultTopologyDB = read_topology_database("amber99sb-ildn")
