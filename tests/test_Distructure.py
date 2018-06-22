@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 11 Jun 2018 04:04:59 PM CEST
 #
-# Last Modified : Wed 20 Jun 2018 04:38:19 PM CEST
+# Last Modified : Fri 22 Jun 2018 04:53:38 PM CEST
 #
 #####################################
 
@@ -32,12 +32,12 @@ def test_Distructure():
 
     sequences = list()
     with open(fileName, 'rU') as f:
-        for record in SeqIO.parse(f, "pdb-seqres"):
-            print(record)
-            sequences.append(record.seq)
-            pass
+        # for record in SeqIO.parse(f, "pdb-seqres"):
+        #     print(record)
+        #     sequences.append(record.seq)
+        #     pass
+        sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
         pass
-    # TODO use only one letter alphabets and choose building block based on the alphabet
 
     # create distruct
     ds = Distructure(code, sequences)
