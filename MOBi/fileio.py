@@ -9,13 +9,11 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Mon 18 Jun 2018 04:27:48 PM CEST
+# Last Modified : Fri 22 Jun 2018 04:52:04 PM CEST
 #
 #####################################
 
 from lxml import etree as ET
-
-# TODO handle alphabets
 
 from . import config
 from . import data
@@ -72,7 +70,8 @@ def write_topology_database(
         buildingBlocks=[],
         outDir='./',
         fileName=None,
-        alphabet=data.alphabet):
+        # alphabet=data.alphabet): # TODO remove this
+    ):
     if not fileName:
         fileName = databaseName + '.xml'
         pass
@@ -83,7 +82,8 @@ def write_topology_database(
     root = ET.Element(databaseName)
     XMLTree = ET.ElementTree(root)
 
-    for buildingBlock in alphabet.letters:
+    # for buildingBlock in alphabet.letters:
+    for buildingBlock in database:
         assert buildingBlock in database
         assert 'vertices' in database[buildingBlock]
         bbElement = ET.SubElement(root, buildingBlock)

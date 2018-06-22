@@ -225,7 +225,6 @@ class Distructure(Structure):
             chainCounter = 1
             atomCounter = 0  # NOTE atomCount starts at 0 since graph vertices do
             for sequence, resIDs in zip_longest(sequences, resIDLists, fillvalue=list()):
-                topologyDB.switch(sequence.alphabet)
 
                 chainID = self._chain_count2ID(chainCounter)
                 resCounter = 1
@@ -235,8 +234,13 @@ class Distructure(Structure):
 
                 for resID, letter in zip_longest(resIDs, sequence):
                     assert letter is not None
-                    resName = letter
+                    resName = topDB['alphabets'][alphabet][letter]
                     segID = "   "  # TODO check this
+                    if resID is None:
+                        hetField = " "
+                        iCode = " "
+                        resID = [hetField, resCounter, iCode]
+                        pass
                     residue = Residue(resID, resName, segID)
                     chain.add(residue)
                     resCounter += 1
@@ -433,6 +437,11 @@ class Distructure(Structure):
         return
 
     def update_serial_numbers(self):
+        """
+        Renumber all atoms in the structure.
+
+        This should be called after adding new atoms to the structure.
+        """
         for i, a in enumerate(self.get_atoms()):
             a.set_serial_number(i)
             pass
