@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Fri 22 Jun 2018 05:22:02 PM CEST
+# Last Modified : Sun 24 Jun 2018 03:35:06 PM CEST
 #
 #####################################
 
@@ -53,6 +53,7 @@ from math import pi
 # RNAalphabet = RNAAlphabet()
 # alphabet = MoleculeAlphabet()
 
+# TODO should this be in the topDB?
 def letters(alphabet):
     if isinstance(alphabet, Alphabet.ProteinAlphabet):
         return "AA"
@@ -62,7 +63,7 @@ def letters(alphabet):
         return "RNA"
     else:
         raise  # TODO helpful message
-    pass
+    return
 
 # NOTE default values to determine edges for secondary structure
 # TODO improve and cite these
