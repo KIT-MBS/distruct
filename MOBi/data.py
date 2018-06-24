@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Fri 22 Jun 2018 04:52:51 PM CEST
+# Last Modified : Fri 22 Jun 2018 05:22:02 PM CEST
 #
 #####################################
 
@@ -52,6 +52,17 @@ from math import pi
 # DNAalphabet = DNAAlphabet()
 # RNAalphabet = RNAAlphabet()
 # alphabet = MoleculeAlphabet()
+
+def letters(alphabet):
+    if isinstance(alphabet, Alphabet.ProteinAlphabet):
+        return "AA"
+    elif isinstance(alphabet, Alphabet.DNAAlphabet):
+        return "DNA"
+    elif isinstance(alphabet, Alphabet.RNAAlphabet):
+        return "RNA"
+    else:
+        raise  # TODO helpful message
+    pass
 
 # NOTE default values to determine edges for secondary structure
 # TODO improve and cite these
