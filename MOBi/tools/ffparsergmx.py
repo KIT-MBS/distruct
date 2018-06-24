@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Sun 24 Jun 2018 07:46:39 PM CEST
+# Last Modified : Sun 24 Jun 2018 09:35:50 PM CEST
 #
 #####################################
 
@@ -855,13 +855,13 @@ def translate(
             result['improperEdges'].update(
                     translate_impropers_to_edges(
                         buildingBlockTopologies[b]['impropers'],
-                        result[b]['angleEdges'],
-                        result[b]['bondEdges'],
+                        result['angleEdges'],
+                        result['bondEdges'],
                         buildingBlockTopologies[b]['atoms'],
                         ffParams['dihedraltypes'])
             )
         pass
-    return
+    return result
 
 
 def generate(
@@ -911,13 +911,13 @@ def generate(
             buildingBlock = letter.upper()
             if buildingBlock not in buildingBlockTopologies:
                 if polymerType =='AA':
-                    buildingBlock = IUPACData,protein_letters_1to3_extended[letter]
+                    buildingBlock = IUPACData.protein_letters_1to3_extended[letter]
                     buildingBlock = buildingBlock.upper()
                     key = buildingBlock
                     if buildingBlock not in buildingBlockTopologies:
                         buildingBlock = buildingBlock[:2] + 'P'  # positively charged histidine
                         pass
-                    if buildingBlock not in result:
+                    if buildingBlock not in buildingBlockTopologies:
                         raise KeyError("Could not find " + letter + " in the residue database.")
                     pass
                 elif polymerType == 'DNA':

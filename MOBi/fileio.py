@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Fri 22 Jun 2018 04:52:04 PM CEST
+# Last Modified : Sun 24 Jun 2018 09:53:23 PM CEST
 #
 #####################################
 
@@ -78,13 +78,14 @@ def write_topology_database(
     if len(buildingBlocks) == 0:
         buildingBlocks = list(database.keys())
         pass
+    # TODO make it work with new topology implementation
+    assert False
 
     root = ET.Element(databaseName)
     XMLTree = ET.ElementTree(root)
 
     # for buildingBlock in alphabet.letters:
     for buildingBlock in database:
-        assert buildingBlock in database
         assert 'vertices' in database[buildingBlock]
         bbElement = ET.SubElement(root, buildingBlock)
         atomsElement = ET.SubElement(bbElement, 'vertices')

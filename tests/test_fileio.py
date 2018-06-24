@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Mon 28 May 2018 10:09:46 AM CEST
+# Last Modified : Sun 24 Jun 2018 09:52:17 PM CEST
 #
 #####################################
 
@@ -52,3 +52,8 @@ testFilePath = MOBi.config.data_path + 'tests/'
 #         pass
 #     os.remove(testFilePath + testFileName)
 #     return
+
+def test_fileio():
+    databaseName = 'test'
+    assert False
+    return
