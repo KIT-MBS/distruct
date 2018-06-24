@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Sun 24 Jun 2018 04:41:21 PM CEST
+# Last Modified : Sun 24 Jun 2018 07:15:17 PM CEST
 #
 #####################################
 
@@ -62,7 +62,8 @@ def polymer_type(alphabet):
     elif isinstance(alphabet, Alphabet.RNAAlphabet):
         return "RNA"
     else:
-        raise  # TODO helpful message
+        print(alphabet)
+        assert False # TODO helpful message
     return
 
 # NOTE default values to determine edges for secondary structure

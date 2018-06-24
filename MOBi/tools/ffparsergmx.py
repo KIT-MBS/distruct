@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Sun 24 Jun 2018 07:00:29 PM CEST
+# Last Modified : Sun 24 Jun 2018 07:46:39 PM CEST
 #
 #####################################
 
@@ -883,8 +883,8 @@ def generate(
     result = {}
     result['alphabets'] = {}
     for a in alphabets:
-        polymerType = data.polymer_type(alphabet)
-        a['alphabets'][polymerType] = dict()
+        polymerType = data.polymer_type(a)
+        result['alphabets'][polymerType] = dict()
         pass
 
     ffDir = topPath + ffName + '.ff/'
