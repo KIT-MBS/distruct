@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 18 Jun 2018 05:34:21 PM CEST
+# Last Modified : Sun 24 Jun 2018 07:00:29 PM CEST
 #
 #####################################
 
@@ -23,6 +23,7 @@ from math import pi
 from . import math as m
 
 from .. import config
+from .. import data
 
 topologyPath = config.gromacs_topology_path
 
@@ -173,11 +174,19 @@ def parse_residue_topology(
         else:
             if buildingBlock and context:
                 if knownDirectives[context]:
+                    result[buildingBlock][context].update(knownDirectives[context](line))
                     # TODO improve, kinda hacky
                     if context == 'atoms':
-                        result[buildingBlock]['vertices'].append(read_atoms(line))
+                        atomName = read_atoms(line)
+                        atomType = result[buildingBlock]['atoms'][atomName][0]
+                        element = atomType[0]
+                        # TODO this does not work e.g. for the Mg in AMBER
+                        if len(atomType) > 1:
+                            if atomType[1].islower():
+                                element += atomType[1].upper()
+                            pass
+                        result[buildingBlock]['vertices'].append((atomName, element))
                         pass
-                    result[buildingBlock][context].update(knownDirectives[context](line))
                     pass
                 pass
             pass
@@ -337,18 +346,7 @@ def infer_angles(atoms, bonds, angleTypes):
 
     return result
 
-
-# def infer_impropers():
-#     # TODO from rings? probably not useful. peptide bond / backbone dihedral omega?
-#     result = {}
-#     return result
-
 # TODO add backbone dihedral omega
-
-
-# def translate_atoms_to_vertices(atoms):
-#     result = [a[0] for a in atoms]
-#     return result
 
 
 def translate_bonds_to_edges(bonds, atomTypes, bondTypes):
@@ -492,71 +490,72 @@ def translate_impropers_to_edges(impropers, angleEdges, bondEdges, atomTypes, di
         pass
     return result
 
-def translate(buildingBlockTopologies, ffParams, inferAngles=True, inferImpropers=False):
-    """
-    Translate building block topologies parsed from .rtp files to vertices and edges.
-    """
-    result = {}
-    for b in buildingBlockTopologies:
-        print(b)
-        result[b] = {}
-        result[b]['vertices'] = list()
-        result[b]['bondEdges'] = {}
-        result[b]['angleEdges'] = {}
-        result[b]['improperEdges'] = {}
-        result[b]['dihedralEdges'] = {}
-
-        # result[b]['vertices'] = translate_atoms_to_vertices(
-        #         buildingBlockTopologies[b]['atoms']
-        #         )
-        result[b]['vertices'] = buildingBlockTopologies[b]['vertices']
-
-        if 'bonds' in buildingBlockTopologies[b]:
-            result[b]['bondEdges'].update(
-                    translate_bonds_to_edges(
-                        buildingBlockTopologies[b]['bonds'],
-                        buildingBlockTopologies[b]['atoms'],
-                        ffParams['bondtypes']
-                    )
-            )
-
-            if inferAngles:
-                inferredAngles = infer_angles(
-                        buildingBlockTopologies[b]['atoms'],
-                        buildingBlockTopologies[b]['bonds'],
-                        ffParams['angletypes'])
-                result[b]['angleEdges'].update(
-                        translate_angles_to_edges(
-                            inferredAngles,
-                            buildingBlockTopologies[b]['atoms'],
-                            ffParams['bondtypes'],
-                            ffParams['angletypes']
-                        )
-                )
-                pass
-            pass
-            if 'angles' in buildingBlockTopologies[b]:
-                result[b]['angleEdges'].update(translate_angles_to_edges(
-                    buildingBlockTopologies[b]['angles'],
-                    buildingBlockTopologies[b]['atoms'],
-                    ffParams['bondtypes'],
-                    ffParams['angletypes']))
-                pass
-
-            if inferImpropers:
-                raise NotImplementedError
-            if 'impropers' in buildingBlockTopologies[b]:
-                result[b]['improperEdges'].update(
-                        translate_impropers_to_edges(
-                            buildingBlockTopologies[b]['impropers'],
-                            result[b]['angleEdges'],
-                            result[b]['bondEdges'],
-                            buildingBlockTopologies[b]['atoms'],
-                            ffParams['dihedraltypes'])
-                )
-            pass
-        pass
-    return result
+# TODO translate only needed  building blocks (avoids unnecessary warnings and errors)
+# def translate(buildingBlockTopologies, ffParams, inferAngles=True, inferImpropers=False):
+#     """
+#     Translate building block topologies parsed from .rtp files to vertices and edges.
+#     """
+#     result = {}
+#     for b in buildingBlockTopologies:
+#         print(b)
+#         result[b] = {}
+#         result[b]['vertices'] = list()
+#         result[b]['bondEdges'] = {}
+#         result[b]['angleEdges'] = {}
+#         result[b]['improperEdges'] = {}
+#         result[b]['dihedralEdges'] = {}
+#
+#         # result[b]['vertices'] = translate_atoms_to_vertices(
+#         #         buildingBlockTopologies[b]['atoms']
+#         #         )
+#         result[b]['vertices'] = buildingBlockTopologies[b]['vertices']
+#
+#         if 'bonds' in buildingBlockTopologies[b]:
+#             result[b]['bondEdges'].update(
+#                     translate_bonds_to_edges(
+#                         buildingBlockTopologies[b]['bonds'],
+#                         buildingBlockTopologies[b]['atoms'],
+#                         ffParams['bondtypes']
+#                     )
+#             )
+#
+#             if inferAngles:
+#                 inferredAngles = infer_angles(
+#                         buildingBlockTopologies[b]['atoms'],
+#                         buildingBlockTopologies[b]['bonds'],
+#                         ffParams['angletypes'])
+#                 result[b]['angleEdges'].update(
+#                         translate_angles_to_edges(
+#                             inferredAngles,
+#                             buildingBlockTopologies[b]['atoms'],
+#                             ffParams['bondtypes'],
+#                             ffParams['angletypes']
+#                         )
+#                 )
+#                 pass
+#             pass
+#             if 'angles' in buildingBlockTopologies[b]:
+#                 result[b]['angleEdges'].update(translate_angles_to_edges(
+#                     buildingBlockTopologies[b]['angles'],
+#                     buildingBlockTopologies[b]['atoms'],
+#                     ffParams['bondtypes'],
+#                     ffParams['angletypes']))
+#                 pass
+#
+#             if inferImpropers:
+#                 raise NotImplementedError
+#             if 'impropers' in buildingBlockTopologies[b]:
+#                 result[b]['improperEdges'].update(
+#                         translate_impropers_to_edges(
+#                             buildingBlockTopologies[b]['impropers'],
+#                             result[b]['angleEdges'],
+#                             result[b]['bondEdges'],
+#                             buildingBlockTopologies[b]['atoms'],
+#                             ffParams['dihedraltypes'])
+#                 )
+#             pass
+#         pass
+#     return result
 
 
 # def generate(
@@ -718,14 +717,177 @@ def translate(buildingBlockTopologies, ffParams, inferAngles=True, inferImproper
 #     return result
 
 
+# def generate(
+#         ffName,
+#         alphabets=[],
+#         inferAngles=True,
+#         inferImpropers=False,
+#         topPath=topologyPath):
+#     result = {}
+#     ffDir = topPath + ffName + ".ff/"
+#
+#     residueTopologyFiles = [ffDir + f for f in os.listdir(ffDir) if f.endswith('.rtp')]
+#     forceFieldParamFiles = [ffDir + "ffbonded.itp"]
+#
+#     params = {}
+#     macros = {}
+#     for f in forceFieldParamFiles:
+#         p, m = parse_forcefield_params(f)
+#         params.update(p)
+#         macros.update(m)
+#         pass
+#
+#     buildingBlockTopologies = {}
+#     for f in residueTopologyFiles:
+#         buildingBlockTopologies.update(parse_residue_topology(f, macros))
+#         pass
+#
+#     result = translate(
+#             buildingBlockTopologies,
+#             params,
+#             inferAngles=inferAngles,
+#             inferImpropers=inferImpropers
+#             )
+#
+#     # NOTE translate residue names
+#     # NOTE uses the charged version of an AA (where applicable)
+#     for letter in alphabet.letters:
+#         buildingBlock = letter
+#         if letter not in result:
+#             if isinstance(alphabet, Alphabet.ProteinAlphabet):
+#                 if alphabet.size == 1:
+#                     buildingBlock = IUPACData.protein_letters_1to3_extended[letter]
+#                     pass
+#                 buildingBlock = buildingBlock.upper()
+#                 if buildingBlock not in result:
+#                     buildingBlock = buildingBlock[:2] + 'P'  # positively charged histidine
+#                     pass
+#                 if buildingBlock not in result:
+#                     raise KeyError("Could not find " + letter + " in the residue database.")
+#                 pass
+#             elif isinstance(alphabet, Alphabet.DNAAlphabet):
+#                 if alphabet.size == 1:
+#                     buildingBlock = 'D' + letter
+#                     pass
+#                 if buildingBlock not in result:
+#                     # NOTE should find all unambiguous residues
+#                     raise KeyError("Could not find " + letter + " in the residue database.")
+#                 raise
+#             elif isinstance(alphabet, Alphabet.RNAAlphabet):
+#                 if alphabet.size == 1:
+#                     buildingBlock = 'R' + letter
+#                     pass
+#                 if buildingBlock not in result:
+#                     # NOTE should find all unambiguous residues
+#                     raise KeyError("Could not find " + letter + " in the residue database.")
+#                 pass
+#             else:
+#                 raise Exception("Alphabet too generic.")
+#             result[letter] = result[buildingBlock]
+#             pass
+#         # TODO translate atom names
+#         # TODO reorder atoms so backbone comes first
+#         pass
+#     # NOTE remove unneeded building blocks
+#     toDelete = set(result.keys()) - set(alphabet.letters)
+#     for l in toDelete:
+#         result.pop(l)
+#         pass
+#     # TODO gap character
+#
+#     return result
+
+
+def translate(
+        buildingBlock,
+        buildingBlockTopologies,
+        ffParams,
+        inferAngles=True):
+    """
+    Translate a building block from a force field topology to a distruct topology.
+    """
+
+    result = {}
+
+    result['vertices'] = list()
+    result['bondEdges'] = {}
+    result['angleEdges'] = {}
+    result['improperEdges'] = {}
+    result['dihedralEdges'] = {}
+
+    result['vertices'] = buildingBlockTopologies[buildingBlock]['vertices']
+
+
+    b = buildingBlock
+    if 'bonds' in buildingBlockTopologies[b]:
+        result['bondEdges'].update(
+                translate_bonds_to_edges(
+                    buildingBlockTopologies[b]['bonds'],
+                    buildingBlockTopologies[b]['atoms'],
+                    ffParams['bondtypes']
+                )
+        )
+
+        if inferAngles:
+            inferredAngles = infer_angles(
+                    buildingBlockTopologies[b]['atoms'],
+                    buildingBlockTopologies[b]['bonds'],
+                    ffParams['angletypes'])
+            result['angleEdges'].update(
+                    translate_angles_to_edges(
+                        inferredAngles,
+                        buildingBlockTopologies[b]['atoms'],
+                        ffParams['bondtypes'],
+                        ffParams['angletypes']
+                    )
+            )
+            pass
+        pass
+        if 'angles' in buildingBlockTopologies[b]:
+            result['angleEdges'].update(translate_angles_to_edges(
+                buildingBlockTopologies[b]['angles'],
+                buildingBlockTopologies[b]['atoms'],
+                ffParams['bondtypes'],
+                ffParams['angletypes']))
+            pass
+
+        if 'impropers' in buildingBlockTopologies[b]:
+            result['improperEdges'].update(
+                    translate_impropers_to_edges(
+                        buildingBlockTopologies[b]['impropers'],
+                        result[b]['angleEdges'],
+                        result[b]['bondEdges'],
+                        buildingBlockTopologies[b]['atoms'],
+                        ffParams['dihedraltypes'])
+            )
+        pass
+    return
+
+
 def generate(
         ffName,
-        alphabet=None,
+        alphabets=[],
         inferAngles=True,
-        inferImpropers=False,
         topPath=topologyPath):
+    """
+    Generate a topology database from force field parameters out of a gromacs force field.
+
+    Topology is read from .rtp files. Parameters are read from .itp files.
+
+    NOTE on the structure of this: in the structure any type of residue has to have a unique name.
+    That is why I chose to translate the letter from an alphabet to a unique building block name
+    instead of putting in one database for every type of polymer.
+    Terminal residues will have to be handled slightly differently.
+    """
+
     result = {}
-    ffDir = topPath + ffName + ".ff/"
+    result['alphabets'] = {}
+    for a in alphabets:
+        polymerType = data.polymer_type(alphabet)
+        a['alphabets'][polymerType] = dict()
+        pass
+
+    ffDir = topPath + ffName + '.ff/'
 
     residueTopologyFiles = [ffDir + f for f in os.listdir(ffDir) if f.endswith('.rtp')]
     forceFieldParamFiles = [ffDir + "ffbonded.itp"]
@@ -743,57 +905,35 @@ def generate(
         buildingBlockTopologies.update(parse_residue_topology(f, macros))
         pass
 
-    result = translate(
-            buildingBlockTopologies,
-            params,
-            inferAngles=inferAngles,
-            inferImpropers=inferImpropers
-            )
-
-    # NOTE translate residue names
-    # NOTE uses the charged version of an AA (where applicable)
-    # TODO check length of letter instead of alphabet to be more flexible?
-    for letter in alphabet.letters:
-        buildingBlock = letter
-        if letter not in result:
-            if isinstance(alphabet, Alphabet.ProteinAlphabet):
-                if alphabet.size == 1:
-                    buildingBlock = IUPACData.protein_letters_1to3_extended[letter]
+    for a in alphabets:
+        polymerType = data.polymer_type(a)
+        for letter in a.letters:
+            buildingBlock = letter.upper()
+            if buildingBlock not in buildingBlockTopologies:
+                if polymerType =='AA':
+                    buildingBlock = IUPACData,protein_letters_1to3_extended[letter]
+                    buildingBlock = buildingBlock.upper()
+                    key = buildingBlock
+                    if buildingBlock not in buildingBlockTopologies:
+                        buildingBlock = buildingBlock[:2] + 'P'  # positively charged histidine
+                        pass
+                    if buildingBlock not in result:
+                        raise KeyError("Could not find " + letter + " in the residue database.")
                     pass
-                buildingBlock = buildingBlock.upper()
-                if buildingBlock not in result:
-                    buildingBlock = buildingBlock[:2] + 'P'  # positively charged histidine
+                elif polymerType == 'DNA':
+                    buildingBlock = 'D' + buildingBlock
+                    key = buildingBlock
                     pass
-                if buildingBlock not in result:
-                    raise KeyError("Could not find " + letter + " in the residue database.")
+                elif polymerType == 'RNA':
+                    key = buildingBlock
+                    buildingBlock = 'R' + buildingBlock
+                    pass
+                else:
+                    raise
                 pass
-            elif isinstance(alphabet, Alphabet.DNAAlphabet):
-                if alphabet.size == 1:
-                    buildingBlock = 'D' + letter
-                    pass
-                if buildingBlock not in result:
-                    # NOTE should find all unambiguous residues
-                    raise KeyError("Could not find " + letter + " in the residue database.")
-                raise
-            elif isinstance(alphabet, Alphabet.RNAAlphabet):
-                if alphabet.size == 1:
-                    buildingBlock = 'R' + letter
-                    pass
-                if buildingBlock not in result:
-                    # NOTE should find all unambiguous residues
-                    raise KeyError("Could not find " + letter + " in the residue database.")
-                pass
-            else:
-                raise Exception("Alphabet too generic.")
-            result[letter] = result[buildingBlock]
+            result['alphabets'][polymerType][letter] = key
+            result[key] = translate(buildingBlock, buildingBlockTopologies, params)
             pass
-        # TODO translate atom names
-        # TODO reorder atoms so backbone comes first
-        pass
-    # NOTE remove unneeded building blocks
-    toDelete = set(result.keys()) - set(alphabet.letters)
-    for l in toDelete:
-        result.pop(l)
         pass
 
     return result

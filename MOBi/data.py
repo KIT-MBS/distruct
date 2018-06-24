@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Sun 24 Jun 2018 03:35:06 PM CEST
+# Last Modified : Sun 24 Jun 2018 04:41:21 PM CEST
 #
 #####################################
 
@@ -54,7 +54,7 @@ from math import pi
 # alphabet = MoleculeAlphabet()
 
 # TODO should this be in the topDB?
-def letters(alphabet):
+def polymer_type(alphabet):
     if isinstance(alphabet, Alphabet.ProteinAlphabet):
         return "AA"
     elif isinstance(alphabet, Alphabet.DNAAlphabet):

@@ -207,7 +207,6 @@ class Distructure(Structure):
     Also maintains a list of contacts and corresponding edges between vertices (atoms).
     """
 
-    # TODO the sequences i.e. chains might have user supplies ids
     def __init__(self, id, sequences = [], resIDLists = [], SSsequences = None, topologyDB=data.defaultTopologyDB):
         """
         Initialize Distructure object.
@@ -234,7 +233,8 @@ class Distructure(Structure):
 
                 for resID, letter in zip_longest(resIDs, sequence):
                     assert letter is not None
-                    resName = topDB['alphabets'][alphabet][letter]
+                    polymerType = data.polymer_type(alphabet)
+                    resName = topDB['alphabets'][polymerType][letter]
                     segID = "   "  # TODO check this
                     if resID is None:
                         hetField = " "
