@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Sun 24 Jun 2018 09:53:23 PM CEST
+# Last Modified : Mon 25 Jun 2018 05:51:40 PM CEST
 #
 #####################################
 
@@ -32,70 +32,98 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
         XMLTree = ET.parse(f)
         pass
 
-    for buildingBlock in XMLTree.getroot():
+    for buildingBlockNode in XMLTree.getroot():
         # NOTE overwrites if there are duplicate building block entries in the file
         # if one was added by hand at the end, that one will be used?
-        result[buildingBlock.tag] = {}
-        for vertices in buildingBlock.findall('vertices'):
-            if vertices.tag not in result:
-                result[buildingBlock.tag][vertices.tag] = list()
-                pass
-            # TODO check this preserves ordering
-            for atom in vertices.findall('atom'):
-                result[buildingBlock.tag]['vertices'].append(atom.attrib['name'])
+
+        if buildingBlockNode.tag == 'alphabets':
+            result[buildingBlockNode.tag] = dict()
+            for polymerTypeNode in buildingBlockNode:
+                polymerType = polymerTypeNode.tag
+                result[buildingBlockNode.tag][polymerType] = dict()
+                for letterNode in polymerTypeNode:
+                    assert len(letterNode.items()) == 1
+                    letter, buildingBlock = letterNode.items()[0]
+                    result[buildingBlockNode.tag][polymerType][letter] = buildingBlock
+                    pass
                 pass
             pass
-        for child in buildingBlock:
-            if child.tag != 'vertices':
-                if child.tag not in result[buildingBlock.tag]:
-                    result[buildingBlock.tag][child.tag] = {}
+        else:
+            result[buildingBlockNode.tag] = dict()
+            for vertices in buildingBlockNode.findall('vertices'):
+                if vertices.tag not in result:
+                    result[buildingBlockNode.tag][vertices.tag] = list()
                     pass
-                for edge in child:
-                    edgeTuple = tuple(edge.attrib['vertices'].strip('()').split(','))
-                    edgeTuple = tuple(x.strip(" \'") for x in edgeTuple)
-                    result[buildingBlock.tag][child.tag][edgeTuple] = float(edge.attrib['distance'])
+                # TODO check this preserves ordering
+                for atom in vertices.findall('atom'):
+                    result[buildingBlockNode.tag]['vertices'].append((atom.attrib['name'], atom.attrib['element']))
+                    pass
+                pass
+            for child in buildingBlockNode:
+                if child.tag != 'vertices':
+                    if child.tag not in result[buildingBlockNode.tag]:
+                        result[buildingBlockNode.tag][child.tag] = {}
+                        pass
+                    for edge in child:
+                        edgeTuple = tuple(edge.attrib['vertices'].strip('()').split(','))
+                        edgeTuple = tuple(x.strip(" \'") for x in edgeTuple)
+                        result[buildingBlockNode.tag][child.tag][edgeTuple] = float(edge.attrib['distance'])
+                        pass
                     pass
                 pass
             pass
         pass
 
-    # TODO check if test fails correctly
     return result
 
 
-# TODO get the sorting right: vertices, bondEdges, angleEdges, improperEdges dihedralEdges
 def write_topology_database(
         database,
         databaseName,
-        buildingBlocks=[],
+        alphabets,
         outDir='./',
-        fileName=None,
-        # alphabet=data.alphabet): # TODO remove this
+        fileName=None
     ):
-    if not fileName:
+    if fileName is None:
         fileName = databaseName + '.xml'
         pass
-    if len(buildingBlocks) == 0:
-        buildingBlocks = list(database.keys())
+
+    buildingBlocks = list()
+    for a in alphabets:
+        polymerType = data.polymer_type(a)
+        buildingBlocks += [database['alphabets'][polymerType][letter] for letter in a.letters]
         pass
-    # TODO make it work with new topology implementation
-    assert False
 
     root = ET.Element(databaseName)
     XMLTree = ET.ElementTree(root)
 
-    # for buildingBlock in alphabet.letters:
-    for buildingBlock in database:
+    if 'alphabets' in database:
+        aElement = ET.SubElement(root, 'alphabets')
+        for polymerType in database['alphabets']:
+            pTElement = ET.SubElement(aElement, polymerType)
+            for letter in database['alphabets'][polymerType]:
+                buildingBlock = database['alphabets'][polymerType][letter]
+                ET.SubElement(pTElement, 'letter', attrib={letter: database['alphabets'][polymerType][letter]})
+                pass
+            pass
+        pass
+
+
+    for buildingBlock in buildingBlocks:
         assert 'vertices' in database[buildingBlock]
         bbElement = ET.SubElement(root, buildingBlock)
         atomsElement = ET.SubElement(bbElement, 'vertices')
         for entry in database[buildingBlock]['vertices']:
-            ET.SubElement(atomsElement, 'atom', attrib={'name': entry})
+            ET.SubElement(atomsElement, 'atom', attrib={'name': entry[0], 'element': entry[1]})
             pass
-        directives = sorted(database[buildingBlock].keys())
-        directives.remove('vertices')
+        directives = ['bondEdges', 'angleEdges', 'improperEdges', 'dihedralEdges']
         for directive in directives:
+
             directiveElement = ET.SubElement(bbElement, directive)
+
+            if directive not in database[buildingBlock]:
+                continue
+
             for entry in sorted(database[buildingBlock][directive]):
                 # TODO is three significant places adequate for all applications?
                 distance = None

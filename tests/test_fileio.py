@@ -9,17 +9,20 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Sun 24 Jun 2018 09:52:17 PM CEST
+# Last Modified : Mon 25 Jun 2018 06:41:49 PM CEST
 #
 #####################################
 
 import os
 
-import MOBi
+from pytest import approx
 
-# TODO redo these
+from MOBi.fileio import read_topology_database, write_topology_database
+from MOBi.tools.ffparsergmx import generate
 
-testFilePath = MOBi.config.data_path + 'tests/'
+from MOBi import config
+
+testFilePath = config.data_path + 'tests/'
 #
 #
 # def test_parse_primary_edge_database():
@@ -54,6 +57,26 @@ testFilePath = MOBi.config.data_path + 'tests/'
 #     return
 
 def test_fileio():
-    databaseName = 'test'
-    assert False
+    ffname = 'test'
+    from Bio import Alphabet
+    alphabet = Alphabet.ProteinAlphabet()
+    alphabet.size = 3
+    alphabet.letters = ['BB1', 'BB2']
+    inferAngles = True
+    topPath = testFilePath
+
+    testDB = generate(ffname, [alphabet], inferAngles, topPath=topPath)
+
+    write_topology_database(testDB, 'test', [alphabet], outDir=testFilePath)
+
+    result = read_topology_database('test', inDir=testFilePath)
+    assert result['BB1']['vertices'] == [('A1', 'A'), ('A2', 'A'), ('A3', 'A'), ('A4', 'A')]
+
+    assert result['BB1']['bondEdges'][('A1', 'A2')] == approx(1.2)
+    assert result['BB1']['bondEdges'][('A2', 'A3')] == approx(1.0)
+    assert result['BB1']['bondEdges'][('A3', 'A4')] == approx(1.1)
+    assert result['BB1']['angleEdges'][('A1', 'A3')] == approx(1.90787884028338913, rel=1e-5)
+    assert result['BB1']['angleEdges'][('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
+    assert result['BB1']['improperEdges']['A1', 'A4'] == approx(2.065313144262336, rel=1e-5)
+
     return

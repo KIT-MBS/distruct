@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Wed 20 Jun 2018 01:32:41 PM CEST
+# Last Modified : Mon 25 Jun 2018 06:17:14 PM CEST
 #
 #####################################
 
@@ -67,11 +67,11 @@ def test_parse_residue_topology():
             fileName,
             macros,
             ignoredDirectives = ignoredDirectives)
-    assert result['BB']['atoms'] == {'A1': 'A1', 'A2': 'A2', 'A3': 'A3', 'A4': 'A4'}
-    assert result['BB']['bonds'] == {('A1', 'A2'): None, ('A2', 'A3'): None, ('A3', 'A4'): None, ('A2', 'A1'): None, ('A3', 'A2'): None, ('A4', 'A3'): None}
-    assert result['BB']['angles'] == {('A1', 'A2', 'A3'): None, ('A2', 'A3', 'A4'): None, ('A3', 'A2', 'A1'): None, ('A4', 'A3', 'A2'): None}
-    assert result['BB']['impropers'] == {('A1', 'A2', 'A3', 'A4'): 0.0}
-    assert 'dihedrals' not in result['BB']
+    assert result['BB1']['atoms'] == {'A1': 'A1', 'A2': 'A2', 'A3': 'A3', 'A4': 'A4'}
+    assert result['BB1']['bonds'] == {('A1', 'A2'): None, ('A2', 'A3'): None, ('A3', 'A4'): None, ('A2', 'A1'): None, ('A3', 'A2'): None, ('A4', 'A3'): None}
+    assert result['BB1']['angles'] == {('A1', 'A2', 'A3'): None, ('A2', 'A3', 'A4'): None, ('A3', 'A2', 'A1'): None, ('A4', 'A3', 'A2'): None}
+    assert result['BB1']['impropers'] == {('A1', 'A2', 'A3', 'A4'): 0.0}
+    assert 'dihedrals' not in result['BB1']
     return
 
 
@@ -179,22 +179,21 @@ def test_translate_impropers_to_edges():
 
 def test_generate():
     ffname = 'test'
-    # buildingBlocks = ['BB']
     from Bio import Alphabet
-    alphabet = Alphabet.Alphabet()
-    alphabet.size = 2
-    alphabet.letters = ['BB']
+    alphabet = Alphabet.ProteinAlphabet()
+    alphabet.size = 3
+    alphabet.letters = ['BB1', 'BB2']
     inferAngles = True
     topPath = testFilePath
 
-    result = ffparsergmx.generate(ffname, alphabet, inferAngles, topPath=topPath)
-    assert result['BB']['vertices'] == ['A1', 'A2', 'A3', 'A4']
+    result = ffparsergmx.generate(ffname, [alphabet], inferAngles, topPath=topPath)
+    assert result['BB1']['vertices'] == [('A1', 'A'), ('A2', 'A'), ('A3', 'A'), ('A4', 'A')]
 
-    assert result['BB']['bondEdges'][('A1', 'A2')] == approx(1.2)
-    assert result['BB']['bondEdges'][('A2', 'A3')] == approx(1.0)
-    assert result['BB']['bondEdges'][('A3', 'A4')] == approx(1.1)
-    assert result['BB']['angleEdges'][('A1', 'A3')] == approx(1.90787884028338913, rel=1e-5)
-    assert result['BB']['angleEdges'][('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
-    assert result['BB']['improperEdges']['A1', 'A4'] == approx(2.065313144262336)
+    assert result['BB1']['bondEdges'][('A1', 'A2')] == approx(1.2)
+    assert result['BB1']['bondEdges'][('A2', 'A3')] == approx(1.0)
+    assert result['BB1']['bondEdges'][('A3', 'A4')] == approx(1.1)
+    assert result['BB1']['angleEdges'][('A1', 'A3')] == approx(1.90787884028338913, rel=1e-5)
+    assert result['BB1']['angleEdges'][('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
+    assert result['BB1']['improperEdges']['A1', 'A4'] == approx(2.065313144262336)
 
     return

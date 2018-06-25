@@ -251,7 +251,7 @@ class Distructure(Structure):
                         bFactor = 0.
                         occupancy = 1.
                         altloc = " "
-                        fullName = vertex  # TODO get the coorect full name from somewhere
+                        fullName = vertex  # TODO get the correct full name from somewhere
                         serialNumber = atomCounter
                         # element = atomName = [0]  # TODO get from top db
                         atom = Atom(atomName, coord, bFactor, occupancy, altloc, fullName, serialNumber, element)

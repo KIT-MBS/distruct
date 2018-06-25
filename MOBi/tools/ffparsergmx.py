@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Sun 24 Jun 2018 09:35:50 PM CEST
+# Last Modified : Mon 25 Jun 2018 06:13:07 PM CEST
 #
 #####################################
 
@@ -909,6 +909,7 @@ def generate(
         polymerType = data.polymer_type(a)
         for letter in a.letters:
             buildingBlock = letter.upper()
+            key = buildingBlock
             if buildingBlock not in buildingBlockTopologies:
                 if polymerType =='AA':
                     buildingBlock = IUPACData.protein_letters_1to3_extended[letter]
