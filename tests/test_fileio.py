@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Mon 25 Jun 2018 06:41:49 PM CEST
+# Last Modified : Tue 26 Jun 2018 11:04:58 AM CEST
 #
 #####################################
 
@@ -78,5 +78,7 @@ def test_fileio():
     assert result['BB1']['angleEdges'][('A1', 'A3')] == approx(1.90787884028338913, rel=1e-5)
     assert result['BB1']['angleEdges'][('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
     assert result['BB1']['improperEdges']['A1', 'A4'] == approx(2.065313144262336, rel=1e-5)
+
+    os.remove(testFilePath + 'test.xml')
 
     return
