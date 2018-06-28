@@ -240,7 +240,7 @@ class Distructure(Structure):
                     if resID is None:
                         hetField = " "
                         iCode = " "
-                        resID = [hetField, resCounter, iCode]
+                        resID = (hetField, resCounter, iCode)
                         pass
                     residue = Residue(resID, resName, segID)
                     chain.add(residue)
