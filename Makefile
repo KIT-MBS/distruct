@@ -63,3 +63,8 @@ deps:
 
 test:
 	pytest tests
+
+clean:
+	$(RM) ./.build ./lib ./MOBi/_MOBi.cpp
+
+.PHONY: deps test clean
