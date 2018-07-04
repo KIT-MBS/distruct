@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 05 Dec 2017 08:08:18 PM CET
 #
-# Last Modified : Sun 24 Jun 2018 07:39:37 PM CEST
+# Last Modified : Wed 04 Jul 2018 06:02:59 PM CEST
 #
 #####################################
 
@@ -23,6 +23,6 @@ topPath = "/usr/share/gromacs/top/"
 
 alphabets = [protein, unambiguous_dna, unambiguous_rna]
 
-topDB = generate(ff, alphabets, topPath)
+topDB = generate(ff, alphabets, topPath=topPath)
 
-write_topology_database(topDB, ff)
+write_topology_database(topDB, ff, alphabets)
