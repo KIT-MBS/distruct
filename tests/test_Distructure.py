@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 11 Jun 2018 04:04:59 PM CEST
 #
-# Last Modified : Fri 22 Jun 2018 04:53:38 PM CEST
+# Last Modified : Thu 28 Jun 2018 09:37:45 AM CEST
 #
 #####################################
 
@@ -43,7 +43,7 @@ def test_Distructure():
     ds = Distructure(code, sequences)
 
     # create primary edges
-    ds.generate_primary_edges()
+    ds.generate_primary_contacts()
     # generate coordinates
     ds.run()
     return

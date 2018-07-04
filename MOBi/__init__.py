@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Wed 20 Jun 2018 03:50:01 PM CEST
+# Last Modified : Thu 28 Jun 2018 01:17:20 PM CEST
 #
 #####################################
 
@@ -24,6 +24,6 @@ from .superimposer import Superimposer
 import sys
 import os
 # TODO is this too hacky? there probably is a proper way
-sys.path.append(os.path.dirname(__file__) + "/../lib/")
+# sys.path.append(os.path.dirname(__file__) + "/../lib/")
 
 from _MOBi import Distructure

@@ -207,7 +207,7 @@ class Distructure(Structure):
     Also maintains a list of contacts and corresponding edges between vertices (atoms).
     """
 
-    def __init__(self, id, sequences = [], resIDLists = [], SSsequences = None, topologyDB=data.defaultTopologyDB):
+    def __init__(self, id, sequences = [], resIDLists = [], SSsequences = None, topDB=data.defaultTopologyDB):
         """
         Initialize Distructure object.
 
@@ -219,6 +219,7 @@ class Distructure(Structure):
         # TODO implement 8 state protein SS
 
         Structure.__init__(self, id)
+        self.topDB = topDB
 
         if sequences:
             chainCounter = 1
@@ -233,25 +234,25 @@ class Distructure(Structure):
 
                 for resID, letter in zip_longest(resIDs, sequence):
                     assert letter is not None
-                    polymerType = data.polymer_type(alphabet)
-                    resName = topDB['alphabets'][polymerType][letter]
+                    polymerType = data.polymer_type(sequence.alphabet)
+                    resName = self.topDB['alphabets'][polymerType][letter]
                     segID = "   "  # TODO check this
                     if resID is None:
                         hetField = " "
                         iCode = " "
-                        resID = [hetField, resCounter, iCode]
+                        resID = (hetField, resCounter, iCode)
                         pass
                     residue = Residue(resID, resName, segID)
                     chain.add(residue)
                     resCounter += 1
 
-                    for atomName, element in topologyDB[resName]['vertices']:
+                    for atomName, element in self.topDB[resName]['vertices']:
                         # atomName = vertex
                         coord = np.full(3, np.nan)
                         bFactor = 0.
                         occupancy = 1.
                         altloc = " "
-                        fullName = vertex  # TODO get the correct full name from somewhere
+                        fullName = atomName  # TODO get the correct full name from somewhere
                         serialNumber = atomCounter
                         # element = atomName = [0]  # TODO get from top db
                         atom = Atom(atomName, coord, bFactor, occupancy, altloc, fullName, serialNumber, element)
@@ -317,7 +318,7 @@ class Distructure(Structure):
             resn = r.get_resname()
             # TODO maybe rename keys in dict
             for edgeType in ["bondEdges", "angleEdges", "improperEdges"]:
-                for edge in self.topologyDB[resn][edgeType]:
+                for edge in self.topDB[resn][edgeType]:
                     # NOTE edges between neighboring residues in sequence are constructed
                     # NOTE with sequential sequence ids. May cause problems with non-
                     # NOTE blank insertion codes and the like (hetero field should be fine).
@@ -349,7 +350,7 @@ class Distructure(Structure):
                             if useStructureDistances and (atoms[1] - atoms[0] > 0.1):
                                 distance = atoms[1] - atoms[0]
                             else:
-                                distance = self.topologyDB[resn][edgeType][edge]
+                                distance = self.topDB[resn][edgeType][edge]
                                 pass
                             weight = 1.
                             contacts.append((edgeFullAtomIDs, distance, weight))
