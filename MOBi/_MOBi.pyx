@@ -1,3 +1,4 @@
+# distutils: language = c++
 from libc.stdint cimport uint64_t
 from libc.stdint cimport uint32_t
 from libcpp.vector cimport vector

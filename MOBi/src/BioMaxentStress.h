@@ -9,14 +9,12 @@
  *
  *  Creation Date : Wed 23 May 2018 05:27:01 PM CEST
  *
- *  Last Modified : Wed 23 May 2018 05:28:46 PM CEST
+ *  Last Modified : Mon 23 Jul 2018 09:16:08 PM CEST
  *
  * *************************************/
 
 #ifndef BIOMAXENTSTRESS_H
 #define BIOMAXENTSTRESS_H
-
-
 
 #include <cpp/viz/GraphLayoutAlgorithm.h>
 #include <cpp/numerics/LinearSolver.h>
@@ -24,17 +22,18 @@
 #include <cpp/viz/Octree.h>
 
 //#include <NetworKit/graph/BFS.h>
-#include <cpp/distance/Dijkstra.h>
-#include <cpp/distance/AlgebraicDistance.h>
+//#include <cpp/distance/Dijkstra.h>
+//#include <cpp/distance/AlgebraicDistance.h>
+//
+//#include <cpp/viz/FruchtermanReingold.h>
+//#include <cpp/io/LineFileReader.h>
+//#include <cpp/auxiliary/StringTools.h>
 
-#include <cpp/viz/FruchtermanReingold.h>
-#include <cpp/io/LineFileReader.h>
-#include <cpp/auxiliary/StringTools.h>
+//#include <sys/time.h>
 
-#include <sys/time.h>
+//#include <memory>
 
-#include <memory>
-
+//provides keyboard interrupt handling
 #include "aux/sig.h"
 
 namespace NetworKit {
