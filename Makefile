@@ -61,10 +61,14 @@
 deps:
 	pip install -r requirements.txt
 
+inplace:
+	python setup.py build_ext --inplace
+
 test:
 	pytest tests
 
 clean:
-	$(RM) ./.build ./lib ./MOBi/_MOBi.cpp
+	$(RM) ./include ./MOBi/_MOBi.cpp _MOBi.*.so
+	python setup.py clean --all
 
-.PHONY: deps test clean
+.PHONY: deps inplace test clean
