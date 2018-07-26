@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Thu 28 Jun 2018 01:17:20 PM CEST
+# Last Modified : Thu 26 Jul 2018 07:04:43 PM CEST
 #
 #####################################
 
@@ -23,7 +23,15 @@ from .superimposer import Superimposer
 
 import sys
 import os
-# TODO is this too hacky? there probably is a proper way
-# sys.path.append(os.path.dirname(__file__) + "/../lib/")
 
-from _MOBi import Distructure
+
+try:
+    from _MOBi import Distructure
+except ImportError:
+    # TODO set the LD_LIBRARY_PATH automatically
+    import _NetworKit
+    print("export LD_LIBRARY_PATH=LD_LIBRARY_PATH:" + os.path.split(_NetworKit.__file__)[0])
+    print("or put it in the .bashrc")
+    print("i know this is bananas")
+    print("i will fix it eventually")
+    raise ImportError
