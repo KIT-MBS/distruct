@@ -191,6 +191,7 @@ cdef extern from "DuckingWrapper.h":
 #     pass
 
 from Bio.PDB.Structure import Structure
+from Bio.PDB.Model import Model
 from Bio.PDB.Chain import Chain
 from Bio.PDB.Residue import Residue
 from Bio.PDB.Atom import Atom
@@ -219,8 +220,11 @@ class Distructure(Structure):
         # TODO implement nucleic acid SS
         # TODO implement 8 state protein SS
 
-        Structure.__init__(self, id)
         self.topDB = topDB
+        Structure.__init__(self, id)
+
+        model = Model(0, None)
+        self.add(model)
 
         if sequences:
             chainCounter = 1
@@ -232,6 +236,7 @@ class Distructure(Structure):
                 chainCounter += 1
 
                 chain = Chain(chainID)
+                model.add(chain)
 
                 for resID, letter in zip_longest(resIDs, sequence):
                     assert letter is not None
