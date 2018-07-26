@@ -68,7 +68,8 @@ test:
 	pytest tests
 
 clean:
-	$(RM) ./include ./MOBi/_MOBi.cpp _MOBi.*.so
 	python setup.py clean --all
+	$(RM) ./MOBi/_MOBi.cpp _MOBi.*.so
+	rm -rf ./shallonwk
 
 .PHONY: deps inplace test clean

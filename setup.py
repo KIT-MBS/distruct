@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Wed 25 Jul 2018 05:08:13 PM CEST
+# Last Modified : Thu 26 Jul 2018 06:53:30 PM CEST
 #
 #####################################
 
@@ -19,30 +19,44 @@
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
 
+import os
+
 
 USE_CYTHON = True
 fext = '.pyx' if USE_CYTHON else '.cpp'
 
-def networkit_get_include():
-    # TODO just wget the needed nwk headers
+# NOTE we need the cpp headers from networkit, which they do not redistribute
+# NOTE so we do a shallow clone from their repo
+# TODO this will hopefully be fixed at some point
+def networkit_get_include(dir):
+    import subprocess as sp
+    # TODO get the downloadurl from the networkit package
+    nwkurl = "https://github.com/kit-parco/networkit.git"
+    sp.call(['git', 'clone', '--depth=1', nwkurl, dir])
     return
 
 sources = ['MOBi/src/BioMaxentStress.cpp', "MOBi/_MOBi" + fext]
 
-# TODO correct include path
-from os import environ
-includeDirs = [environ["HOME"] + "/Projects/networkit/networkit/", "MOBi/src/"]
+nwkDir = "shallownwk"
+print("downloading networkit header files...")
+if not os.path.isdir(nwkDir):
+    networkit_get_include(nwkDir)
+    pass
 
-# TODO determine lib path from networkit install path
-libraryDirs = ["/usr/lib/python3.6/site-packages/"]
+includeDir = nwkDir + "/networkit"
+includeDirs = [includeDir, "MOBi/src/"]
 
-# TODO determine lib name at install time
-libraries = [":_NetworKit.cpython-36m-x86_64-linux-gnu.so"]
+import _NetworKit
+libraryDir, library = tuple(os.path.split(_NetworKit.__file__))
+
+libraryDirs = [libraryDir]
+libraries = [':' + library]  # NOTE the : is to tell the linker to use the actual filename
+
+import _NetworKit
+nwkpath = os.path.split(_NetworKit.__file__)[0]
 
 compile_args = ["-fopenmp"]
 link_args = ["-fopenmp"]
-
-# TODO basically use the pythonpath as LD_LIBRARY_PATH
 
 extensions = [
         Extension(
