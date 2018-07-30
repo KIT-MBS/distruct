@@ -9,10 +9,10 @@ Implementation of Maxent-stress Optimization of Biomolecular systems.
 **TODO** what it does not
 
 ## Requirements
-The actual structure generation in diSTruct is build on the MaxEnt-stress graph drawing implementation in [NetworKit][https://networkit.iti.kit.edu].
+The actual structure generation in diSTruct is build on the MaxEnt-stress graph drawing implementation in [NetworKit](https://networkit.iti.kit.edu).
 **TODO** cite
 
-It aims to conveniently combine this with the PDB module in [Biopython][https://biopython.org].
+It aims to conveniently combine this with the PDB module in [Biopython](https://biopython.org).
 **TODO** cite
 
 ## Publications
