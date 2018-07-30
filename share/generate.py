@@ -3,18 +3,18 @@
 #
 # Filename : generate.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 05 Dec 2017 08:08:18 PM CET
 #
-# Last Modified : Wed 04 Jul 2018 06:02:59 PM CEST
+# Last Modified : Mon 30 Jul 2018 02:36:21 PM CEST
 #
 #####################################
 
-from MOBi.tools.ffparsergmx import generate
-from MOBi.fileio import write_topology_database
+from distruct.tools.ffparsergmx import generate
+from distruct.fileio import write_topology_database
 
 from Bio.Alphabet.IUPAC import protein, unambiguous_dna, unambiguous_rna
 

@@ -3,13 +3,13 @@
 #
 # Filename : ffparsergmx.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 25 Jun 2018 06:13:07 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:01:43 PM CEST
 #
 #####################################
 

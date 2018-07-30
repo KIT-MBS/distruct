@@ -3,13 +3,13 @@
 #
 # Filename : test_Superimposer.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Wed 20 Jun 2018 03:24:11 PM CEST
+# Last Modified : Mon 30 Jul 2018 02:41:32 PM CEST
 #
 #####################################
 
@@ -18,8 +18,8 @@ import numpy as np
 from pytest import approx
 
 
-from MOBi import config
-from MOBi import Superimposer
+from distruct import config
+from distruct import Superimposer
 
 testFilePath = config.data_path + "tests/"
 

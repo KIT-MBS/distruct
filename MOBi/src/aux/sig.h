@@ -3,13 +3,13 @@
  *
  *  Filename : sig.h
  *
- *  Projectname : MOBi
+ *  Projectname : diSTruct
  *
  *  Author : Oskar Taubert
  *
  *  Creation Date : Mon 31 Jul 2017 11:05:33 CEST
  *
- *  Last Modified : Tue 01 Aug 2017 11:17:33 CEST
+ *  Last Modified : Mon 30 Jul 2018 03:04:14 PM CEST
  *
  * *************************************/
 

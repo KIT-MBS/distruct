@@ -3,13 +3,13 @@
 #
 # Filename : seq.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 08 Aug 2017 13:56:55 CEST
 #
-# Last Modified : Thu 10 Aug 2017 13:57:25 CEST
+# Last Modified : Mon 30 Jul 2018 03:03:18 PM CEST
 #
 #####################################
 

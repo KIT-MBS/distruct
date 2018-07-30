@@ -3,23 +3,23 @@
 #
 # Filename : test_Distructure.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Mon 11 Jun 2018 04:04:59 PM CEST
 #
-# Last Modified : Thu 28 Jun 2018 09:37:45 AM CEST
+# Last Modified : Mon 30 Jul 2018 02:37:18 PM CEST
 #
 #####################################
 
 from Bio import SeqIO
 from Bio.PDB.PDBParser import PDBParser
 
-from MOBi import Distructure
-from MOBi import data
-from MOBi import config
-from MOBi import Superimposer
+from distruct import Distructure
+from distruct import data
+from distruct import config
+from distruct import Superimposer
 
 
 testFilePath = config.data_path + "tests/"

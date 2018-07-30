@@ -3,13 +3,13 @@
 #
 # Filename : pdbparser.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 11 Jun 2018 04:34:44 PM CEST
+# Last Modified : Mon 30 Jul 2018 02:52:40 PM CEST
 #
 #####################################
 
@@ -27,8 +27,8 @@ from Bio import SeqIO
 # from Bio import Alphabet
 # from Bio.Data.IUPACData import protein_letters_1to3
 
-from MOBi import data
-from MOBi.tools import math
+from distruct import data
+from distruct.tools import math
 
 
 # NOTE added chemicalDB to check for differing atom naming convention
@@ -308,7 +308,7 @@ def get_secondary_sequence_protein(fileName, topologyDB):
 
 def get_secondary_edges_protein(model, secondaryStructureSequence, topologyDB, useStructureDistances=True):
     # TODO this works only for protein right now
-    # TODO load edges to be used from MOBi.data
+    # TODO load edges to be used from distruct.data
     # TODO add distance from database
 
     edges = []

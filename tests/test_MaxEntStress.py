@@ -3,17 +3,17 @@
 #
 # Filename : test_MaxEntStress.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Wed 20 Jun 2018 01:47:30 PM CEST
+# Last Modified : Mon 30 Jul 2018 02:40:10 PM CEST
 #
 #####################################
 
-from MOBi import config
+from distruct import config
 testFilePath = config.data_path + 'tests/'
 
 

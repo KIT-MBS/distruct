@@ -3,13 +3,13 @@
 #
 # Filename : math.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 23 May 2017 17:01:55 CEST
 #
-# Last Modified : Mon 30 Apr 2018 03:56:37 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:02:16 PM CEST
 #
 #####################################
 

@@ -69,7 +69,7 @@ test:
 
 clean:
 	python setup.py clean --all
-	$(RM) ./MOBi/_MOBi.cpp _MOBi.*.so
+	$(RM) ./distruct/_diSTruct.cpp _diSTruct.*.so
 	rm -rf ./shallonwk
 
 .PHONY: deps inplace test clean

@@ -3,13 +3,13 @@
 #
 # Filename : __init__.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Thu 26 Jul 2018 07:04:43 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:02:56 PM CEST
 #
 #####################################
 
@@ -26,7 +26,7 @@ import os
 
 
 try:
-    from _MOBi import Distructure
+    from _diSTruct import Distructure
 except ImportError:
     # TODO set the LD_LIBRARY_PATH automatically
     import _NetworKit

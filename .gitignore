@@ -140,6 +140,5 @@ ENV/
 # custom settings
 bin/
 .build/
-src/_MOBi.cpp
 .pytest_cache
 shallownwk

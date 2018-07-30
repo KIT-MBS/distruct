@@ -3,13 +3,13 @@
 #
 # Filename : config.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Mon 22 May 2017 17:23:27 CEST
 #
-# Last Modified : Wed 02 May 2018 04:09:30 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:08:49 PM CEST
 #
 #####################################
 

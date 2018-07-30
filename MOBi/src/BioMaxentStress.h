@@ -3,13 +3,13 @@
  *
  *  Filename : BioMaxentStress.h
  *
- *  Projectname : MOBi
+ *  Projectname : diSTruct
  *
  *  Author : Oskar Taubert, Michael Wegner
  *
  *  Creation Date : Wed 23 May 2018 05:27:01 PM CEST
  *
- *  Last Modified : Mon 23 Jul 2018 09:16:08 PM CEST
+ *  Last Modified : Mon 30 Jul 2018 03:06:39 PM CEST
  *
  * *************************************/
 

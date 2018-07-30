@@ -3,13 +3,13 @@
 #
 # Filename : fileio.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Mon 25 Jun 2018 05:51:40 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:08:24 PM CEST
 #
 #####################################
 

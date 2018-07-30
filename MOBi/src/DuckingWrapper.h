@@ -3,13 +3,13 @@
  *
  *  Filename : DuckingWrapper.h
  *
- *  Projectname : MOBi
+ *  Projectname : diSTruct
  *
  *  Author : Oskar Taubert
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Thu 24 May 2018 11:57:30 AM CEST
+ *  Last Modified : Mon 30 Jul 2018 03:03:35 PM CEST
  *
  * *************************************/
 

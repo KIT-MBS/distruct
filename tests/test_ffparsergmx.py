@@ -3,13 +3,13 @@
 #
 # Filename : test_ffparsergmx.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Thu 11 May 2017 14:12:24 CEST
 #
-# Last Modified : Mon 25 Jun 2018 06:17:14 PM CEST
+# Last Modified : Mon 30 Jul 2018 02:40:57 PM CEST
 #
 #####################################
 
@@ -17,8 +17,9 @@ from math import pi
 from math import sqrt
 from pytest import approx
 
-from MOBi.tools import ffparsergmx
-from MOBi import config
+from distruct.tools import ffparsergmx
+
+from distruct import config
 
 testFilePath = config.data_path + 'tests/'
 

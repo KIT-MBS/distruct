@@ -3,13 +3,13 @@
 #
 # Filename : data.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Tue 15 Aug 2017 02:15:31 PM CEST
 #
-# Last Modified : Sun 24 Jun 2018 07:15:17 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:03:05 PM CEST
 #
 #####################################
 

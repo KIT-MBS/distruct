@@ -3,13 +3,13 @@
 #
 # Filename : superimposer.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Thu 17 May 2018 07:39:39 PM CEST
 #
-# Last Modified : Wed 20 Jun 2018 03:20:37 PM CEST
+# Last Modified : Mon 30 Jul 2018 03:08:39 PM CEST
 #
 #####################################
 

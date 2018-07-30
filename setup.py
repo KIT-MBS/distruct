@@ -3,13 +3,13 @@
 #
 # Filename : setup.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Thu 26 Jul 2018 06:53:30 PM CEST
+# Last Modified : Mon 30 Jul 2018 02:49:51 PM CEST
 #
 #####################################
 
@@ -35,7 +35,7 @@ def networkit_get_include(dir):
     sp.call(['git', 'clone', '--depth=1', nwkurl, dir])
     return
 
-sources = ['MOBi/src/BioMaxentStress.cpp', "MOBi/_MOBi" + fext]
+sources = ['distruct/src/BioMaxentStress.cpp', "distruct/_diSTruct" + fext]
 
 nwkDir = "shallownwk"
 print("downloading networkit header files...")
@@ -44,7 +44,7 @@ if not os.path.isdir(nwkDir):
     pass
 
 includeDir = nwkDir + "/networkit"
-includeDirs = [includeDir, "MOBi/src/"]
+includeDirs = [includeDir, "diSTruct/src/"]
 
 import _NetworKit
 libraryDir, library = tuple(os.path.split(_NetworKit.__file__))
@@ -60,7 +60,7 @@ link_args = ["-fopenmp"]
 
 extensions = [
         Extension(
-            "_MOBi",
+            "_diSTruct",
             sources,
             language = "c++",
             extra_compile_args = compile_args,
@@ -76,7 +76,7 @@ if USE_CYTHON:
     pass
 
 setup(
-        name = "MOBi",
+        name = "distruct",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",

@@ -1,4 +1,5 @@
-# MOBi
+# diSTruct (stylized)
+# package name: distruct
 Implementation of Maxent-stress Optimization of Biomolecular systems.
 
 We use pytest for the tests.

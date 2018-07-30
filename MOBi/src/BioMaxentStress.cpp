@@ -3,15 +3,17 @@
  *
  *  Filename : BioMaxentStress.cpp
  *
- *  Projectname : MOBi
+ *  Projectname : diSTruct
  *
- *  Author : Oskar Taubert, MOBi
+ *  Author : Michael Wegner
  *
  *  Creation Date : Wed 23 May 2018 05:28:02 PM CEST
  *
- *  Last Modified : Wed 23 May 2018 05:28:34 PM CEST
+ *  Last Modified : Mon 30 Jul 2018 03:06:14 PM CEST
  *
  * *************************************/
+
+// TODO remove and replace this entire thing
 
 #include "BioMaxentStress.h"
 

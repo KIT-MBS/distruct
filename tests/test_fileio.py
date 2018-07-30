@@ -3,13 +3,13 @@
 #
 # Filename : test_databaseio.py
 #
-# Projectname : MOBi
+# Projectname : diSTruct
 #
 # Author : Oskar Taubert
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Tue 26 Jun 2018 11:04:58 AM CEST
+# Last Modified : Mon 30 Jul 2018 02:39:15 PM CEST
 #
 #####################################
 
@@ -17,10 +17,10 @@ import os
 
 from pytest import approx
 
-from MOBi.fileio import read_topology_database, write_topology_database
-from MOBi.tools.ffparsergmx import generate
+from distruct.fileio import read_topology_database, write_topology_database
+from distruct.tools.ffparsergmx import generate
 
-from MOBi import config
+from distruct import config
 
 testFilePath = config.data_path + 'tests/'
 #
