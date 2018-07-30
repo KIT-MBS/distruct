@@ -197,7 +197,7 @@ from Bio.PDB.Residue import Residue
 from Bio.PDB.Atom import Atom
 
 from networkit import Graph
-from MOBi import data
+from distruct import data
 
 from itertools import zip_longest
 

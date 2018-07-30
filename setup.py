@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Mon 30 Jul 2018 02:49:51 PM CEST
+# Last Modified : Mon 30 Jul 2018 04:17:49 PM CEST
 #
 #####################################
 
@@ -44,7 +44,7 @@ if not os.path.isdir(nwkDir):
     pass
 
 includeDir = nwkDir + "/networkit"
-includeDirs = [includeDir, "diSTruct/src/"]
+includeDirs = [includeDir, "distruct/src/"]
 
 import _NetworKit
 libraryDir, library = tuple(os.path.split(_NetworKit.__file__))
