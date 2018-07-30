@@ -141,4 +141,5 @@ ENV/
 bin/
 .build/
 .pytest_cache
+_diSTruct.cpp
 shallownwk
