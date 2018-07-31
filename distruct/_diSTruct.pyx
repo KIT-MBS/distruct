@@ -273,6 +273,7 @@ class Distructure(Structure):
         self._primaryContacts = list()
         self._secondaryContacts = list()
         self._tertiaryContacts = list()
+        self.edgesSet = False
         return
 
     def _chain_count2ID(self, count):
@@ -308,7 +309,11 @@ class Distructure(Structure):
 
         e = self
         for ID in fullID[1:]:
-            e = e[ID]
+            if e.get_level() == 'R':
+                e = e[ID[0]]  # NOTE for biopython weirdness reasons, they don't return the atom_id in the full_id, but (atom_name, altloc)
+            else:
+                e = e[ID]
+                pass
             pass
         return e
 
@@ -319,6 +324,15 @@ class Distructure(Structure):
 
         # TODO maybe this should be a dict
         contacts = list()
+
+        # for r in chain:
+        #     print(r.get_id())
+        #     print(r.get_resname())
+        #     for a in r:
+        #         print('\t' + str(a.get_id()))
+        #         print('\t' + str(a.get_serial_number()))
+        #         pass
+        #     pass
 
         for r in chain:
             resn = r.get_resname()
@@ -364,12 +378,19 @@ class Distructure(Structure):
                             # NOTE atoms that are present in topology are not in the structure
                             # this may happen when there are missing atoms in a parsed structure
                             # or when hydrogens are deliberately left out
+                            print("one of the atoms is missing in the structure")
+                            print(chain.get_id())
+                            print(resIDs)
+                            print(atomIDs)
                             pass
                     else:
                         # NOTE the next or previous residue of r is not present
                         # this happens, when there are missing residues in the structure
                         # or when the end of the chain is reached
                         # TODO handle termini
+                        print("one of the residues is missing in the structure")
+                        print(chain.get_id())
+                        print(resIDs)
                         pass
                     pass
                 pass
@@ -416,9 +437,24 @@ class Distructure(Structure):
         # and otherwise just sets the new weight.
         # because of this it iterates over tertiary contacts first and overwrites them later with
         # primary contact weights. this should probably not be in the shipping version!!!!!
+
+        # TODO better way to do the distances
+        self.distDict = dict()
         for contact in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts:
-            self.graph.setWeight(contact[0][0], contact[0][1], contact[1])
+            atom1, atom2 = contact[0]
+            distance = contact[1]
+            weight = contact[2]
+
+            vertex1 = self._get_entity(atom1).get_serial_number()
+            vertex2 = self._get_entity(atom2).get_serial_number()
+            edge = tuple(sorted((vertex1, vertex2), reverse=True))
+
+            self.distDict[edge] = distance
+            self.graph.setWeight(vertex1, vertex2, weight)
             pass
+        self.edgesSet = True
+
+        # self.distDict = {(u, v): d for ((u, v), w, d) in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts}
 
         return
 
@@ -427,11 +463,12 @@ class Distructure(Structure):
         Generate atomic coordinates from the supplied edges, running MaxEnt-Stress graph drawing.
         """
 
+        self.generate_edges()
+
+        # TODO move all the checks from the wrapper here
         # TODO work on graph directly
         edges = self.graph.edges()
-        # TODO redundancy check befor this. at this point there should be no overlap between the different sets of contacts.
-        distDict = {(u, v): d for ((u, v), w, d) in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts}
-        distances = [distDict[(u, v)] for (u, v) in edges]
+        distances = [self.distDict[e] for e in edges]
         weights = [self.graph.weight(u, v) for (u, v) in edges]
 
         # TODO move checks here

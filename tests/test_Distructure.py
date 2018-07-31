@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 11 Jun 2018 04:04:59 PM CEST
 #
-# Last Modified : Mon 30 Jul 2018 02:37:18 PM CEST
+# Last Modified : Tue 31 Jul 2018 05:05:03 PM CEST
 #
 #####################################
 
@@ -17,9 +17,7 @@ from Bio import SeqIO
 from Bio.PDB.PDBParser import PDBParser
 
 from distruct import Distructure
-from distruct import data
 from distruct import config
-from distruct import Superimposer
 
 
 testFilePath = config.data_path + "tests/"
@@ -42,7 +40,7 @@ def test_Distructure():
     # create distruct
     ds = Distructure(code, sequences)
 
-    # create primary edges
+    # create primary contacts
     ds.generate_primary_contacts()
     # generate coordinates
     ds.run()
