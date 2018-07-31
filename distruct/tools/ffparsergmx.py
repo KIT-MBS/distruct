@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Mon 30 Jul 2018 03:01:43 PM CEST
+# Last Modified : Tue 31 Jul 2018 05:54:10 PM CEST
 #
 #####################################
 
@@ -910,8 +910,9 @@ def generate(
         for letter in a.letters:
             buildingBlock = letter.upper()
             key = buildingBlock
-            if buildingBlock not in buildingBlockTopologies:
-                if polymerType =='AA':
+
+            if polymerType =='AA':
+                if a.size == 1:
                     buildingBlock = IUPACData.protein_letters_1to3_extended[letter]
                     buildingBlock = buildingBlock.upper()
                     key = buildingBlock
@@ -921,16 +922,19 @@ def generate(
                     if buildingBlock not in buildingBlockTopologies:
                         raise KeyError("Could not find " + letter + " in the residue database.")
                     pass
-                elif polymerType == 'DNA':
-                    buildingBlock = 'D' + buildingBlock
-                    key = buildingBlock
+            else:
+                if buildingBlock not in buildingBlockTopologies:
+                    if polymerType == 'DNA':
+                        buildingBlock = 'D' + buildingBlock
+                        key = buildingBlock
+                        pass
+                    elif polymerType == 'RNA':
+                        key = buildingBlock
+                        buildingBlock = 'R' + buildingBlock
+                        pass
+                    else:
+                        raise
                     pass
-                elif polymerType == 'RNA':
-                    key = buildingBlock
-                    buildingBlock = 'R' + buildingBlock
-                    pass
-                else:
-                    raise
                 pass
             result['alphabets'][polymerType][letter] = key
             result[key] = translate(buildingBlock, buildingBlockTopologies, params)
