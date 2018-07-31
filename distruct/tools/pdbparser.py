@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Mon 30 Jul 2018 02:52:40 PM CEST
+# Last Modified : Mon 30 Jul 2018 07:46:39 PM CEST
 #
 #####################################
 
@@ -33,8 +33,12 @@ from distruct.tools import math
 
 # NOTE added chemicalDB to check for differing atom naming convention
 # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
-def read_PDB(PDBCode, fileName, chemicalDB={}, assign_serial_numbers=True):
+def read_PDB(PDBCode, fileName=None, chemicalDB=data.defaultTopologyDB, assign_serial_numbers=True):
     # TODO maybe handle hetero stuff if they are present in the force field
+
+    if fileName is None:
+        fileName = PDBCode + '.pdb'  # TODO replace this with .cif since it's the new default
+        pass
 
     # TODO Glycin Hs are not read correctly!!! (others probably too)
 
