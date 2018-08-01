@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Wed 01 Aug 2018 05:53:26 PM CEST
+# Last Modified : Wed 01 Aug 2018 06:43:33 PM CEST
 #
 #####################################
 
@@ -20,6 +20,32 @@ from Bio import PDB
 
 from distruct import data
 from distruct.tools import math
+
+
+def cull_atoms(atoms, structure):
+    """
+    Remove all atoms from a list, that are not in a structure.
+
+    In most reference structures, there are missing atoms and residues and often there are additional ligands.
+    To compute the RMSD between two structures, atom lists of identical length are needed.
+    """
+    for a in atoms:
+        fullID = a.get_full_id()
+        mID = fullID[1]
+        cID = fullID[2]
+        rID = fullID[3]
+        aID = a.get_id()
+        if mID in structure:
+            if cID in structure[mID]:
+                if rID in structure[mID][cID]:
+                    if aID in structure[mID][cID][rID]:
+                        yield a
+                        pass
+                    pass
+                pass
+            pass
+        pass
+    pass
 
 
 # NOTE added chemicalDB to check for differing atom naming convention
