@@ -325,15 +325,6 @@ class Distructure(Structure):
         # TODO maybe this should be a dict
         contacts = list()
 
-        # for r in chain:
-        #     print(r.get_id())
-        #     print(r.get_resname())
-        #     for a in r:
-        #         print('\t' + str(a.get_id()))
-        #         print('\t' + str(a.get_serial_number()))
-        #         pass
-        #     pass
-
         for r in chain:
             resn = r.get_resname()
             # TODO maybe rename keys in dict
@@ -389,6 +380,7 @@ class Distructure(Structure):
                         # or when the end of the chain is reached
                         # TODO handle termini
                         print("one of the residues is missing in the structure")
+                        print("TODO this also warns at terminals, which is dumb")
                         print(chain.get_id())
                         print(resIDs)
                         pass
