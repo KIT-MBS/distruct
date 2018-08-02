@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:53:41 CEST
 #
-# Last Modified : Mon 30 Jul 2018 04:23:09 PM CEST
+# Last Modified : Thu 02 Aug 2018 01:39:09 PM CEST
 #
 #####################################
 
@@ -19,4 +19,24 @@ def test_NWK():
     g = nwk.Graph(5)
     g.addEdge(0, 1)
     g.toString()
+    return
+
+
+def test_protein_xray():
+    assert False
+    return
+
+
+def test_protein_nmr():
+    assert False
+    return
+
+
+def test_rna_xray():
+    assert False
+    return
+
+
+def test_rna_nmr():
+    assert False
     return
