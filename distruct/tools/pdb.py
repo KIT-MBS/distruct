@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 #####################################
 #
-# Filename : pdbparser.py
+# Filename : pdb.py
 #
 # Projectname : diSTruct
 #
@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Wed 01 Aug 2018 06:43:33 PM CEST
+# Last Modified : Fri 03 Aug 2018 10:38:52 AM CEST
 #
 #####################################
 
