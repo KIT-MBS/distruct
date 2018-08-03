@@ -9,7 +9,7 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Wed 01 Aug 2018 07:27:52 PM CEST
+# Last Modified : Fri 03 Aug 2018 10:42:45 AM CEST
 #
 #####################################
 
@@ -21,7 +21,7 @@ from pytest import approx
 from distruct import config
 from distruct import Superimposer
 from distruct import Distructure
-from distruct.tools.pdbparser import cull_atoms
+from distruct.tools.pdb import cull_atoms
 
 testFilePath = config.data_path + "tests/"
 
@@ -81,7 +81,6 @@ def test_compare():
     from Bio import SeqIO
     from Bio.PDB import Superimposer as BPSuperimposer
     from Bio.PDB import PDBParser
-    from distruct.tools.pdbparser import cull_atoms
 
     code = '1ptq'
     fileName = testFilePath + code + '.pdb'
