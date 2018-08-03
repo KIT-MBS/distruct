@@ -9,17 +9,18 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Fri 03 Aug 2018 10:38:52 AM CEST
+# Last Modified : Fri 03 Aug 2018 01:22:17 PM CEST
 #
 #####################################
 
-import os
-
-import Bio
 from Bio import PDB
+from Bio import Seq
+from Bio.Alphabet import IUPAC
+
 
 from distruct import data
-from distruct.tools import math
+# from distruct.tools import math
+from . import math
 
 
 def cull_atoms(atoms, structure):
@@ -48,13 +49,46 @@ def cull_atoms(atoms, structure):
     pass
 
 
+def read_sequences(file):
+    sequences = list()
+
+    cifdict = PDB.MMCIF2Dict.MMCIF2Dict(file)
+
+    typeKey = '_entity_poly.type'
+    seqKey = '_entity_poly.pdbx_seq_one_letter_code_can'  # NOTE in this sequence, modified residues are identified with a one letter code
+
+    if not isinstance(cifdict[typeKey], list):
+        cifdict[typeKey] = [cifdict[typeKey]]
+        cifdict[seqKey] = [cifdict[seqKey]]
+        assert len(cifdict[typeKey]) == len(cifdict[seqKey])
+        pass
+
+    for s, t in zip(cifdict[seqKey], cifdict[typeKey]):
+        # TODO make this safer
+        a = None
+        if 'peptide' in t:
+            a = IUPAC.protein
+        elif 'ribonucleotide' in t:
+            a = IUPAC.unambiguous_rna
+        else:
+            raise
+
+        sequences.append(Seq.Seq(s, a))
+        pass
+
+    return sequences
+
+
 # NOTE added chemicalDB to check for differing atom naming convention
 # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
 def read_PDB(PDBCode, fileName=None, chemicalDB=data.defaultTopologyDB, assign_serial_numbers=True):
+
+    # TODO remove this and pass file instead of filename
+    import os
     # TODO maybe handle hetero stuff if they are present in the force field
 
     if fileName is None:
-        fileName = PDBCode + '.pdb'  # TODO replace this with .cif since it's the new default
+        fileName = PDBCode + '.cif.gz'  # TODO replace this with .cif since it's the new default
         pass
 
     # TODO Glycin Hs are not read correctly!!! (others probably too)
@@ -75,13 +109,11 @@ def read_PDB(PDBCode, fileName=None, chemicalDB=data.defaultTopologyDB, assign_s
         return parser.get_structure(structureName, structureFile)
 
     if ext == '.gz':
-        import gzip
         with gzip.open(fileName, 'rt') as f:
             structure = _read_structure_file(PDBCode, f, os.path.splitext(root)[1])
             pass
         pass
     elif ext == '.bz2':
-        import bzip
         with bzip.open(fileName, 'rt') as f:
             structure = _read_structure_file(PDBCode, f, os.path.splitext(root)[1])
     else:
