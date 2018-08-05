@@ -1,6 +1,7 @@
 
 Short term:
     optimize c++ part
+    test structure generation from dihedrals
     test on different types of structure (make sure NMR ones and ribosome work)
     test on robustness, error output, maybe filtering
     compare to two competitors at least
