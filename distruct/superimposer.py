@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 17 May 2018 07:39:39 PM CEST
 #
-# Last Modified : Mon 30 Jul 2018 03:08:39 PM CEST
+# Last Modified : Sun 05 Aug 2018 11:11:21 PM CEST
 #
 #####################################
 
@@ -79,6 +79,21 @@ class Superimposer(object):
             pass
 
         self.set_coords(fixedCoords, movingCoords)
+        return
+
+
+    def set_structures(self, fixed, moving):
+        """
+        Conveniently superimpose structures.
+        """
+
+        from distruct.tools.pdb import cull_atoms
+        fAtoms = list(cull_atoms(fixed.get_atoms(), moving))
+        mAtoms = list(cull_atoms(moving.get_atoms(), fixed))
+
+        assert len(fAtoms) == len(mAtoms)
+
+        self.set_atoms(fAtoms, mAtoms)
         return
 
     def apply(self, atom_list):

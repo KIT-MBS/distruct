@@ -9,7 +9,7 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Fri 03 Aug 2018 10:42:45 AM CEST
+# Last Modified : Sun 05 Aug 2018 11:12:14 PM CEST
 #
 #####################################
 
@@ -68,11 +68,31 @@ def test_superimposer_atoms():
 
 
 def test_superimposer_structure():
-    assert 0
+
+    from Bio import SeqIO
+    from Bio.PDB import PDBParser
+
+    code = '1ptq'
+    fileName = testFilePath + code + '.pdb'
+
+    refStructure = PDBParser().get_structure(code, fileName)
+
+    sequences = []
+    with open(fileName, 'rU') as f:
+        sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
+        pass
+
+    ds = Distructure('test', sequences, [[r.get_id() for r in refStructure.get_residues() if r.get_id()[0] == ' ']])
+    ds.generate_primary_contacts()
+    ds.run()
+
+    refStructure = PDBParser().get_structure(code, fileName)
+
+    sup = Superimposer()
+    sup.set_structures(refStructure, ds)
     return
 
 
-# TODO maybe compare the transformation, not just the error?
 def test_compare():
     """
     Compare the result of the diSTruct superimposer to the biopython one.
@@ -92,8 +112,6 @@ def test_compare():
         sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
         pass
 
-    print(sequences)
-    print([r.get_id() for r in refStructure.get_residues() if r.get_id()[0] == ' '])
     ds = Distructure('test', sequences, [[r.get_id() for r in refStructure.get_residues() if r.get_id()[0] == ' ']])
     ds.generate_primary_contacts()
     ds.run()
