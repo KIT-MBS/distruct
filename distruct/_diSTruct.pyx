@@ -343,7 +343,7 @@ class Distructure(Structure):
                         if '+' in edge[i]:
                             resIDs[i] += 1
                         elif '-' in edge[i]:
-                            resIDs[i] += 1
+                            resIDs[i] -= 1
                             pass
                         atomIDs.append(edge[i].strip('+-'))
                         pass
