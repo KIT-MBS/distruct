@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Thu 02 Aug 2018 01:40:00 PM CEST
+# Last Modified : Sun 05 Aug 2018 11:44:12 PM CEST
 #
 #####################################
 
@@ -18,11 +18,6 @@ testFilePath = config.data_path + 'tests/'
 
 
 def test_maxent_from_contacts():
-    assert False
-    return
-
-
-def test_maxent_from_dihedrals():
     assert False
     return
 
