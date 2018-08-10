@@ -9,16 +9,55 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Sun 05 Aug 2018 11:44:12 PM CEST
+# Last Modified : Fri 10 Aug 2018 06:56:35 PM CEST
 #
 #####################################
+
+from pytest import approx
+
+from Bio.PDB import PDBParser
+from Bio import SeqIO
+
+from distruct import Superimposer
+from distruct import Distructure
+from distruct.tools.pdb import get_contacts
+
 
 from distruct import config
 testFilePath = config.data_path + 'tests/'
 
 
 def test_maxent_from_contacts():
-    assert False
+    code = '1ptq'
+
+    fileName = testFilePath + code + '.pdb'
+
+    refStructure = PDBParser().get_structure(code, fileName)
+    contacts = get_contacts(refStructure[0], cutOff=9., minSeqDist=0)
+
+    sequences = []
+    with open(fileName, 'rU') as f:
+        sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
+        pass
+
+    ds = Distructure(
+            'test',
+            sequences,
+            [
+                [r.get_id() for r in c if r.get_id()[0] == ' ']
+                for c in refStructure[0]
+            ]
+    )
+
+    ds.generate_primary_contacts()
+    ds.set_tertiary_contacts(contacts)
+    ds.run()
+
+    sup = Superimposer()
+    sup.set_structures(refStructure, ds)
+
+    RMSD = sup.rms
+    assert RMSD == approx(0.)
     return
 
 
