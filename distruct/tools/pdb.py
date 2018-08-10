@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Fri 03 Aug 2018 01:22:17 PM CEST
+# Last Modified : Fri 10 Aug 2018 02:12:23 PM CEST
 #
 #####################################
 
@@ -79,150 +79,171 @@ def read_sequences(file):
     return sequences
 
 
-# NOTE added chemicalDB to check for differing atom naming convention
-# TODO add missing residues from a sequence and use distances from force field at the read pdb step?
-def read_PDB(PDBCode, fileName=None, chemicalDB=data.defaultTopologyDB, assign_serial_numbers=True):
+# # NOTE added chemicalDB to check for differing atom naming convention
+# # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
+# def read_PDB(PDBCode, fileName=None, chemicalDB=data.defaultTopologyDB, assign_serial_numbers=True):
+#
+#     # TODO remove this and pass file instead of filename
+#     import os
+#     # TODO maybe handle hetero stuff if they are present in the force field
+#
+#     if fileName is None:
+#         fileName = PDBCode + '.cif.gz'  # TODO replace this with .cif since it's the new default
+#         pass
+#
+#     # TODO Glycin Hs are not read correctly!!! (others probably too)
+#
+#     structure = None
+#
+#     root, ext = os.path.splitext(fileName)
+#
+#     def _read_structure_file(structureName, structureFile, mode='.cif'):
+#         nonlocal assign_serial_numbers
+#         parser = None
+#         if mode == '.cif':
+#             assign_serial_numbers = True
+#             parser = PDB.MMCIFParser()
+#         else:
+#             parser = PDB.PDBParser()
+#             pass
+#         return parser.get_structure(structureName, structureFile)
+#
+#     if ext == '.gz':
+#         with gzip.open(fileName, 'rt') as f:
+#             structure = _read_structure_file(PDBCode, f, os.path.splitext(root)[1])
+#             pass
+#         pass
+#     elif ext == '.bz2':
+#         with bzip.open(fileName, 'rt') as f:
+#             structure = _read_structure_file(PDBCode, f, os.path.splitext(root)[1])
+#     else:
+#         structure = _read_structure_file(PDBCode, fileName, ext)
+#         pass
+#
+#     # NOTE this is a bit clunky but it is apparently a bad idea to remove bits of an iterable while iterating over it
+#     flaggedForRemoval = []
+#     for model in structure:
+#         for chain in model:
+#             for residue in chain:
+#                 if residue.id[0] != ' ':
+#                     # NOTE this removes e.g. hetero residues
+#                     flaggedForRemoval.append((chain.id, residue.id))
+#                     assign_serial_numbers = True
+#                 else:
+#                     if residue.get_resname() not in chemicalDB:
+#                         flaggedForRemoval.append((chain.id, residue.id))
+#                         assign_serial_numbers = True
+#                         pass
+#                     # TODO remove this and handle termini properly
+#                     if residue.has_id('OXT'):
+#                         residue.detach_child('OXT')
+#                         pass
+#                     if chemicalDB:
+#                         if residue.get_resname() in chemicalDB:
+#                             for atom in residue:
+#                                 if atom.get_name() not in chemicalDB[residue.get_resname()]['vertices']:
+#                                     if not residue.has_id(atom.get_name()[:-1]) and atom.get_name()[:-1] in chemicalDB[residue.get_resname()]['vertices']:
+#                                         # NOTE sometimes atoms in pdbfiles are called e.g. CD1 instead of CD
+#                                         # print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
+#                                         oldID = atom.get_id()
+#                                         newID = oldID[:-1]
+#                                         atom.name = newID
+#                                         atom.id = newID
+#                                         atom.parent.child_dict[newID] = atom.parent.child_dict[oldID]  # NOTE has_id checks in the parents child_dict. which still has the old id as key. since atoms are not entities for some reason, can't use builtin facilities to manage this
+#                                         del atom.parent.child_dict[oldID]  # TODO maybe this should be done outside the loop
+#                                         # print("renaming to ", atom.get_name())
+#                                         # print(chemicalDB[residue.get_resname()]['bondEdges'])
+#
+#                                     else:
+#                                         print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
+#                                         # TODO handle this properly
+#                                         assert False
+#                                         pass
+#                                     pass
+#                                 pass
+#                             pass
+#                         else:
+#                             print("unkown residue: ", str(residue), "in chain ", str(chain), " flagged for removal")
+#                             flaggedForRemoval.append((chain.get_id(), residue.get_id()))
+#                             assign_serial_numbers = True
+#                             pass
+#                     pass
+#                 pass
+#             pass
+#         for cr in flaggedForRemoval:
+#             residue = model[cr[0]][cr[1]]
+#             model[cr[0]].detach_child(cr[1])
+#             pass
+#         flaggedForRemoval = []
+#         for chain in model:
+#             if len(chain) == 0:
+#                 flaggedForRemoval.append(chain.id)
+#                 pass
+#             pass
+#         for chain in flaggedForRemoval:
+#             model.detach_child(chain)
+#         pass
+#
+#     # NOTE this is necessary after removing some atoms or when loading a .cif, since the structure builder sets None for all serial numbers in that case
+#     # TODO should happen when serial numbers start at 1 too!!
+#     if assign_serial_numbers:
+#         i = 0
+#         for model in structure:
+#             for chain in model:
+#                 for residue in chain:
+#                     for atom in residue:
+#                         atom.set_serial_number(i)
+#                         i += 1
+#                         pass
+#                     pass
+#                 pass
+#             pass
+#         pass
+#
+#     print(len(list(structure.get_atoms())), ' atoms parsed')
+#
+#     return structure
 
-    # TODO remove this and pass file instead of filename
-    import os
-    # TODO maybe handle hetero stuff if they are present in the force field
 
-    if fileName is None:
-        fileName = PDBCode + '.cif.gz'  # TODO replace this with .cif since it's the new default
+from Bio.PDB import NeighborSearch
+
+def get_contacts(model, cutOff=5., minSeqDist=5):
+    contacts = list()
+
+    ns = NeighborSearch(list(model.get_atoms()))
+    foundPairs = ns.search_all(cutOff)
+
+    for pair in foundPairs:
+        fullAtomIDs = [
+                pair[0].get_full_id(),
+                pair[1].get_full_id()]
+        distance = pair[1] - pair[0]
+        weight = 1.
+
+        contacts.append((fullAtomIDs, distance, weight))
         pass
 
-    # TODO Glycin Hs are not read correctly!!! (others probably too)
-
-    structure = None
-
-    root, ext = os.path.splitext(fileName)
-
-    def _read_structure_file(structureName, structureFile, mode='.cif'):
-        nonlocal assign_serial_numbers
-        parser = None
-        if mode == '.cif':
-            assign_serial_numbers = True
-            parser = PDB.MMCIFParser()
-        else:
-            parser = PDB.PDBParser()
-            pass
-        return parser.get_structure(structureName, structureFile)
-
-    if ext == '.gz':
-        with gzip.open(fileName, 'rt') as f:
-            structure = _read_structure_file(PDBCode, f, os.path.splitext(root)[1])
-            pass
-        pass
-    elif ext == '.bz2':
-        with bzip.open(fileName, 'rt') as f:
-            structure = _read_structure_file(PDBCode, f, os.path.splitext(root)[1])
-    else:
-        structure = _read_structure_file(PDBCode, fileName, ext)
-        pass
-
-    # NOTE this is a bit clunky but it is apparently a bad idea to remove bits of an iterable while iterating over it
-    flaggedForRemoval = []
-    for model in structure:
-        for chain in model:
-            for residue in chain:
-                if residue.id[0] != ' ':
-                    # NOTE this removes e.g. hetero residues
-                    flaggedForRemoval.append((chain.id, residue.id))
-                    assign_serial_numbers = True
-                else:
-                    if residue.get_resname() not in chemicalDB:
-                        flaggedForRemoval.append((chain.id, residue.id))
-                        assign_serial_numbers = True
-                        pass
-                    # TODO remove this and handle termini properly
-                    if residue.has_id('OXT'):
-                        residue.detach_child('OXT')
-                        pass
-                    if chemicalDB:
-                        if residue.get_resname() in chemicalDB:
-                            for atom in residue:
-                                if atom.get_name() not in chemicalDB[residue.get_resname()]['vertices']:
-                                    if not residue.has_id(atom.get_name()[:-1]) and atom.get_name()[:-1] in chemicalDB[residue.get_resname()]['vertices']:
-                                        # NOTE sometimes atoms in pdbfiles are called e.g. CD1 instead of CD
-                                        # print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
-                                        oldID = atom.get_id()
-                                        newID = oldID[:-1]
-                                        atom.name = newID
-                                        atom.id = newID
-                                        atom.parent.child_dict[newID] = atom.parent.child_dict[oldID]  # NOTE has_id checks in the parents child_dict. which still has the old id as key. since atoms are not entities for some reason, can't use builtin facilities to manage this
-                                        del atom.parent.child_dict[oldID]  # TODO maybe this should be done outside the loop
-                                        # print("renaming to ", atom.get_name())
-                                        # print(chemicalDB[residue.get_resname()]['bondEdges'])
-
-                                    else:
-                                        print(str(residue), atom.get_name(), " not in ", chemicalDB[residue.get_resname()]['vertices'], " of " + residue.get_resname())
-                                        # TODO handle this properly
-                                        assert False
-                                        pass
-                                    pass
-                                pass
-                            pass
-                        else:
-                            print("unkown residue: ", str(residue), "in chain ", str(chain), " flagged for removal")
-                            flaggedForRemoval.append((chain.get_id(), residue.get_id()))
-                            assign_serial_numbers = True
-                            pass
-                    pass
-                pass
-            pass
-        for cr in flaggedForRemoval:
-            residue = model[cr[0]][cr[1]]
-            model[cr[0]].detach_child(cr[1])
-            pass
-        flaggedForRemoval = []
-        for chain in model:
-            if len(chain) == 0:
-                flaggedForRemoval.append(chain.id)
-                pass
-            pass
-        for chain in flaggedForRemoval:
-            model.detach_child(chain)
-        pass
-
-    # NOTE this is necessary after removing some atoms or when loading a .cif, since the structure builder sets None for all serial numbers in that case
-    # TODO should happen when serial numbers start at 1 too!!
-    if assign_serial_numbers:
-        i = 0
-        for model in structure:
-            for chain in model:
-                for residue in chain:
-                    for atom in residue:
-                        atom.set_serial_number(i)
-                        i += 1
-                        pass
-                    pass
-                pass
-            pass
-        pass
-
-    print(len(list(structure.get_atoms())), ' atoms parsed')
-
-    return structure
+    return contacts
 
 
-def get_edge(atom1, atom2):
-    edge = tuple(sorted([atom1.get_serial_number(), atom2.get_serial_number()]))
-    distance = np.sqrt(np.dot(atom1.get_coord() - atom2.get_coord(), atom1.get_coord() - atom2.get_coord()))
-    return edge, distance
-
-
-# TODO this is only for backbone dihedrals, rename
-def get_dihedral_edge(model, chainID, resID, atomID):
-    if chainID in model:
-        if resID in model[chainID] and resID - 1 in model[chainID]:
-            if model[chainID][resID].has_id(atomID) and model[chainID][resID - 1].has_id(atomID):
-                atom1 = model[chainID][resID][atomID]
-                atom2 = model[chainID][resID - 1][atomID]
-                return get_edge(atom1, atom2)
-                pass
-            pass
-        pass
-    return None, None
+# def get_edge(atom1, atom2):
+#     edge = tuple(sorted([atom1.get_serial_number(), atom2.get_serial_number()]))
+#     distance = np.sqrt(np.dot(atom1.get_coord() - atom2.get_coord(), atom1.get_coord() - atom2.get_coord()))
+#     return edge, distance
+#
+#
+# # TODO this is only for backbone dihedrals, rename
+# def get_dihedral_edge(model, chainID, resID, atomID):
+#     if chainID in model:
+#         if resID in model[chainID] and resID - 1 in model[chainID]:
+#             if model[chainID][resID].has_id(atomID) and model[chainID][resID - 1].has_id(atomID):
+#                 atom1 = model[chainID][resID][atomID]
+#                 atom2 = model[chainID][resID - 1][atomID]
+#                 return get_edge(atom1, atom2)
+#                 pass
+#             pass
+#         pass
+#     return None, None
 
 
 # TODO make this integrate better, it should take a primary sequence and a structure...
