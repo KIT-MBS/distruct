@@ -241,6 +241,10 @@ class Distructure(Structure):
                 for resID, letter in zip_longest(resIDs, sequence):
                     assert letter is not None
                     polymerType = data.polymer_type(sequence.alphabet)
+                    if letter not in self.topDB['alphabets'][polymerType]:
+                        print(letter + " is an unknown residue.")
+                        print("Add Vertices manually and make sure to add enough edges to connect them all to the rest of the graph.")
+                        continue
                     resName = self.topDB['alphabets'][polymerType][letter]
                     segID = "   "  # TODO check this
                     if resID is None:
@@ -273,7 +277,7 @@ class Distructure(Structure):
         self._primaryContacts = list()
         self._secondaryContacts = list()
         self._tertiaryContacts = list()
-        self.edgesSet = False
+        self._edgesSet = False
         return
 
     def _chain_count2ID(self, count):
@@ -305,8 +309,6 @@ class Distructure(Structure):
         Primarily intended to convert an Atoms full_id to the integer ID of the corresponding vertex.
         """
 
-        assert self.id == fullID[0]
-
         e = self
         for ID in fullID[1:]:
             if e.get_level() == 'R':
@@ -327,12 +329,18 @@ class Distructure(Structure):
 
         for r in chain:
             resn = r.get_resname()
-            # TODO maybe rename keys in dict
+            if resn not in self.topDB:
+                print(resn + ' ' + str(r.get_id()) + " in " + str(chain.get_id()) + " is an unknown residue.")
+                print("Add Vertices manually and make sure to add enough edges to connect them all to the rest of the graph.")
+                continue
+
             for edgeType in ["bondEdges", "angleEdges", "improperEdges"]:
                 for edge in self.topDB[resn][edgeType]:
                     # NOTE edges between neighboring residues in sequence are constructed
                     # NOTE with sequential sequence ids. May cause problems with non-
                     # NOTE blank insertion codes and the like (hetero field should be fine).
+
+                    # TODO clean up, functionify
 
                     # TODO Correctly handle insertion code
                     resIDs = [r.get_id()[1], r.get_id()[1]]
@@ -401,6 +409,7 @@ class Distructure(Structure):
             pass
 
         self._primaryContacts = contacts
+        self._edgesSet = False
         return
 
     def generate_secondary_contacts(self):
@@ -413,15 +422,51 @@ class Distructure(Structure):
 
         # TODO check for protein / rna
         # TODO implement other SS elements
+        self._edgesSet = False
         raise NotImplementedError
 
     def set_tertiary_contacts(self, contacts):
-        self._tertiaryContacts = contacts
+        """
+        Check supplied edges for missing atoms and warn, then add only the useful ones.
+        """
+        self._tertiaryContacts = list()
+        for contact in contacts:
+            fullID1 = contact[0][0]
+            fullID2 = contact[0][1]
+
+            if fullID1[2] in self[0] and fullID2[2] in self[0]:
+                chain1 = self[0][fullID1[2]]
+                chain2 = self[0][fullID2[2]]
+                if fullID1[3] in chain1 and fullID2[3] in chain2:
+                    residue1 = chain1[fullID1[3]]
+                    residue2 = chain2[fullID2[3]]
+                    if fullID1[4][0] in residue1 and fullID2[4][0] in residue2:
+                        self._tertiaryContacts.append(contact)
+                    else:
+                        print("at least one atom in the edge between")
+                        print(chain1.get_id() + '(' + str(residue1.get_id()[1]) + ' ' + residue1.get_resname() + ')' + fullID1[4][0])
+                        print("and")
+                        print(chain2.get_id() + '(' + str(residue2.get_id()[1]) + ' ' + residue2.get_resname() + ')' + fullID2[4][0])
+                        print("is missing in the structure (dist = " + str(contact[1]) + ')')
+                        print([a.get_id() for a in residue1.get_atoms()])
+                        print([a.get_id() for a in residue2.get_atoms()])
+                        print('')
+                        pass
+                else:
+                    print("at least one residue in", contact, "is missing in the structure")
+                    pass
+            else:
+                print("at least one chain in", contact, "is missing in the structure")
+                pass
+            pass
+        self._edgesSet = False
         return
 
-    def add_tertiary_contacts(self, contacts):
-        self._tertiaryContacts += contacts
-        return
+    # def add_tertiary_contacts(self, contacts):
+    #     self._tertiaryContacts += contacts
+
+    #     self._edgesSet = False
+    #     return
 
     def generate_edges(self):
         # TODO improve
@@ -444,7 +489,7 @@ class Distructure(Structure):
             self.distDict[edge] = distance
             self.graph.setWeight(vertex1, vertex2, weight)
             pass
-        self.edgesSet = True
+        self._edgesSet = True
 
         # self.distDict = {(u, v): d for ((u, v), w, d) in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts}
 
@@ -455,7 +500,9 @@ class Distructure(Structure):
         Generate atomic coordinates from the supplied edges, running MaxEnt-Stress graph drawing.
         """
 
-        self.generate_edges()
+        if not self._edgesSet:
+            self.generate_edges()
+            pass
 
         # TODO move all the checks from the wrapper here
         # TODO work on graph directly
