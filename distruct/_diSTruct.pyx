@@ -107,11 +107,6 @@ cdef extern from "DuckingWrapper.h":
 #
 #     pass
 
-# TODO add IDGPOptimizerOld
-
-# NOTE actual MOBi interface follows
-
-
 # cdef extern from "../src/BioMaxentStress.h" namespace "MOBi":
 #     cdef cppclass _BioMaxentStress "MOBi::BioMaxentStress":
 #         # TODO find a way to use actual NetworKit interface
@@ -182,7 +177,6 @@ cdef extern from "DuckingWrapper.h":
 
 # TODO separate the Distructure class
 
-# TODO a more efficient MOBi::edge class may be useful at some point, but the atom IDs will have to be python objects
 # cdef cppclass _edge:
 #     cdef tuple fullAtomID1
 #     cdef tuple fullAtomID2
