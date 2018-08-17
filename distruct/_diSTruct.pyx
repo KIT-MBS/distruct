@@ -504,7 +504,7 @@ class Distructure(Structure):
         distances = [self.distDict[e] for e in edges]
         weights = [self.graph.weight(u, v) for (u, v) in edges]
 
-        # TODO move checks here
+        # NOTE connectivity check
         cdef vector[Point[double]] coord = runMaxent(self.graph.numberOfNodes(), alpha, q, solves, edges, distances, weights)
 
         for atom in self.get_atoms():

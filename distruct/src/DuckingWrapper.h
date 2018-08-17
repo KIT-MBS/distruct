@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Mon 30 Jul 2018 03:03:35 PM CEST
+ *  Last Modified : Fri 17 Aug 2018 02:07:42 PM CEST
  *
  * *************************************/
 
@@ -36,18 +36,15 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
 
     uint64_t numEdges = edges.size();
 
-
+    // NOTE add edges with distances as weights
     for(uint64_t i=0; i<numEdges; ++i)
     {
-        if(graph.hasEdge(edges[i].first, edges[i].second))
-        {
-            throw std::invalid_argument("ERROR: Input graph is not simple.");
-        }
         graph.addEdge(edges[i].first, edges[i].second, distances[i]);
     }
     std::cout << "vertices: " << graph.numberOfNodes() << " edges: " << graph.numberOfEdges() << std::endl;
     graph.indexEdges();
 
+    // NOTE sort probabilites so they are accessible with edge index
     std::vector<double> sortedProbabilities(numEdges);
     for(uint64_t i=0; i<numEdges; ++i)
     {
@@ -56,6 +53,7 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
     }
     probabilities = sortedProbabilities;
 
+    // NOTE connectivity check
     NetworKit::ConnectedComponents cc(graph);
     cc.run();
     if(cc.numberOfComponents() != 1)
@@ -78,19 +76,10 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
         throw std::invalid_argument("ERROR: Input graph is not connected.");
     }
 
+    // NOTE initialize
     NetworKit::Lamg<NetworKit::CSRMatrix> lamg(1e-5);
 
     NetworKit::BioMaxentStress maxent(graph, 3, lamg, probabilities, false);
-    //if(initCoords.size() != numNodes)
-    //{
-    //    NetworKit::BioMaxentStress maxent(graph, 3, lamg, probabilities, false);
-    //}
-    //else
-    //{
-    //    NetworKit::BioMaxentStress maxent(graph, 3, initCoords, lamg, probabilities, false);
-    //}
-    //
-    // TODO do all the checks
 
     // defaults
     alpha = 1.;
