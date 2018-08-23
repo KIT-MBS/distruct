@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Mon 30 Jul 2018 03:02:56 PM CEST
+# Last Modified : Thu 23 Aug 2018 12:00:02 PM CEST
 #
 #####################################
 
@@ -30,8 +30,11 @@ try:
 except ImportError:
     # TODO set the LD_LIBRARY_PATH automatically
     import _NetworKit
+    print("####################################################################################")
     print("export LD_LIBRARY_PATH=LD_LIBRARY_PATH:" + os.path.split(_NetworKit.__file__)[0])
     print("or put it in the .bashrc")
     print("i know this is bananas")
     print("i will fix it eventually")
+    print("also make sure all the dependencies are installed correctly")
+    print("####################################################################################")
     raise ImportError
