@@ -9,7 +9,7 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Sun 05 Aug 2018 11:12:14 PM CEST
+# Last Modified : Thu 23 Aug 2018 04:49:50 PM CEST
 #
 #####################################
 
@@ -102,21 +102,30 @@ def test_compare():
     from Bio.PDB import Superimposer as BPSuperimposer
     from Bio.PDB import PDBParser
 
+    from distruct.tools.pdb import get_contacts
+
     code = '1ptq'
     fileName = testFilePath + code + '.pdb'
 
     refStructure = PDBParser().get_structure(code, fileName)
+    contacts = get_contacts(refStructure[0], cutOff=5., minSeqDist=0)
 
     sequences = []
     with open(fileName, 'rU') as f:
         sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
         pass
 
-    ds = Distructure('test', sequences, [[r.get_id() for r in refStructure.get_residues() if r.get_id()[0] == ' ']])
+    ds = Distructure(
+            'test',
+            sequences,
+            [
+                [r.get_id() for r in c if r.get_id()[0] == ' ']
+                for c in refStructure[0]
+            ]
+    )
     ds.generate_primary_contacts()
+    ds.set_tertiary_contacts(contacts)
     ds.run()
-
-    # NOTE assuming all atoms in the ref structure are in the res structure, but not vv
 
     refStructure = PDBParser().get_structure(code, fileName)
     tempStructure = ds.copy()
