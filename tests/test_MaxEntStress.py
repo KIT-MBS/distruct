@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Fri 10 Aug 2018 06:56:35 PM CEST
+# Last Modified : Thu 23 Aug 2018 05:56:25 PM CEST
 #
 #####################################
 
@@ -33,7 +33,7 @@ def test_maxent_from_contacts():
     fileName = testFilePath + code + '.pdb'
 
     refStructure = PDBParser().get_structure(code, fileName)
-    contacts = get_contacts(refStructure[0], cutOff=9., minSeqDist=0)
+    contacts = get_contacts(refStructure[0], cutOff=5., minSeqDist=0)
 
     sequences = []
     with open(fileName, 'rU') as f:
@@ -57,7 +57,7 @@ def test_maxent_from_contacts():
     sup.set_structures(refStructure, ds)
 
     RMSD = sup.rms
-    assert RMSD == approx(0.)
+    assert RMSD < 0.15
     return
 
 
