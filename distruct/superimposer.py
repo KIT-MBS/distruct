@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 17 May 2018 07:39:39 PM CEST
 #
-# Last Modified : Sun 05 Aug 2018 11:13:32 PM CEST
+# Last Modified : Thu 23 Aug 2018 05:50:06 PM CEST
 #
 #####################################
 
@@ -85,11 +85,23 @@ class Superimposer(object):
     def set_structures(self, fixed, moving):
         """
         Conveniently superimpose structures.
+
+        It is recommended to use this interface, since it also makes sure, the atom lists are
+        ordered the same way.
         """
 
         from distruct.tools.pdb import cull_atoms
         fAtoms = list(cull_atoms(fixed.get_atoms(), moving))
-        mAtoms = list(cull_atoms(moving.get_atoms(), fixed))
+        # mAtoms = list(cull_atoms(moving.get_atoms(), fixed))
+        mAtoms = list()
+        for atom in fAtoms:
+            fullID = atom.get_full_id()
+            mID = fullID[1]
+            cID = fullID[2]
+            rID = fullID[3]
+            aID = atom.get_id()
+            mAtoms.append(moving[mID][cID][rID][aID])
+            pass
 
         self.set_atoms(fAtoms, mAtoms)
         return
