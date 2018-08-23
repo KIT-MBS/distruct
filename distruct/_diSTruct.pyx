@@ -485,8 +485,6 @@ class Distructure(Structure):
             pass
         self._edgesSet = True
 
-        # self.distDict = {(u, v): d for ((u, v), w, d) in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts}
-
         return
 
     def run(self, double alpha = 1., double q = 0., uint64_t solves = 300):
