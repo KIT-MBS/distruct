@@ -211,6 +211,13 @@ class Distructure(Structure):
         protein secondary structure (3 state)
         """
         # TODO better (markup) doc
+
+        # TODO redo entire initialization!!!!!!!
+        # TODO use args and kwargs here for more flexibility
+        # TODO separate chains and sequences
+        # TODO implement terminals
+        # TODO implement gaps
+
         # TODO implement nucleic acid SS
         # TODO implement 8 state protein SS
 

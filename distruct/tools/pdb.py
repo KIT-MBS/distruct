@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 16:35:51 CEST
 #
-# Last Modified : Fri 10 Aug 2018 02:12:23 PM CEST
+# Last Modified : Tue 28 Aug 2018 11:42:56 AM CEST
 #
 #####################################
 
@@ -49,6 +49,7 @@ def cull_atoms(atoms, structure):
     pass
 
 
+# TODO redo this
 def read_sequences(file):
     sequences = list()
 
