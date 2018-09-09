@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Tue 31 Jul 2018 05:54:10 PM CEST
+# Last Modified : Sun 09 Sep 2018 11:50:51 PM CEST
 #
 #####################################
 
@@ -28,6 +28,7 @@ from .. import data
 topologyPath = config.gromacs_topology_path
 
 # TODO add omega to topologies
+# TODO resolve ILE issue: ff: CD, PDB: CD1
 
 
 def read_atomtypes(line):
