@@ -224,12 +224,13 @@ class Distructure(Structure):
         self.topDB = topDB
         Structure.__init__(self, id)
 
-        model = Model(0, None)
-        self.add(model)
-
+        self._serial_set = False
+        atomCounter = 0  # NOTE atomCount starts at 0 since graph vertices do
         if sequences:
+            model = Model(0, None)
+            self.add(model)
+
             chainCounter = 1
-            atomCounter = 0  # NOTE atomCount starts at 0 since graph vertices do
             for sequence, resIDs in zip_longest(sequences, resIDLists, fillvalue=list()):
 
                 chainID = self._chain_count2ID(chainCounter)
@@ -272,6 +273,7 @@ class Distructure(Structure):
                         pass
                     pass
                 pass
+            self._serial_set = True
             pass
         self.graph = Graph(atomCounter, True, False)
         self.graph.setName(id)
@@ -303,6 +305,7 @@ class Distructure(Structure):
             pass
         return ID
 
+    # TODO use biopython unfold entities instead
     def _get_entity(self, fullID):
         """
         Get a child entity from the Structure from its full ID.
@@ -477,6 +480,19 @@ class Distructure(Structure):
         # primary contact weights. this should probably not be in the shipping version!!!!!
 
         # TODO better way to do the distances
+        print("generating edges...")
+
+        # TODO set this to false when adding new atoms
+        if not self._serial_set:
+            atomCounter = 0
+            for atom in self.get_atoms():
+                atom.set_serial_number(atomCounter)
+                atomCounter += 1
+                pass
+            self._serial_set = True
+            self.graph = Graph(atomCounter, True, False)
+            pass
+
         self.distDict = dict()
         for contact in self._tertiaryContacts + self._primaryContacts + self._secondaryContacts:
             atom1, atom2 = contact[0]
@@ -485,6 +501,7 @@ class Distructure(Structure):
 
             vertex1 = self._get_entity(atom1).get_serial_number()
             vertex2 = self._get_entity(atom2).get_serial_number()
+
             edge = tuple(sorted((vertex1, vertex2), reverse=True))
 
             self.distDict[edge] = distance
@@ -501,6 +518,7 @@ class Distructure(Structure):
 
         if not self._edgesSet:
             self.generate_edges()
+            self._edgesSet = True
             pass
 
         # TODO move all the checks from the wrapper here
@@ -510,22 +528,13 @@ class Distructure(Structure):
         weights = [self.graph.weight(u, v) for (u, v) in edges]
 
         # NOTE connectivity check
+
+        print("running MaxEnt stress")
         cdef vector[Point[double]] coord = runMaxent(self.graph.numberOfNodes(), alpha, q, solves, edges, distances, weights)
 
         for atom in self.get_atoms():
             atomCoord = coord[atom.get_serial_number()]
             atom.set_coord(np.array([atomCoord[0], atomCoord[1], atomCoord[2]]))
-            pass
-        return
-
-    def update_serial_numbers(self):
-        """
-        Renumber all atoms in the structure.
-
-        This should be called after adding new atoms to the structure.
-        """
-        for i, a in enumerate(self.get_atoms()):
-            a.set_serial_number(i)
             pass
         return
 
