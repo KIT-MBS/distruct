@@ -381,20 +381,20 @@ class Distructure(Structure):
                             # NOTE atoms that are present in topology are not in the structure
                             # this may happen when there are missing atoms in a parsed structure
                             # or when hydrogens are deliberately left out
-                            print("one of the atoms is missing in the structure")
-                            print(chain.get_id())
-                            print(resIDs)
-                            print(atomIDs)
+                            # print("one of the atoms is missing in the structure")
+                            # print(chain.get_id())
+                            # print(resIDs)
+                            # print(atomIDs)
                             pass
                     else:
                         # NOTE the next or previous residue of r is not present
                         # this happens, when there are missing residues in the structure
                         # or when the end of the chain is reached
                         # TODO handle termini
-                        print("one of the residues is missing in the structure")
-                        print("TODO this also warns at terminals, which is dumb")
-                        print(chain.get_id())
-                        print(resIDs)
+                        # print("one of the residues is missing in the structure")
+                        # print("TODO this also warns at terminals, which is dumb")
+                        # print(chain.get_id())
+                        # print(resIDs)
                         pass
                     pass
                 pass
@@ -447,14 +447,15 @@ class Distructure(Structure):
                     if fullID1[4][0] in residue1 and fullID2[4][0] in residue2:
                         self._tertiaryContacts.append(contact)
                     else:
-                        print("at least one atom in the edge between")
-                        print(chain1.get_id() + '(' + str(residue1.get_id()[1]) + ' ' + residue1.get_resname() + ')' + fullID1[4][0])
-                        print("and")
-                        print(chain2.get_id() + '(' + str(residue2.get_id()[1]) + ' ' + residue2.get_resname() + ')' + fullID2[4][0])
-                        print("is missing in the structure (dist = " + str(contact[1]) + ')')
-                        print([a.get_id() for a in residue1.get_atoms()])
-                        print([a.get_id() for a in residue2.get_atoms()])
-                        print('')
+                        # TODO implement verbosity
+                        # print("at least one atom in the edge between")
+                        # print(chain1.get_id() + '(' + str(residue1.get_id()[1]) + ' ' + residue1.get_resname() + ')' + fullID1[4][0])
+                        # print("and")
+                        # print(chain2.get_id() + '(' + str(residue2.get_id()[1]) + ' ' + residue2.get_resname() + ')' + fullID2[4][0])
+                        # print("is missing in the structure (dist = " + str(contact[1]) + ')')
+                        # print([a.get_id() for a in residue1.get_atoms()])
+                        # print([a.get_id() for a in residue2.get_atoms()])
+                        # print('')
                         pass
                 else:
                     print("at least one residue in", contact, "is missing in the structure")
