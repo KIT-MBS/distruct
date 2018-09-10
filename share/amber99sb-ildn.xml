@@ -474,7 +474,7 @@
       <atom element="C" name="CG1"/>
       <atom element="H" name="HG11"/>
       <atom element="H" name="HG12"/>
-      <atom element="C" name="CD"/>
+      <atom element="C" name="CD1"/>
       <atom element="H" name="HD1"/>
       <atom element="H" name="HD2"/>
       <atom element="H" name="HD3"/>
@@ -491,10 +491,10 @@
       <edge distance="1.52600" vertices="('CB', 'CG1')"/>
       <edge distance="1.52600" vertices="('CB', 'CG2')"/>
       <edge distance="1.09000" vertices="('CB', 'HB')"/>
-      <edge distance="1.52600" vertices="('CD', 'CG1')"/>
-      <edge distance="1.09000" vertices="('CD', 'HD1')"/>
-      <edge distance="1.09000" vertices="('CD', 'HD2')"/>
-      <edge distance="1.09000" vertices="('CD', 'HD3')"/>
+      <edge distance="1.52600" vertices="('CD1', 'CG1')"/>
+      <edge distance="1.09000" vertices="('CD1', 'HD1')"/>
+      <edge distance="1.09000" vertices="('CD1', 'HD2')"/>
+      <edge distance="1.09000" vertices="('CD1', 'HD3')"/>
       <edge distance="1.09000" vertices="('CG1', 'HG11')"/>
       <edge distance="1.09000" vertices="('CG1', 'HG12')"/>
       <edge distance="1.09000" vertices="('CG2', 'HG21')"/>
@@ -515,7 +515,7 @@
       <edge distance="2.12029" vertices="('CA', 'H')"/>
       <edge distance="2.15110" vertices="('CA', 'HB')"/>
       <edge distance="2.39166" vertices="('CA', 'O')"/>
-      <edge distance="2.49239" vertices="('CB', 'CD')"/>
+      <edge distance="2.49239" vertices="('CB', 'CD1')"/>
       <edge distance="2.15110" vertices="('CB', 'HA')"/>
       <edge distance="2.15110" vertices="('CB', 'HG11')"/>
       <edge distance="2.15110" vertices="('CB', 'HG12')"/>
@@ -523,8 +523,8 @@
       <edge distance="2.15110" vertices="('CB', 'HG22')"/>
       <edge distance="2.15110" vertices="('CB', 'HG23')"/>
       <edge distance="2.43291" vertices="('CB', 'N')"/>
-      <edge distance="2.15110" vertices="('CD', 'HG11')"/>
-      <edge distance="2.15110" vertices="('CD', 'HG12')"/>
+      <edge distance="2.15110" vertices="('CD1', 'HG11')"/>
+      <edge distance="2.15110" vertices="('CD1', 'HG12')"/>
       <edge distance="2.49239" vertices="('CG1', 'CG2')"/>
       <edge distance="2.15110" vertices="('CG1', 'HB')"/>
       <edge distance="2.15110" vertices="('CG1', 'HD1')"/>
