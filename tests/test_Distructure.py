@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 11 Jun 2018 04:04:59 PM CEST
 #
-# Last Modified : Mon 10 Sep 2018 06:24:58 PM CEST
+# Last Modified : Tue 11 Sep 2018 03:34:48 PM CEST
 #
 #####################################
 
@@ -43,21 +43,5 @@ def test_Distructure():
     # create primary contacts
     ds.generate_primary_contacts()
     # generate coordinates
-    ds.run()
-    return
-
-def test_RNA():
-
-    code = "3iqn"
-    fileName = testFilePath + code + '.pdb'
-
-    sequences = list()
-    with open(fileName, 'rU') as f:
-        sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
-        pass
-
-    ds = Distructure(code, sequences)
-
-    ds.generate_primary_contacts()
     ds.run()
     return

@@ -9,13 +9,12 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Thu 23 Aug 2018 12:00:02 PM CEST
+# Last Modified : Tue 11 Sep 2018 06:47:28 PM CEST
 #
 #####################################
 
 from . import config
 from . import data
-from . import seq
 from . import fileio
 from . import tools
 
