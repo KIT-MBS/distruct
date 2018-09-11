@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Tue 11 Sep 2018 07:07:02 PM CEST
+# Last Modified : Tue 11 Sep 2018 07:28:24 PM CEST
 #
 #####################################
 
@@ -52,7 +52,7 @@ def test_maxent_from_contacts():
     )
 
     ds.generate_primary_contacts()
-    # ds.set_tertiary_contacts(contacts)
+    ds.set_tertiary_contacts(contacts)
     ds.run()
 
     sup = Superimposer()
@@ -73,7 +73,7 @@ def test_RNA():
 
     sequences = []
     for chain in refStructure[0]:
-        s = ''.join([r.get_resname() for r in chain if r.get_id()[0]==' '])
+        s = ''.join([r.get_resname().strip() for r in chain if r.get_id()[0]==' '])
         s = Seq(s, unambiguous_rna)
         sequences.append(s)
         pass
@@ -81,7 +81,7 @@ def test_RNA():
     ds = Distructure('test', sequences)
 
     ds.generate_primary_contacts()
-    ds.set_tertiary_contacts(contacts)
+    # ds.set_tertiary_contacts(contacts)
     ds.run()
 
     sup = Superimposer()
