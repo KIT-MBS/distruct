@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Mon 30 Jul 2018 03:08:24 PM CEST
+# Last Modified : Wed 12 Sep 2018 06:24:44 PM CEST
 #
 #####################################
 
@@ -57,6 +57,7 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
                 # TODO check this preserves ordering
                 for atom in vertices.findall('atom'):
                     result[buildingBlockNode.tag]['vertices'].append((atom.attrib['name'], atom.attrib['element']))
+                    print(atom.attrib['name'])
                     pass
                 pass
             for child in buildingBlockNode:
@@ -65,8 +66,22 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
                         result[buildingBlockNode.tag][child.tag] = {}
                         pass
                     for edge in child:
-                        edgeTuple = tuple(edge.attrib['vertices'].strip('()').split(','))
-                        edgeTuple = tuple(x.strip(" \'") for x in edgeTuple)
+                        s = edge.attrib['vertices'].strip('()')
+                        print(s)
+                        s = s.split(',')
+                        for i, x in enumerate(s):
+                            if '"' in x:
+                                s[i] = x.strip('" ')
+                            else:
+                                s[i] = x.strip("' ")
+                                pass
+                            pass
+                        # TODO remove
+                        # for x in s:
+                        #     print(x)
+                        # edgeTuple = tuple(edge.attrib['vertices'].strip('()').split(','))
+                        # edgeTuple = tuple(x.strip(" \'") for x in edgeTuple)
+                        edgeTuple = tuple(s)
                         result[buildingBlockNode.tag][child.tag][edgeTuple] = float(edge.attrib['distance'])
                         pass
                     pass
