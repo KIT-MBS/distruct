@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Mon 30 Jul 2018 02:39:15 PM CEST
+# Last Modified : Wed 12 Sep 2018 06:33:42 PM CEST
 #
 #####################################
 
@@ -57,7 +57,7 @@ testFilePath = config.data_path + 'tests/'
 #     return
 
 def test_fileio():
-    ffname = 'test'
+    ffName = 'test'
     from Bio import Alphabet
     alphabet = Alphabet.ProteinAlphabet()
     alphabet.size = 3
@@ -65,7 +65,7 @@ def test_fileio():
     inferAngles = True
     topPath = testFilePath
 
-    testDB = generate(ffname, [alphabet], inferAngles, topPath=topPath)
+    testDB = generate(ffName, [alphabet], inferAngles, topPath=topPath)
 
     write_topology_database(testDB, 'test', [alphabet], outDir=testFilePath)
 
@@ -77,8 +77,33 @@ def test_fileio():
     assert result['BB1']['bondEdges'][('A3', 'A4')] == approx(1.1)
     assert result['BB1']['angleEdges'][('A1', 'A3')] == approx(1.90787884028338913, rel=1e-5)
     assert result['BB1']['angleEdges'][('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
-    assert result['BB1']['improperEdges']['A1', 'A4'] == approx(2.065313144262336, rel=1e-5)
+    assert result['BB1']['improperEdges'][('A1', 'A4')] == approx(2.065313144262336, rel=1e-5)
 
     os.remove(testFilePath + 'test.xml')
+
+    return
+
+
+def test_quotationMarks():
+    ffName = "test"
+    from Bio import Alphabet
+    alphabet = Alphabet.RNAAlphabet()
+    alphabet.size = 1
+    alphabet.letters = ['A']
+
+    testDB = generate(ffName,  [alphabet], True, topPath=testFilePath)
+
+    write_topology_database(testDB, 'test', [alphabet], outDir=testFilePath)
+
+    result = read_topology_database('test', inDir=testFilePath)
+
+    print(result['A']['vertices'])
+    print(result['A']['bondEdges'])
+
+    assert result['A']['vertices'] == [('A', 'A'), ("A1'", 'A'), ("A2'", 'A'), ("A1'1", 'A')]
+
+    assert result['A']['bondEdges'][('A', "A1'")] == approx(1.2)
+    assert result['A']['bondEdges'][("A1'", "A2'")] == approx(1.0)
+    assert result['A']['bondEdges'][("A1'1", "A2'")] == approx(1.1)
 
     return
