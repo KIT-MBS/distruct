@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Wed 12 Sep 2018 06:24:44 PM CEST
+# Last Modified : Thu 13 Sep 2018 01:24:14 PM CEST
 #
 #####################################
 
@@ -57,7 +57,6 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
                 # TODO check this preserves ordering
                 for atom in vertices.findall('atom'):
                     result[buildingBlockNode.tag]['vertices'].append((atom.attrib['name'], atom.attrib['element']))
-                    print(atom.attrib['name'])
                     pass
                 pass
             for child in buildingBlockNode:
@@ -67,7 +66,6 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
                         pass
                     for edge in child:
                         s = edge.attrib['vertices'].strip('()')
-                        print(s)
                         s = s.split(',')
                         for i, x in enumerate(s):
                             if '"' in x:
@@ -76,9 +74,6 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
                                 s[i] = x.strip("' ")
                                 pass
                             pass
-                        # TODO remove
-                        # for x in s:
-                        #     print(x)
                         # edgeTuple = tuple(edge.attrib['vertices'].strip('()').split(','))
                         # edgeTuple = tuple(x.strip(" \'") for x in edgeTuple)
                         edgeTuple = tuple(s)
