@@ -539,4 +539,10 @@ class Distructure(Structure):
             pass
         return
 
+    def error():
+        return
+
+    def loss():
+        return
+
     pass
