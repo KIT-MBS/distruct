@@ -1487,8 +1487,8 @@
   <DG>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -1554,14 +1554,14 @@
       <edge distance="1.01000" vertices="('H1', 'N1')"/>
       <edge distance="1.01000" vertices="('H21', 'N2')"/>
       <edge distance="1.01000" vertices="('H22', 'N2')"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
       <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
@@ -1621,9 +1621,9 @@
       <edge distance="2.43284" vertices="('N3', 'N9')"/>
       <edge distance="2.24247" vertices="('N7', 'N9')"/>
       <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -1631,8 +1631,8 @@
   <DA>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -1696,14 +1696,14 @@
       <edge distance="1.37100" vertices="('C8', 'N9')"/>
       <edge distance="1.01000" vertices="('H61', 'N6')"/>
       <edge distance="1.01000" vertices="('H62', 'N6')"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
       <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
@@ -1761,9 +1761,9 @@
       <edge distance="2.43284" vertices="('N3', 'N9')"/>
       <edge distance="2.24247" vertices="('N7', 'N9')"/>
       <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -1771,8 +1771,8 @@
   <DT>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -1835,14 +1835,14 @@
       <edge distance="1.09000" vertices="('C7', 'H72')"/>
       <edge distance="1.09000" vertices="('C7', 'H73')"/>
       <edge distance="1.01000" vertices="('H3', 'N3')"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
@@ -1900,9 +1900,9 @@
       <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
       <edge distance="2.27457" vertices="('N3', 'O2')"/>
       <edge distance="2.27457" vertices="('N3', 'O4')"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -1910,8 +1910,8 @@
   <DC>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -1970,14 +1970,14 @@
       <edge distance="1.36500" vertices="('C6', 'N1')"/>
       <edge distance="1.01000" vertices="('H41', 'N4')"/>
       <edge distance="1.01000" vertices="('H42', 'N4')"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
@@ -2030,9 +2030,9 @@
       <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
       <edge distance="2.31186" vertices="('N3', 'N4')"/>
       <edge distance="2.26894" vertices="('N3', 'O2')"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -2040,8 +2040,8 @@
   <G>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -2109,14 +2109,14 @@
       <edge distance="1.01000" vertices="('H21', 'N2')"/>
       <edge distance="1.01000" vertices="('H22', 'N2')"/>
       <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
       <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
@@ -2177,9 +2177,9 @@
       <edge distance="2.43284" vertices="('N3', 'N9')"/>
       <edge distance="2.24247" vertices="('N7', 'N9')"/>
       <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -2187,8 +2187,8 @@
   <A>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -2254,14 +2254,14 @@
       <edge distance="1.01000" vertices="('H61', 'N6')"/>
       <edge distance="1.01000" vertices="('H62', 'N6')"/>
       <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
       <edge distance="2.53663" vertices="(&quot;C1'&quot;, 'C4')"/>
@@ -2320,9 +2320,9 @@
       <edge distance="2.43284" vertices="('N3', 'N9')"/>
       <edge distance="2.24247" vertices="('N7', 'N9')"/>
       <edge distance="2.35631" vertices="('N9', &quot;O4'&quot;)"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -2330,8 +2330,8 @@
   <U>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -2390,14 +2390,14 @@
       <edge distance="1.36500" vertices="('C6', 'N1')"/>
       <edge distance="1.01000" vertices="('H3', 'N3')"/>
       <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
@@ -2450,9 +2450,9 @@
       <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
       <edge distance="2.27457" vertices="('N3', 'O2')"/>
       <edge distance="2.27457" vertices="('N3', 'O4')"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>
@@ -2460,8 +2460,8 @@
   <C>
     <vertices>
       <atom element="P" name="P"/>
-      <atom element="O" name="O1P"/>
-      <atom element="O" name="O2P"/>
+      <atom element="O" name="OP1"/>
+      <atom element="O" name="OP2"/>
       <atom element="O" name="O5'"/>
       <atom element="C" name="C5'"/>
       <atom element="H" name="H5'1"/>
@@ -2522,14 +2522,14 @@
       <edge distance="1.01000" vertices="('H41', 'N4')"/>
       <edge distance="1.01000" vertices="('H42', 'N4')"/>
       <edge distance="0.96000" vertices="(&quot;HO'2&quot;, &quot;O2'&quot;)"/>
-      <edge distance="1.48000" vertices="('O1P', 'P')"/>
-      <edge distance="1.48000" vertices="('O2P', 'P')"/>
+      <edge distance="1.48000" vertices="('OP1', 'P')"/>
+      <edge distance="1.48000" vertices="('OP2', 'P')"/>
       <edge distance="1.61000" vertices="(&quot;O5'&quot;, 'P')"/>
     </bondEdges>
     <angleEdges>
       <edge distance="2.62384" vertices="('+P', &quot;C3'&quot;)"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O1P')"/>
-      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'O2P')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP1')"/>
+      <edge distance="2.50466" vertices="(&quot;-O3'&quot;, 'OP2')"/>
       <edge distance="2.51299" vertices="(&quot;-O3'&quot;, &quot;O5'&quot;)"/>
       <edge distance="2.44510" vertices="(&quot;C1'&quot;, 'C2')"/>
       <edge distance="2.49239" vertices="(&quot;C1'&quot;, &quot;C3'&quot;)"/>
@@ -2583,9 +2583,9 @@
       <edge distance="2.35631" vertices="('N1', &quot;O4'&quot;)"/>
       <edge distance="2.31186" vertices="('N3', 'N4')"/>
       <edge distance="2.26894" vertices="('N3', 'O2')"/>
-      <edge distance="2.56214" vertices="('O1P', 'O2P')"/>
-      <edge distance="2.50466" vertices="('O1P', &quot;O5'&quot;)"/>
-      <edge distance="2.50466" vertices="('O2P', &quot;O5'&quot;)"/>
+      <edge distance="2.56214" vertices="('OP1', 'OP2')"/>
+      <edge distance="2.50466" vertices="('OP1', &quot;O5'&quot;)"/>
+      <edge distance="2.50466" vertices="('OP2', &quot;O5'&quot;)"/>
     </angleEdges>
     <improperEdges/>
     <dihedralEdges/>

@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 11 May 2017 10:54:56 CEST
 #
-# Last Modified : Sun 09 Sep 2018 11:50:51 PM CEST
+# Last Modified : Fri 14 Sep 2018 06:45:26 PM CEST
 #
 #####################################
 
@@ -29,6 +29,7 @@ topologyPath = config.gromacs_topology_path
 
 # TODO add omega to topologies
 # TODO resolve ILE issue: ff: CD, PDB: CD1
+# TODO similarly, some atoms in RNAs: OP2/O2P
 
 
 def read_atomtypes(line):
