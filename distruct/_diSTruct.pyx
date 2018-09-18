@@ -331,7 +331,9 @@ class Distructure(Structure):
         # TODO maybe this should be a dict
         contacts = list()
 
-        for r in chain:
+        # TODO this is to handle insertion codes, test it works correctly.
+        chainResidues = list(chain.get_residues())
+        for idx, r in enumerate(chainResidues):
             resn = r.get_resname()
             if resn not in self.topDB:
                 print(resn + ' ' + str(r.get_id()) + " in " + str(chain.get_id()) + " is an unknown residue.")
@@ -346,19 +348,43 @@ class Distructure(Structure):
 
                     # TODO clean up, functionify
 
-                    # TODO Correctly handle insertion code
-                    resIDs = [r.get_id()[1], r.get_id()[1]]
-                    atomIDs = list()
-                    edgeAtomIDs = list()
-                    atomCoords = list()
+                    # TODO Correctly handle insertion code and gaps
+                    # TODO this is to handle insertion codes, test it works correctly.
+                    # resIDs = [r.get_id()[1], r.get_id()[1]]
+                    resIndices = [idx, idx]
+
                     for i in range(len(edge)):
                         if '+' in edge[i]:
-                            resIDs[i] += 1
+                            resIndices[i] += 1
                         elif '-' in edge[i]:
-                            resIDs[i] -= 1
+                            resIndices[i] -= 1
                             pass
-                        atomIDs.append(edge[i].strip('+-'))
                         pass
+                    # NOTE check indices are not out of bounds and residues are adjacent in sequence
+                    if resIndices[0] < 0:
+                        continue
+                    if resIndices[0] >= len(chainResidues):
+                        continue
+                    if resIndices[1] < 0:
+                        continue
+                    if resIndices[1] >= len(chainResidues):
+                        continue
+
+                    resIDs = [chainResidues[resIndices[0]].get_id(), chainResidues[resIndices[1]].get_id()]
+                    if abs(resIDs[0][1] - resIDs[1][1]) > 1:
+                        continue
+
+                    # for i in range(len(edge)):
+                    #     if '+' in edge[i]:
+                    #         resIDs[i] += 1
+                    #     elif '-' in edge[i]:
+                    #         resIDs[i] -= 1
+                    #         pass
+                    #     atomIDs.append(edge[i].strip('+-'))
+                    #     pass
+                    atomIDs = list()
+                    atomCoords = list()
+                    atomIDs = [x.strip('+-') for x in edge]
                     if resIDs[0] in chain and resIDs[1] in chain:
                         if chain[resIDs[0]].has_id(atomIDs[0]) and chain[resIDs[1]].has_id(atomIDs[1]):
                             edgeFullAtomIDs = [
