@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Wed 12 Sep 2018 06:33:42 PM CEST
+# Last Modified : Tue 25 Sep 2018 10:54:58 AM CEST
 #
 #####################################
 
@@ -70,6 +70,7 @@ def test_fileio():
     write_topology_database(testDB, 'test', [alphabet], outDir=testFilePath)
 
     result = read_topology_database('test', inDir=testFilePath)
+    os.remove(testFilePath + 'test.xml')
     assert result['BB1']['vertices'] == [('A1', 'A'), ('A2', 'A'), ('A3', 'A'), ('A4', 'A')]
 
     assert result['BB1']['bondEdges'][('A1', 'A2')] == approx(1.2)
@@ -79,7 +80,6 @@ def test_fileio():
     assert result['BB1']['angleEdges'][('A2', 'A4')] == approx(1.7719368430701863, rel=1e-5)
     assert result['BB1']['improperEdges'][('A1', 'A4')] == approx(2.065313144262336, rel=1e-5)
 
-    os.remove(testFilePath + 'test.xml')
 
     return
 
