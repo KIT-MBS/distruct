@@ -16,6 +16,6 @@ test:
 clean:
 	python setup.py clean --all
 	$(RM) ./distruct/_diSTruct.cpp _diSTruct.*.so
-	rm -rf ./shallonwk
+	rm -rf ./shallownwk
 
 .PHONY: install dev deps inplace test clean
