@@ -599,8 +599,39 @@ class Distructure(Structure):
         return np.sum(self.edgeErrors) / len(self.edgeErrors)
 
     # TODO put these in cpp
+    def error2(self):
+        atoms = list(self[0].get_atoms())
+        self.edgeErrors2 = np.zeros(self.graph.numberOfEdges())
+        self.nodeErrors2 = np.zeros(self.graph.numberOfNodes())
+
+        def edgeError2(u, v, weight, id):
+            assert u == atoms[u].get_serial_number()
+            assert v == atoms[v].get_serial_number()
+            edge = tuple(sorted((u, v), reverse=True))
+            d = self.distDict[edge]
+            self.edgeErrors2[id] = (d - (atoms[u] - atoms[v]))*(d - (atoms[u] - atoms[v]))
+            return
+
+        self.graph.forEdges(edgeError2)
+
+        def nodeError2(u):
+            neighborErrors2 = np.zeros(self.graph.degree(u))
+            i = 0
+            def neighborError2(u, v, weight, id):
+                edge = tuple(sorted((u, v), reverse=True))
+                d = self.distDict[edge]
+                neighborErrors2[i] = (d - (atoms[u] - atoms[v]))*(d - (atoms[u] - atoms[v]))
+                return
+            self.graph.forEdgesOf(u, neighborError2)
+            self.nodeErrors2[u] = np.sqrt(np.sum(neighborErrors2) / len(neighborErrors2))
+            return
+        self.graph.forNodes(nodeError2)
+
+        return np.sqrt(np.sum(self.edgeErrors2) / len(self.edgeErrors2))
+
+
+    # TODO put these in cpp
     def stress(self):
         raise NotImplementedError
-        return
 
     pass
