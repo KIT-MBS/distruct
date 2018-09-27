@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 22 May 2017 14:44:16 CEST
 #
-# Last Modified : Tue 25 Sep 2018 10:54:58 AM CEST
+# Last Modified : Thu 27 Sep 2018 07:31:31 PM CEST
 #
 #####################################
 
@@ -97,6 +97,7 @@ def test_quotationMarks():
 
     result = read_topology_database('test', inDir=testFilePath)
 
+    os.remove(testFilePath + 'test.xml')
     print(result['A']['vertices'])
     print(result['A']['bondEdges'])
 
