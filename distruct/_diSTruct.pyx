@@ -564,6 +564,12 @@ class Distructure(Structure):
             atomCoord = coord[atom.get_serial_number()]
             atom.set_coord(np.array([atomCoord[0], atomCoord[1], atomCoord[2]]))
             pass
+
+        self.error2()
+
+        for atom in self.get_atoms():
+            atom.set_bfactor(self.nodeError2[atom.get_serial_number()])
+            pass
         return
 
     # TODO put these in cpp
