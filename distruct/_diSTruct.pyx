@@ -568,7 +568,7 @@ class Distructure(Structure):
         self.error2()
 
         for atom in self.get_atoms():
-            atom.set_bfactor(self.nodeError2[atom.get_serial_number()])
+            atom.set_bfactor(self.nodeErrors2[atom.get_serial_number()])
             pass
         return
 
