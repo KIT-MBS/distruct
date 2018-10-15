@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Fri 17 Aug 2018 02:07:42 PM CEST
+ *  Last Modified : Tue 16 Oct 2018 12:11:20 AM CEST
  *
  * *************************************/
 
@@ -79,7 +79,19 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
     // NOTE initialize
     NetworKit::Lamg<NetworKit::CSRMatrix> lamg(1e-5);
 
-    NetworKit::BioMaxentStress maxent(graph, 3, lamg, probabilities, false);
+    //NetworKit::BioMaxentStress maxent(graph, 3, lamg, probabilities, false);
+    std::vector<NetworKit::Point<double>> coordinates(graph.numberOfNodes(), NetworKit::Point<double>(3));
+#pragma omp parallel for
+    for(uint64_t i=0; i<coordinates[0].getDimensions(); ++i)
+    {
+        for(uint64_t d=0; d<3; ++d)
+        {
+            coordinates[d][i] = Aux::Random::real() * 50;
+        }
+    }
+
+
+    NetworKit::BioMaxentStress maxent(graph, 3, coordinates, lamg, probabilities, false);
 
     // defaults
     alpha = 1.;
