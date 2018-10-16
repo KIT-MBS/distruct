@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Tue 16 Oct 2018 12:11:20 AM CEST
+ *  Last Modified : Tue 16 Oct 2018 02:45:05 PM CEST
  *
  * *************************************/
 
@@ -91,7 +91,7 @@ std::vector<NetworKit::Point<double>> runMaxent(uint64_t numNodes, double alpha,
     }
 
 
-    NetworKit::BioMaxentStress maxent(graph, 3, coordinates, lamg, probabilities, false);
+    diSTruct::BioMaxentStress maxent(graph, 3, coordinates, lamg, probabilities, false);
 
     // defaults
     alpha = 1.;

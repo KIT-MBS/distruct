@@ -9,7 +9,7 @@
  *
  *  Creation Date : Wed 23 May 2018 05:27:01 PM CEST
  *
- *  Last Modified : Mon 30 Jul 2018 03:06:39 PM CEST
+ *  Last Modified : Tue 16 Oct 2018 02:52:05 PM CEST
  *
  * *************************************/
 
@@ -21,24 +21,12 @@
 #include <cpp/algebraic/CSRMatrix.h>
 #include <cpp/viz/Octree.h>
 
-//#include <NetworKit/graph/BFS.h>
-//#include <cpp/distance/Dijkstra.h>
-//#include <cpp/distance/AlgebraicDistance.h>
-//
-//#include <cpp/viz/FruchtermanReingold.h>
-//#include <cpp/io/LineFileReader.h>
-//#include <cpp/auxiliary/StringTools.h>
-
-//#include <sys/time.h>
-
-//#include <memory>
-
 //provides keyboard interrupt handling
 #include "aux/sig.h"
 
-namespace NetworKit {
+namespace diSTruct {
 
-typedef std::vector<Vector> CoordinateVector; // more meaningful and shorter name for coordinates stored by dimension
+typedef std::vector<NetworKit::Vector> CoordinateVector; // more meaningful and shorter name for coordinates stored by dimension
 
 /**
  * @ingroup viz
@@ -47,7 +35,7 @@ typedef std::vector<Vector> CoordinateVector; // more meaningful and shorter nam
  *
  * @see Gansner, Emden R., Yifan Hu, and Steve North. "A maxent-stress model for graph layout." Visualization and Computer Graphics, IEEE Transactions on 19, no. 6 (2013): 927-940.
  */
-class BioMaxentStress : public GraphLayoutAlgorithm<double> {
+class BioMaxentStress : public NetworKit::GraphLayoutAlgorithm<double> {
 public:
 	/**
 	 * Creates a BioMaxentStress object for graph @a G. The algorithm embeds the graph in @a dim dimensional Euclidean
@@ -58,7 +46,7 @@ public:
 	 * @param solver A linear solver capable of solving Laplacian linear systems.
 	 * @param fastComputation
 	 */
-	BioMaxentStress(const Graph& G, const count dim, LinearSolver<CSRMatrix>& solver, bool fastComputation=false);
+	BioMaxentStress(const NetworKit::Graph& G, const uint64_t dim, NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver, bool fastComputation=false);
 
 	/**
 	 * Creates a BioMaxentStress object for graph @a G. The algorithm embeds the graph in @a dim dimensional Euclidean
@@ -72,7 +60,7 @@ public:
 	 * @param probability Probability for each edge (by edgeId)
 	 * @param fastComputation
 	 */
-	BioMaxentStress(const Graph& G, const count dim, LinearSolver<CSRMatrix>& solver, std::vector<double>& probability, bool fastComputation=false);
+	BioMaxentStress(const NetworKit::Graph& G, const uint64_t dim, NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver, std::vector<double>& probability, bool fastComputation=false);
 
 	/**
 	 * Creates a BioMaxentStress object for graph @a G. The algorithm embeds the graph in @a dim dimensional Euclidean
@@ -85,7 +73,7 @@ public:
 	 * @param solver A linear solver capable of solving Laplacian linear systems.
 	 * @param fastComputation
 	 */
-	BioMaxentStress(const Graph& G, const count dim, const std::vector<Point<double>>& coordinates, LinearSolver<CSRMatrix> &solver, bool fastComputation=false);
+	BioMaxentStress(const NetworKit::Graph& G, const uint64_t dim, const std::vector<NetworKit::Point<double>>& coordinates, NetworKit::LinearSolver<NetworKit::CSRMatrix> &solver, bool fastComputation=false);
 
 	/**
 	 * Creates a BioMaxentStress object for graph @a G. The algorithm embeds the graph in @a dim dimensional Euclidean
@@ -101,7 +89,7 @@ public:
 	 * @param probability Probability for each edge (by edgeId)
 	 * @param fastComputation
 	 */
-	BioMaxentStress(const Graph& G, const count dim, const std::vector<Point<double>>& coordinates, LinearSolver<CSRMatrix> &solver, std::vector<double>& probability, bool fastComputation=false);
+	BioMaxentStress(const NetworKit::Graph& G, const uint64_t dim, const std::vector<NetworKit::Point<double>>& coordinates, NetworKit::LinearSolver<NetworKit::CSRMatrix> &solver, std::vector<double>& probability, bool fastComputation=false);
 
 
 	/** Default destructor. */
@@ -154,7 +142,7 @@ public:
 	 * Set the maximum number of solves per alpha.
 	 * @param maxSolvesPerAlpha
 	 */
-	void setMaxSolvesPerAlpha(count maxSolvesPerAlpha) {
+	void setMaxSolvesPerAlpha(uint64_t maxSolvesPerAlpha) {
 		this->maxSolvesPerAlpha = maxSolvesPerAlpha;
 	}
 
@@ -162,7 +150,7 @@ private:
 	/**
 	 * Reference to the linear solver to use during the maxent-stress algorithm.
 	 */
-	LinearSolver<CSRMatrix>& solver;
+    NetworKit::LinearSolver<NetworKit::CSRMatrix>& solver;
 
 	/** Parameters of the MaxentStress model **/
 	double q, alpha, alphaReduction, finalAlpha, convThreshold;
@@ -179,13 +167,13 @@ private:
 	bool fastComputation;
 
 	/** Maximum number of solves for the same value of alpha **/
-	count maxSolvesPerAlpha;
+	uint64_t maxSolvesPerAlpha;
 
 	/** Probability for edge having the given distance **/
 	std::vector<double> probability;
 
 	/** points of vertices are in R^{dim} */
-	count dim;
+	uint64_t dim;
 
 	/**
 	 * Determines whether the run() method has already been called.
@@ -226,7 +214,7 @@ private:
 	 * @param theta Parameter for Barnes-Hut cell-opening criterion.
 	 * @param b Repulsive force vector to compute.
 	 */
-	void approxRepulsiveForces(const CoordinateVector& coordinates, const Octree<double>& octree, const double theta, CoordinateVector& b) const;
+	void approxRepulsiveForces(const CoordinateVector& coordinates, const NetworKit::Octree<double>& octree, const double theta, CoordinateVector& b) const;
 
 	/**
 	 * Initializes the @a coordinates corresponding to vertices in the Graph to a random point in d-dimensional space 50^d pixel.
@@ -246,7 +234,7 @@ private:
 	 * @param i
 	 * @param j
 	 */
-	double squaredDistance(const CoordinateVector& coordinates, const index i, const index j) const;
+	double squaredDistance(const CoordinateVector& coordinates, const uint64_t i, const uint64_t j) const;
 
 
 	/**
@@ -255,7 +243,7 @@ private:
 	 * @param i
 	 * @param j
 	 */
-	inline double distance(const CoordinateVector& coordinates, const index i, const index j) const {
+	inline double distance(const CoordinateVector& coordinates, const uint64_t i, const uint64_t j) const {
 		return sqrt(squaredDistance(coordinates, i, j));
 	}
 
@@ -266,7 +254,7 @@ private:
 	 * @param i
 	 * @param j
 	 */
-	double squaredDistance(const CoordinateVector& coordinates1, const CoordinateVector& coordinates2, const index i, const index j) const;
+	double squaredDistance(const CoordinateVector& coordinates1, const CoordinateVector& coordinates2, const uint64_t i, const uint64_t j) const;
 
 	/**
 	 * Computes the squared distance ||c1_i - c2_j|| between coordinate @a i from @a coordinates1 and coordinate @a j from @a coordinates 2.
@@ -275,7 +263,7 @@ private:
 	 * @param i
 	 * @param j
 	 */
-	inline double distance(const CoordinateVector& coordinates1, const CoordinateVector& coordinates2, const index i, const index j) const {
+	inline double distance(const CoordinateVector& coordinates1, const CoordinateVector& coordinates2, const uint64_t i, const uint64_t j) const {
 		return sqrt(squaredDistance(coordinates1, coordinates2, i, j));
 	}
 
@@ -284,14 +272,14 @@ private:
 	 * @param coordinates
 	 * @param i
 	 */
-	double squaredLength(const CoordinateVector& coordinates, const index i) const;
+	double squaredLength(const CoordinateVector& coordinates, const uint64_t i) const;
 
 	/**
 	 * Computes the length ||c_i|| of coordinate @a i in @a coordinates.
 	 * @param coordinates
 	 * @param i
 	 */
-	inline double length(const CoordinateVector& coordinates, const index i) const {
+	inline double length(const CoordinateVector& coordinates, const uint64_t i) const {
 		return sqrt(squaredLength(coordinates, i));
 	}
 
@@ -304,7 +292,7 @@ private:
 	 * @param edgeId The id of the corresponding edge in the graph.
 	 * @return The corresponding weighting factor.
 	 */
-	inline double weightingFactor(double edgeWeight, index edgeId) const {
+	inline double weightingFactor(double edgeWeight, uint64_t edgeId) const {
         return probabilityProvided? probability[edgeId] : 1.0;
 		//return probabilityProvided? 1+5*exp(-5*(1-probability[edgeId])) : 1.0;
 	}
@@ -322,9 +310,9 @@ private:
 	 * @param coordinates
 	 * @param i
 	 */
-	inline Point<double> getPoint(const CoordinateVector& coordinates, index i) const {
-		Point<double> p(coordinates.size());
-		for (index d = 0; d < p.getDimensions(); ++d) {
+	inline NetworKit::Point<double> getPoint(const CoordinateVector& coordinates, uint64_t i) const {
+        NetworKit::Point<double> p(coordinates.size());
+		for (uint64_t d = 0; d < p.getDimensions(); ++d) {
 			assert(coordinates[d].getDimension() > i);
 			p[d] = coordinates[d][i];
 		}
