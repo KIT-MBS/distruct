@@ -9,7 +9,7 @@
  *
  *  Creation Date : Wed 23 May 2018 05:28:02 PM CEST
  *
- *  Last Modified : Tue 16 Oct 2018 05:21:57 PM CEST
+ *  Last Modified : Thu 18 Oct 2018 11:25:55 AM CEST
  *
  * *************************************/
 
@@ -34,7 +34,7 @@ namespace diSTruct {
         finalAlpha(0.008),
         convThreshold(0.001*0.001),
         fastComputation(fastComputation),
-        maxSolvesPerAlpha(50),
+        maxSolvesPerAlpha(300),
         probability(probability),
         dim(dim),
         hasRun(false)
@@ -160,7 +160,8 @@ namespace diSTruct {
                 }
 
                 t.start();
-                solver.parallelSolve(rhs, newCoordinates, 1000, 75); // solve the Laplacian linear system for each dimension
+                // TODO maybe allow more time to solve in later iterations
+                solver.parallelSolve(rhs, newCoordinates, maxSolvesPerAlpha*10/3, maxSolvesPerAlpha/3); // solve the Laplacian linear system for each dimension
                 t.stop();
                 solveTime += t.elapsedMicroseconds();
 
