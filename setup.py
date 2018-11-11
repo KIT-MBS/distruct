@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Mon 30 Jul 2018 04:17:49 PM CEST
+# Last Modified : Sun 11 Nov 2018 09:36:08 PM CET
 #
 #####################################
 
@@ -75,16 +75,29 @@ if USE_CYTHON:
     extensions = cythonize(extensions, language = 'c++')
     pass
 
+with open("README.md", 'r') as f:
+    long_description = f.read()
+
 setup(
         name = "distruct",
+        version = "0.0.1",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",
-        url = "TODO",
+        description = "a package to generate 3d molecular structures from distance constraints",
+        long_description = long_description,
+        long_description_content_type = "text/markdown",
+        url = "https://github.com/KIT-MBS/distruct",
         download_url = "TODO",
         packages = find_packages(),
         package_data = {},
-        keywords = "",
-        platforms = "",
-        classifiers = "",
+        keywords = ["biomolecules", "graph drawing"],
+        classifiers = [
+            "Programming Language :: Python :: 3",
+            "Environment :: Console",
+            "Natural Language :: English",
+            "License :: OSI Approved :: MIT License",
+            "Operating System :: POSIX :: Linux",
+            "Topic :: Scientific/Engineering :: Bio-Informatics"
+            ],
         zip_safe = False)

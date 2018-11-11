@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Tue 11 Sep 2018 06:47:28 PM CEST
+# Last Modified : Sun 11 Nov 2018 07:45:47 PM CET
 #
 #####################################
 
@@ -22,6 +22,8 @@ from .superimposer import Superimposer
 
 import sys
 import os
+
+name = "distruct"
 
 
 try:
