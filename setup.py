@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Sun 11 Nov 2018 09:36:08 PM CET
+# Last Modified : Sun 11 Nov 2018 09:53:07 PM CET
 #
 #####################################
 
@@ -88,7 +88,7 @@ setup(
         long_description = long_description,
         long_description_content_type = "text/markdown",
         url = "https://github.com/KIT-MBS/distruct",
-        download_url = "TODO",
+        download_url = "https://pypi.python.org/pypi/distruct",
         packages = find_packages(),
         package_data = {},
         keywords = ["biomolecules", "graph drawing"],
