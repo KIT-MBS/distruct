@@ -16,6 +16,11 @@ It also depends on *lxml* and requires *cython*.
 ## Installation Instructions
 
 First install NetworKit following the instructions in their [homepage](https://networkit.iti.kit.edu).
+Make sure you can
+import networkit
+without error. Sometimes there are issues with automatically installing all dependenicies.
+Simply install missing packages manually.
+
 Install cython, Biopython and lxml.
 Install *diSTruct* with
 
