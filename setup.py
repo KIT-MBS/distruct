@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Sun 11 Nov 2018 09:53:07 PM CET
+# Last Modified : Mon 12 Nov 2018 01:08:22 PM CET
 #
 #####################################
 
@@ -52,10 +52,9 @@ libraryDir, library = tuple(os.path.split(_NetworKit.__file__))
 libraryDirs = [libraryDir]
 libraries = [':' + library]  # NOTE the : is to tell the linker to use the actual filename
 
-import _NetworKit
 nwkpath = os.path.split(_NetworKit.__file__)[0]
 
-compile_args = ["-fopenmp"]
+compile_args = ["-fopenmp", "-std=c++11"]
 link_args = ["-fopenmp"]
 
 extensions = [
@@ -80,7 +79,7 @@ with open("README.md", 'r') as f:
 
 setup(
         name = "distruct",
-        version = "0.0.1",
+        version = "0.0.4",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",
@@ -94,10 +93,12 @@ setup(
         keywords = ["biomolecules", "graph drawing"],
         classifiers = [
             "Programming Language :: Python :: 3",
+            "Programming Language :: C++",
             "Environment :: Console",
             "Natural Language :: English",
             "License :: OSI Approved :: MIT License",
             "Operating System :: POSIX :: Linux",
             "Topic :: Scientific/Engineering :: Bio-Informatics"
             ],
+        install_requires = ["numpy", "cython", "networkit", "biopython", "lxml"],
         zip_safe = False)
