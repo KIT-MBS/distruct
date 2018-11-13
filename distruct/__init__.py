@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Mon 12 Nov 2018 03:40:32 PM CET
+# Last Modified : Tue 13 Nov 2018 11:57:36 PM CET
 #
 #####################################
 
@@ -34,7 +34,7 @@ except ImportError:
     print("####################################################################################")
     print("An error occured when trying to import the diSTruct extension.")
     print("This may happen when the NetworKit extension could not be found.")
-    print("export LD_LIBRARY_PATH=LD_LIBRARY_PATH:" + os.path.split(_NetworKit.__file__)[0])
+    print("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:" + os.path.split(_NetworKit.__file__)[0])
     print("or put it in your .bashrc .")
     print("and make sure all the dependencies are installed correctly.")
     print("####################################################################################")
