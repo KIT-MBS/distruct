@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Fri 22 Mar 2019 05:23:28 PM CET
+# Last Modified : Fri 22 Mar 2019 05:51:46 PM CET
 #
 #####################################
 
@@ -61,7 +61,6 @@ extensions = [
         Extension(
             "_diSTruct",
             sources,
-            language = "c++",
             extra_compile_args = compile_args,
             extra_link_args = link_args,
             include_dirs = includeDirs,
