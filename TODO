@@ -8,6 +8,7 @@ Short term:
     display adjecency matrix
     check runtime from q dependency
     check with initialized coords and small perturbations
+    fix distribution of share and test files
 
 Long term:
     add fixed coordinate subsets / initialization
