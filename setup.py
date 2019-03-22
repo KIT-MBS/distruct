@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Fri 22 Mar 2019 01:53:09 PM CET
+# Last Modified : Fri 22 Mar 2019 05:23:28 PM CET
 #
 #####################################
 
@@ -47,10 +47,10 @@ includeDir = nwkDir + "/include/networkit"
 includeDirs = [includeDir, "distruct/src/"]
 
 import _NetworKit
-libraryDir, library = tuple(os.path.split(_NetworKit.__file__))
+libraryDir = os.path.split(_NetworKit.__file__)[0]
 
 libraryDirs = [libraryDir]
-libraries = [':' + library]  # NOTE the : is to tell the linker to use the actual filename
+libraries =['networkit']
 
 nwkpath = os.path.split(_NetworKit.__file__)[0]
 
@@ -79,7 +79,7 @@ with open("README.md", 'r') as f:
 
 setup(
         name = "distruct",
-        version = "0.0.5",
+        version = "0.0.6",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",
