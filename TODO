@@ -1,17 +1,7 @@
 
 Short term:
     optimize c++ part
-    test structure generation from dihedrals
-    test on different types of structure (make sure NMR ones and ribosome work)
-    test on robustness, error output, maybe filtering
-    compare to two competitors at least
-    display adjecency matrix
-    check runtime from q dependency
-    check with initialized coords and small perturbations
     fix distribution of share and test files
-
-Long term:
-    add fixed coordinate subsets / initialization
-    README
-    Docs
-    Citations
+    docs
+    examples
+    citations
