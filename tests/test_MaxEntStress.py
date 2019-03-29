@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Thu 13 Sep 2018 01:05:46 PM CEST
+# Last Modified : Fri 29 Mar 2019 04:12:10 PM CET
 #
 #####################################
 
@@ -45,7 +45,7 @@ def test_maxent_from_contacts():
     contacts = get_contacts(refStructure[0], cutOff=5., minSeqDist=0)
 
     sequences = []
-    with open(fileName, 'rU') as f:
+    with open(fileName, 'r') as f:
         sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
         pass
 

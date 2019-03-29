@@ -9,7 +9,7 @@
 #
 # Creation Date : Fri 18 May 2018 06:28:53 PM CEST
 #
-# Last Modified : Thu 23 Aug 2018 04:49:50 PM CEST
+# Last Modified : Fri 29 Mar 2019 04:12:22 PM CET
 #
 #####################################
 
@@ -78,7 +78,7 @@ def test_superimposer_structure():
     refStructure = PDBParser().get_structure(code, fileName)
 
     sequences = []
-    with open(fileName, 'rU') as f:
+    with open(fileName, 'r') as f:
         sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
         pass
 
@@ -111,7 +111,7 @@ def test_compare():
     contacts = get_contacts(refStructure[0], cutOff=5., minSeqDist=0)
 
     sequences = []
-    with open(fileName, 'rU') as f:
+    with open(fileName, 'r') as f:
         sequences = [r.seq for r in SeqIO.parse(f, "pdb-seqres")]
         pass
 
