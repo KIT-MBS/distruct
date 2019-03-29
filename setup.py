@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Fri 29 Mar 2019 04:14:19 PM CET
+# Last Modified : Fri 29 Mar 2019 06:35:45 PM CET
 #
 #####################################
 
@@ -70,7 +70,7 @@ extensions = [
 
 if USE_CYTHON:
     from Cython.Build import cythonize
-    extensions = cythonize(extensions, language = 'c++')
+    extensions = cythonize(extensions)
     pass
 
 with open("README.md", 'r') as f:
@@ -78,7 +78,7 @@ with open("README.md", 'r') as f:
 
 setup(
         name = "distruct",
-        version = "0.0.8",
+        version = "0.0.9",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",

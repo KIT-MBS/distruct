@@ -1,5 +1,5 @@
 include distruct/_diSTruct.pyx
 include distruct/src/*
 include distruct/src/aux/*
-include tests/*
-include share/*
+include distruct/tests/*
+include distruct/share/*

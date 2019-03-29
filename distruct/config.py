@@ -9,13 +9,13 @@
 #
 # Creation Date : Mon 22 May 2017 17:23:27 CEST
 #
-# Last Modified : Mon 30 Jul 2018 03:08:49 PM CEST
+# Last Modified : Fri 29 Mar 2019 06:33:10 PM CET
 #
 #####################################
 
 import os
 
-data_path = os.path.split(os.path.abspath(__file__))[0] + '/../share/'
+data_path = os.path.split(os.path.abspath(__file__))[0] + '/share/'
 
 # TODO do a setup function where it reads this from gromacs output
 # (or tries to  and if it does not work, warns and tells user to set it themselves)
