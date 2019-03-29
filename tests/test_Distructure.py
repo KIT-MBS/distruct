@@ -9,7 +9,7 @@
 #
 # Creation Date : Mon 11 Jun 2018 04:04:59 PM CEST
 #
-# Last Modified : Tue 11 Sep 2018 03:34:48 PM CEST
+# Last Modified : Thu 28 Mar 2019 11:14:02 AM CET
 #
 #####################################
 
@@ -29,7 +29,7 @@ def test_Distructure():
     fileName = testFilePath + code + '.pdb'
 
     sequences = list()
-    with open(fileName, 'rU') as f:
+    with open(fileName, 'r') as f:
         # for record in SeqIO.parse(f, "pdb-seqres"):
         #     print(record)
         #     sequences.append(record.seq)
@@ -45,3 +45,6 @@ def test_Distructure():
     # generate coordinates
     ds.run()
     return
+
+if __name__ == '__main__':
+    test_Distructure()
