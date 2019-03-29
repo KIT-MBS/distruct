@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Fri 22 Mar 2019 06:11:01 PM CET
+# Last Modified : Fri 29 Mar 2019 12:06:12 PM CET
 #
 #####################################
 
@@ -32,7 +32,7 @@ def networkit_get_include(dir):
     import subprocess as sp
     # TODO get the downloadurl from the networkit package
     nwkurl = "https://github.com/kit-parco/networkit.git"
-    sp.call(['git', 'clone', '--depth=1', nwkurl, dir])
+    sp.call(['git', 'clone', '--branch', '5.0', '--depth=1', nwkurl, dir])
     return
 
 sources = ['distruct/src/BioMaxentStress.cpp', "distruct/_diSTruct" + fext]
