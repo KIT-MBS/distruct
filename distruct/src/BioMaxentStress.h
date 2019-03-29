@@ -9,17 +9,17 @@
  *
  *  Creation Date : Wed 23 May 2018 05:27:01 PM CEST
  *
- *  Last Modified : Fri 22 Mar 2019 02:56:14 PM CET
+ *  Last Modified : Fri 29 Mar 2019 04:07:03 PM CET
  *
  * *************************************/
 
 #ifndef BIOMAXENTSTRESS_H
 #define BIOMAXENTSTRESS_H
 
-#include <viz/GraphLayoutAlgorithm.hpp>
-#include <numerics/LinearSolver.hpp>
-#include <algebraic/CSRMatrix.hpp>
-#include <viz/Octree.hpp>
+#include <viz/GraphLayoutAlgorithm.h>
+#include <numerics/LinearSolver.h>
+#include <algebraic/CSRMatrix.h>
+#include <viz/Octree.h>
 
 //provides keyboard interrupt handling
 #include "aux/sig.h"

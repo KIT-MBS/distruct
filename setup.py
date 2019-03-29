@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Fri 29 Mar 2019 12:06:12 PM CET
+# Last Modified : Fri 29 Mar 2019 04:05:32 PM CET
 #
 #####################################
 
@@ -43,7 +43,7 @@ if not os.path.isdir(nwkDir):
     networkit_get_include(nwkDir)
     pass
 
-includeDir = nwkDir + "/include/networkit"
+includeDir = nwkDir + "/networkit/cpp/"
 includeDirs = [includeDir, "distruct/src/"]
 
 import _NetworKit
