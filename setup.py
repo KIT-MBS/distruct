@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Fri 29 Mar 2019 06:35:45 PM CET
+# Last Modified : Fri 29 Mar 2019 06:46:13 PM CET
 #
 #####################################
 
@@ -78,7 +78,7 @@ with open("README.md", 'r') as f:
 
 setup(
         name = "distruct",
-        version = "0.0.9",
+        version = "0.0.10",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",
@@ -88,7 +88,8 @@ setup(
         url = "https://github.com/KIT-MBS/distruct",
         download_url = "https://pypi.python.org/pypi/distruct",
         packages = find_packages(),
-        package_data = {},
+        include_package_data=True,
+        # package_data = {},
         keywords = ["biomolecules", "graph drawing"],
         classifiers = [
             "Programming Language :: Python :: 3",
