@@ -463,15 +463,28 @@ class Distructure(Structure):
         for contact in contacts:
             fullID1 = contact[0][0]
             fullID2 = contact[0][1]
+            distance = contact[1]
+            weight = contact[2]
 
-            if fullID1[2] in self[0] and fullID2[2] in self[0]:
-                chain1 = self[0][fullID1[2]]
-                chain2 = self[0][fullID2[2]]
-                if fullID1[3] in chain1 and fullID2[3] in chain2:
-                    residue1 = chain1[fullID1[3]]
-                    residue2 = chain2[fullID2[3]]
-                    if fullID1[4][0] in residue1 and fullID2[4][0] in residue2:
-                        self._tertiaryContacts.append(contact)
+            if fullID1[-3] in self[0] and fullID2[-3] in self[0]:
+                chain1 = self[0][fullID1[-3]]
+                chain2 = self[0][fullID2[-3]]
+                if fullID1[-2] in chain1 and fullID2[-2] in chain2:
+                    residue1 = chain1[fullID1[-2]]
+                    residue2 = chain2[fullID2[-2]]
+
+                    atomID1 = fullID1[-1]
+                    atomID2 = fullID2[-1]
+                    if isinstance(atomID1, str):
+                        atomID1 = (atomID1, ' ')
+                    if isinstance(atomID2, str):
+                        atomID2 = (atomID2, ' ')
+
+                    if atomID1[0] in residue1 and atomID2[0] in residue2:
+                        fullAtomIDs = [
+                                residue1[atomID1[0]].get_full_id(),
+                                residue2[atomID2[0]].get_full_id()]
+                        self._tertiaryContacts.append((fullAtomIDs, distance, weight))
                     else:
                         # TODO implement verbosity
                         # print("at least one atom in the edge between")
