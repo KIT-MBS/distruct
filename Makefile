@@ -11,7 +11,7 @@ inplace:
 	python setup.py build_ext --inplace
 
 test:
-	pytest tests
+	pytest distruct/tests
 
 clean:
 	python setup.py clean --all
