@@ -1,7 +1,8 @@
 
 Short term:
     optimize c++ part
-    fix distribution of share and test files
+    fix license
+    configure setup.py to replace makefile entirely
     docs
     examples
     citations
