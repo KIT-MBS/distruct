@@ -9,12 +9,9 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Tue 02 Apr 2019 07:41:03 PM CEST
+# Last Modified : Thu 04 Jul 2019 01:14:59 AM CEST
 #
 #####################################
-
-# TODO look at what kind of structure/files pypi expects
-# TODO install requirements
 
 from setuptools import setup, Extension, find_packages
 from Cython.Build import cythonize
@@ -26,11 +23,9 @@ USE_CYTHON = True
 fext = '.pyx' if USE_CYTHON else '.cpp'
 
 # NOTE we need the cpp headers from networkit, which they do not redistribute
-# NOTE so we do a shallow clone from their repo
-# TODO this will hopefully be fixed at some point
+# NOTE so we do a shallow clone from their repo for now
 def networkit_get_include(dir):
     import subprocess as sp
-    # TODO get the downloadurl from the networkit package
     nwkurl = "https://github.com/kit-parco/networkit.git"
     sp.call(['git', 'clone', '--branch', '5.0', '--depth=1', nwkurl, dir])
     return
@@ -46,10 +41,12 @@ if not os.path.isdir(nwkDir):
 includeDir = nwkDir + "/networkit/cpp/"
 includeDirs = [includeDir, "distruct/src/"]
 
-import _NetworKit
-libraryDir = os.path.split(_NetworKit.__file__)[0]
+# import _NetworKit
+# libraryDir = os.path.split(_NetworKit.__file__)[0]
+from site import getsitepackages
+libraryDir = getsitepackages()
 
-libraryDirs = [libraryDir]
+# libraryDirs = [libraryDir]
 libraries =['networkit']
 
 nwkpath = os.path.split(_NetworKit.__file__)[0]

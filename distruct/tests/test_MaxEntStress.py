@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Fri 29 Mar 2019 04:12:10 PM CET
+# Last Modified : Wed 03 Jul 2019 08:57:13 PM CEST
 #
 #####################################
 
@@ -30,7 +30,6 @@ testFilePath = config.data_path + 'tests/'
 
 
 def test_maxent_from_contacts():
-    # TODO use different molecule here, that has all AAs
     code = '1ptq'
 
     fileName = testFilePath + code + '.pdb'

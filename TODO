@@ -1,8 +1,129 @@
-
-Short term:
-    optimize c++ part
-    fix license
-    configure setup.py to replace makefile entirely
-    docs
-    examples
-    citations
+distruct/_diSTruct.pyx:# TODO maybe replace this? NetworKit::Point was deprecated and then undeprecated again.
+distruct/_diSTruct.pyx:# TODO remove this; needed temprarily for thesis
+distruct/_diSTruct.pyx:#         # TODO find a way to use actual NetworKit interface
+distruct/_diSTruct.pyx:#         # TODO diagnostics, get result, set params
+distruct/_diSTruct.pyx:#     # TODO find a way to use the (python) NetworKit Graph object and the _NetworKit _Graph object
+distruct/_diSTruct.pyx:#     # TODO rename and make faster
+distruct/_diSTruct.pyx:#         # TODO find a way to use actual NetworKit interface
+distruct/_diSTruct.pyx:#         # TODO diagnostics, get result, set params
+distruct/_diSTruct.pyx:#     # TODO find a way to use the (python) NetworKit Graph object and the _NetworKit _Graph object
+distruct/_diSTruct.pyx:#     # TODO rename and make faster
+distruct/_diSTruct.pyx:# TODO separate the Distructure class
+distruct/_diSTruct.pyx:        # TODO better (markup) doc
+distruct/_diSTruct.pyx:        # TODO redo entire initialization!!!!!!!
+distruct/_diSTruct.pyx:        # TODO use args and kwargs here for more flexibility
+distruct/_diSTruct.pyx:        # TODO separate chains and sequences
+distruct/_diSTruct.pyx:        # TODO implement terminals
+distruct/_diSTruct.pyx:        # TODO implement gaps
+distruct/_diSTruct.pyx:        # TODO implement nucleic acid SS
+distruct/_diSTruct.pyx:        # TODO implement 8 state protein SS
+distruct/_diSTruct.pyx:                    segID = "   "  # TODO check this
+distruct/_diSTruct.pyx:                        fullName = atomName  # TODO get the correct full name from somewhere
+distruct/_diSTruct.pyx:                        # element = atomName = [0]  # TODO get from top db
+distruct/_diSTruct.pyx:    # TODO use biopython unfold entities instead
+distruct/_diSTruct.pyx:        # TODO maybe this should be a dict
+distruct/_diSTruct.pyx:        # TODO this is to handle insertion codes, test it works correctly.
+distruct/_diSTruct.pyx:                    # TODO clean up, functionify
+distruct/_diSTruct.pyx:                    # TODO Correctly handle insertion code and gaps
+distruct/_diSTruct.pyx:                    # TODO this is to handle insertion codes, test it works correctly.
+distruct/_diSTruct.pyx:                            # TODO check how coordinates are initialized, when unknown
+distruct/_diSTruct.pyx:                        # TODO handle termini
+distruct/_diSTruct.pyx:                        # print("TODO this also warns at terminals, which is dumb")
+distruct/_diSTruct.pyx:        # TODO check for protein / rna
+distruct/_diSTruct.pyx:        # TODO implement other SS elements
+distruct/_diSTruct.pyx:                        # TODO implement verbosity
+distruct/_diSTruct.pyx:        # TODO improve
+distruct/_diSTruct.pyx:        # TODO add redundancy checks, setWeights just generates the edge, if it does not exist yet
+distruct/_diSTruct.pyx:        # TODO better way to do the distances
+distruct/_diSTruct.pyx:        # TODO set this to false when adding new atoms
+distruct/_diSTruct.pyx:        # TODO move all the checks from the wrapper here
+distruct/_diSTruct.pyx:        # TODO work on graph directly
+distruct/_diSTruct.pyx:    # TODO put these in cpp
+distruct/_diSTruct.pyx:    # TODO write tests
+distruct/_diSTruct.pyx:    # TODO put these in cpp
+distruct/_diSTruct.pyx:    # TODO put these in cpp
+distruct/config.py:# TODO do a setup function where it reads this from gromacs output
+distruct/data.py:# TODO remove these. have to work with just the default bio alphabets
+distruct/data.py:# TODO should this be in the topDB?
+distruct/data.py:        assert False # TODO helpful message
+distruct/data.py:# TODO improve and cite these
+distruct/data.py:# TODO default omega value
+distruct/__init__.py:    # TODO set the LD_LIBRARY_PATH automatically
+distruct/tools/math.py:# TODO rename this module
+distruct/tools/math.py:# TODO this is probably not optimal. smaller numerical error?
+distruct/tools/math.py:# TODO remove this?
+distruct/tools/pdb.py:# TODO redo this
+distruct/tools/pdb.py:        # TODO make this safer
+distruct/tools/pdb.py:# # TODO add missing residues from a sequence and use distances from force field at the read pdb step?
+distruct/tools/pdb.py:#     # TODO remove this and pass file instead of filename
+distruct/tools/pdb.py:#     # TODO maybe handle hetero stuff if they are present in the force field
+distruct/tools/pdb.py:#         fileName = PDBCode + '.cif.gz'  # TODO replace this with .cif since it's the new default
+distruct/tools/pdb.py:#     # TODO Glycin Hs are not read correctly!!! (others probably too)
+distruct/tools/pdb.py:#                     # TODO remove this and handle termini properly
+distruct/tools/pdb.py:#                                         del atom.parent.child_dict[oldID]  # TODO maybe this should be done outside the loop
+distruct/tools/pdb.py:#                                         # TODO handle this properly
+distruct/tools/pdb.py:#     # TODO should happen when serial numbers start at 1 too!!
+distruct/tools/pdb.py:# # TODO this is only for backbone dihedrals, rename
+distruct/tools/pdb.py:# TODO make this integrate better, it should take a primary sequence and a structure...
+distruct/tools/pdb.py:#     # TODO the model seems unnecessary
+distruct/tools/pdb.py:# TODO integrate into Distructure
+distruct/tools/pdb.py:#     # TODO this works only for protein right now
+distruct/tools/pdb.py:#     # TODO load edges to be used from distruct.data
+distruct/tools/pdb.py:#     # TODO add distance from database
+distruct/tools/pdb.py:#             # TODO check if first or last residue
+distruct/tools/pdb.py:#                 if resn != 'PRO':  # TODO alphabet
+distruct/tools/pdb.py:#                     # TODO include H
+distruct/tools/pdb.py:#                     # TODO test this
+distruct/tools/pdb.py:#                                     # TODO maybe add edge between acceptor and hydrogen
+distruct/tools/pdb.py:#     #                     # TODO take H atom into account
+distruct/tools/pdb.py:# TODO redo this part and return ((fullid1, fullid2), distance, weight)
+distruct/tools/ffparsergmx.py:# TODO add omega to topologies
+distruct/tools/ffparsergmx.py:# TODO resolve ILE issue: ff: CD, PDB: CD1
+distruct/tools/ffparsergmx.py:# TODO similarly, some atoms in RNAs: OP2/O2P
+distruct/tools/ffparsergmx.py:    # TODO only add, if single minimum
+distruct/tools/ffparsergmx.py:    # TODO only add, if single minimum
+distruct/tools/ffparsergmx.py:    # TODO more combinations are possible
+distruct/tools/ffparsergmx.py:                # TODO this is not very general, but should suffice for now
+distruct/tools/ffparsergmx.py:        # TODO exceptions or just return error?
+distruct/tools/ffparsergmx.py:                        # TODO this is getting too noodly
+distruct/tools/ffparsergmx.py:                    # TODO improve, kinda hacky
+distruct/tools/ffparsergmx.py:                        # TODO this does not work e.g. for the Mg in AMBER
+distruct/tools/ffparsergmx.py:# TODO wildcards (X)
+distruct/tools/ffparsergmx.py:        # TODO check ordering stuff!!
+distruct/tools/ffparsergmx.py:        # TODO this should probably not happen for termini
+distruct/tools/ffparsergmx.py:# TODO add backbone dihedral omega
+distruct/tools/ffparsergmx.py:    # TODO n-termini special casing
+distruct/tools/ffparsergmx.py:# TODO switch to bondTypes and angleTypes
+distruct/tools/ffparsergmx.py:        # TODO order of residues is important!!!
+distruct/tools/ffparsergmx.py:            # TODO
+distruct/tools/ffparsergmx.py:# TODO translate only needed  building blocks (avoids unnecessary warnings and errors)
+distruct/tools/ffparsergmx.py:#     # TODO ordering such that backbone atoms occur first in an ordered dict / order of ff is preserved?
+distruct/tools/ffparsergmx.py:#     # TODO replace this with check on alphabet
+distruct/tools/ffparsergmx.py:#     #         # TODO more helpful error messages / warnings
+distruct/tools/ffparsergmx.py:#         # TODO translate letter to building block and vv
+distruct/tools/ffparsergmx.py:#         # TODO handle termini
+distruct/tools/ffparsergmx.py:#                 # TODO error message
+distruct/tools/ffparsergmx.py:#             #     inferredImpropers = infer_impropers()  # TODO
+distruct/tools/ffparsergmx.py:#         # TODO translate atom names
+distruct/tools/ffparsergmx.py:#         # TODO reorder atoms so backbone comes first
+distruct/tools/ffparsergmx.py:#     # TODO gap character
+distruct/src/DuckingWrapper.h:// TODO remove this and use the proper networkit cython interface
+distruct/src/BioMaxentStress.cpp:// TODO remove and replace this entire thing
+distruct/src/BioMaxentStress.cpp:                // TODO maybe allow more time to solve in later iterations
+distruct/src/aux/sig.h:// TODO this is not great. the funtion is used in the form of a pointer. for some reason it still throws a function unused warning
+distruct/src/aux/sig.h:        // TODO cases SIGABRT, SIGFPE, SIGILL, SIGSEGV
+distruct/topologydb.py:    # TODO redo this bit
+distruct/fileio.py:                # TODO check this preserves ordering
+distruct/fileio.py:                # TODO is three significant places adequate for all applications?
+distruct/fileio.py:    # TODO add xml version line thingy
+distruct/tests/test_MaxEntStress.py:    # TODO use different molecule here, that has all AAs
+distruct/tests/test_MaxEntStress.py:    # TODO
+distruct/tests/test_MaxEntStress.py:    # TODO
+distruct/tests/test_superimposer.py:    # TODO is this really that bad??
+distruct/tests/test_superimposer.py:    # TODO transform moving
+distruct/tests/test_pdb.py:# TODO test termini
+distruct/tests/test_pdb.py:# TODO test RNA and protein and DNA and mixed complexes
+distruct/tests/test_pdb.py:# TODO test parse xray and nmr generated structures
+distruct/tests/test_pdb.py:# TODO test all functions
+distruct/tests/test_fileio.py:#     # TODO more efficient comparison? (i.e. store a hash)
+distruct/tests/test_ffparsergmx.py:    # TODO test for additional entries
