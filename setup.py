@@ -9,12 +9,11 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Thu 04 Jul 2019 01:14:59 AM CEST
+# Last Modified : Mon 08 Jul 2019 11:38:47 PM CEST
 #
 #####################################
 
 from setuptools import setup, Extension, find_packages
-from Cython.Build import cythonize
 
 import os
 
@@ -41,15 +40,10 @@ if not os.path.isdir(nwkDir):
 includeDir = nwkDir + "/networkit/cpp/"
 includeDirs = [includeDir, "distruct/src/"]
 
-# import _NetworKit
-# libraryDir = os.path.split(_NetworKit.__file__)[0]
 from site import getsitepackages
-libraryDir = getsitepackages()
+libraryDirs = getsitepackages()
 
-# libraryDirs = [libraryDir]
 libraries =['networkit']
-
-nwkpath = os.path.split(_NetworKit.__file__)[0]
 
 compile_args = ["-fopenmp", "-std=c++11"]
 link_args = ["-fopenmp"]
@@ -62,13 +56,16 @@ extensions = [
             extra_link_args = link_args,
             include_dirs = includeDirs,
             libraries = libraries,
-            library_dirs = libraryDirs)
+            library_dirs = libraryDirs,
+            language='c++')
 ]
 
-if USE_CYTHON:
-    from Cython.Build import cythonize
-    extensions = cythonize(extensions)
-    pass
+# if USE_CYTHON:
+#     def cythonize(*args, **kwargs):
+#         from Cython.Build import cythonize
+#         return cythonize(*args, **kwargs)
+#     extensions = cythonize(extensions)
+#     pass
 
 with open("README.md", 'r') as f:
     long_description = f.read()
@@ -98,4 +95,5 @@ setup(
             "Topic :: Scientific/Engineering :: Bio-Informatics"
             ],
         install_requires = ["numpy", "cython", "networkit", "biopython", "lxml"],
+        setup_requires=['setuptools>=18.0', "cython", "networkit"],
         zip_safe = False)
