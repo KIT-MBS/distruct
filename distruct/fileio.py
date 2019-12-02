@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Thu 13 Sep 2018 01:24:14 PM CEST
+# Last Modified : Mon 02 Dec 2019 08:06:25 PM CET
 #
 #####################################
 
@@ -99,6 +99,7 @@ def write_topology_database(
         pass
 
     buildingBlocks = list()
+    # TODO alphabets should not be needed to write the db to disk.
     for a in alphabets:
         polymerType = data.polymer_type(a)
         buildingBlocks += [database['alphabets'][polymerType][letter] for letter in a.letters]
