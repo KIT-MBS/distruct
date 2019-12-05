@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 15 Aug 2017 11:19:36 AM CEST
 #
-# Last Modified : Mon 02 Dec 2019 08:06:25 PM CET
+# Last Modified : Thu 05 Dec 2019 04:35:57 PM CET
 #
 #####################################
 
@@ -90,7 +90,7 @@ def read_topology_database(databaseName, inDir=defaultDataPath, fileName=None):
 def write_topology_database(
         database,
         databaseName,
-        alphabets,
+        alphabets=None,
         outDir='./',
         fileName=None
     ):
@@ -99,11 +99,16 @@ def write_topology_database(
         pass
 
     buildingBlocks = list()
-    # TODO alphabets should not be needed to write the db to disk.
-    for a in alphabets:
-        polymerType = data.polymer_type(a)
-        buildingBlocks += [database['alphabets'][polymerType][letter] for letter in a.letters]
-        pass
+    # TODO this is only here to have the keys sorted in the output file, maybe just sort them (as in else)?
+    if alphabets is not None:
+        for a in alphabets:
+            polymerType = data.polymer_type(a)
+            buildingBlocks += [database['alphabets'][polymerType][letter] for letter in a.letters]
+    else:
+        for polymerType in database['alphabets']:
+            keys = set(database.keys())
+            keys.remove('alphabets')
+            buildingBlocks += sorted(list(keys))
 
     root = ET.Element(databaseName)
     XMLTree = ET.ElementTree(root)
