@@ -30,6 +30,21 @@ To run *diSTruct* it may be necessary to set your LD_LIBRARY_PATH to find the Ne
 *diSTruct* gives further instructions on importing.
 
 ## Publications
+Please cite 
+
+    @article{10.1093/bioinformatics/btz578,
+        author = {Taubert, Oskar and Reinartz, Ines and Meyerhenke, Henning and Schug, Alexander},
+        title = "{diSTruct v1.0: generating biomolecular structures from distance constraints}",
+        journal = {Bioinformatics},
+        year = {2019},
+        month = {07},
+        abstract = "{The distance geometry problem is often encountered in molecular biology and the life sciences at large, as a host of experimental methods produce ambiguous and noisy distance data. In this note, we present diSTruct; an adaptation of the generic MaxEnt-Stress graph drawing algorithm to the domain of biological macromolecules. diSTruct is fast, provides reliable structural models even from incomplete or noisy distance data and integrates access to graph analysis tools.diSTruct is written in C++, Cython and Python 3. It is available from https://github.com/KIT-MBS/distruct.git or in the Python package index under the MIT license.Supplementary data are available at Bioinformatics online.}",
+        issn = {1367-4803},
+        doi = {10.1093/bioinformatics/btz578},
+        url = {https://doi.org/10.1093/bioinformatics/btz578},
+        note = {btz578},
+        eprint = {http://oup.prod.sis.lan/bioinformatics/advance-article-pdf/doi/10.1093/bioinformatics/btz578/29161648/btz578.pdf},
+    }
 
 ## Tests
 To run the python tests run "make test".
