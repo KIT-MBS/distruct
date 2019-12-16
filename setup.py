@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Thu 11 Jul 2019 06:55:46 PM CEST
+# Last Modified : Mon 16 Dec 2019 02:27:16 PM CET
 #
 #####################################
 
@@ -26,19 +26,27 @@ fext = '.pyx' if USE_CYTHON else '.cpp'
 def networkit_get_include(dir):
     import subprocess as sp
     nwkurl = "https://github.com/kit-parco/networkit.git"
-    sp.call(['git', 'clone', '--branch', '5.0', '--depth=1', nwkurl, dir])
+    sp.call(['git', 'clone', '--branch', '6.0', '--depth=1', nwkurl, dir])
+    return
+
+def tlx_get_include(dir):
+    import subprocess as sp
+    tlxurl = "https://github.com/tlx/tlx.git"
+    sp.call(['git', 'clone', '--depth=1', tlxurl, dir])
     return
 
 sources = ['distruct/src/BioMaxentStress.cpp', "distruct/_diSTruct" + fext]
 
-nwkDir = "shallownwk"
+nwkDir = "./shallownwk/"
 print("downloading networkit header files...")
 if not os.path.isdir(nwkDir):
     networkit_get_include(nwkDir)
-    pass
+tlxDir = "./shallowtlx/"
+print("downloading tlx header files...")
+if not os.path.isdir(tlxDir):
+    tlx_get_include(tlxDir)
 
-includeDir = nwkDir + "/networkit/cpp/"
-includeDirs = [includeDir, "distruct/src/"]
+includeDirs = [nwkDir+"include/", tlxDir, "distruct/src/"]
 
 from site import getsitepackages
 libraryDirs = getsitepackages()

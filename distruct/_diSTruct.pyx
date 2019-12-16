@@ -7,7 +7,7 @@ from libcpp.utility cimport pair
 import numpy as np
 
 # TODO maybe replace this? NetworKit::Point was deprecated and then undeprecated again.
-cdef extern from "viz/Point.h" namespace "NetworKit":
+cdef extern from "networkit/viz/Point.hpp" namespace "NetworKit":
     cdef cppclass Point[T]:
         Point()
         Point(uint64_t dim)

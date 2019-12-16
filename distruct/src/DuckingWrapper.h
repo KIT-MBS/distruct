@@ -9,7 +9,7 @@
  *
  *  Creation Date : Fri 27 Oct 2017 01:41:27 PM CEST
  *
- *  Last Modified : Fri 29 Mar 2019 04:06:31 PM CET
+ *  Last Modified : Mon 16 Dec 2019 02:32:32 PM CET
  *
  * *************************************/
 
@@ -18,11 +18,11 @@
 
 #include <vector>
 
-#include <graph/Graph.h>
-#include <numerics/LAMG/Lamg.h>
-#include <algebraic/CSRMatrix.h>
+#include <networkit/graph/Graph.hpp>
+#include <networkit/numerics/LAMG/Lamg.hpp>
+#include <networkit/algebraic/CSRMatrix.hpp>
 
-#include <components/ConnectedComponents.h>
+#include <networkit/components/ConnectedComponents.hpp>
 
 #include "BioMaxentStress.h"
 

@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Tue 13 Nov 2018 11:57:36 PM CET
+# Last Modified : Mon 16 Dec 2019 02:57:14 PM CET
 #
 #####################################
 
@@ -30,6 +30,7 @@ try:
     from _diSTruct import Distructure
 except ImportError:
     # TODO set the LD_LIBRARY_PATH automatically
+    import networkit
     import _NetworKit
     print("####################################################################################")
     print("An error occured when trying to import the diSTruct extension.")
