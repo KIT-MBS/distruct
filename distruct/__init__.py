@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:33:38 CEST
 #
-# Last Modified : Mon 16 Dec 2019 02:57:14 PM CET
+# Last Modified : Wed 11 Mar 2020 05:35:37 PM CET
 #
 #####################################
 
@@ -29,14 +29,9 @@ name = "distruct"
 try:
     from _diSTruct import Distructure
 except ImportError:
-    # TODO set the LD_LIBRARY_PATH automatically
     import networkit
     import _NetworKit
-    print("####################################################################################")
-    print("An error occured when trying to import the diSTruct extension.")
-    print("This may happen when the NetworKit extension could not be found.")
-    print("export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:" + os.path.split(_NetworKit.__file__)[0])
-    print("or put it in your .bashrc .")
-    print("and make sure all the dependencies are installed correctly.")
-    print("####################################################################################")
-    raise ImportError
+
+    path_to_networkit = os.path.split(_NetworKit.__file__)[0]
+    os.environ['PATH'] = path_to_networkit + os.pathsep + os.environ['PATH']
+    from _diSTruct import Distructure
