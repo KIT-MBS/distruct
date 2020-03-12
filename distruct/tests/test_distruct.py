@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 09 May 2017 13:53:41 CEST
 #
-# Last Modified : Sun 05 Aug 2018 07:58:37 PM CEST
+# Last Modified : Thu 12 Mar 2020 06:19:48 PM CET
 #
 #####################################
 
@@ -18,5 +18,4 @@ def test_NWK():
     import networkit as nwk
     g = nwk.Graph(5)
     g.addEdge(0, 1)
-    g.toString()
     return

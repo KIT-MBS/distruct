@@ -9,7 +9,7 @@
 #
 # Creation Date : Tue 17 Apr 2018 04:25:49 PM CEST
 #
-# Last Modified : Wed 03 Jul 2019 08:57:13 PM CEST
+# Last Modified : Thu 12 Mar 2020 04:32:04 PM CET
 #
 #####################################
 
@@ -65,7 +65,8 @@ def test_maxent_from_contacts():
     sup.set_structures(refStructure, ds)
 
     RMSD = sup.rms
-    # TODO
+
+    # TODO deterministic initialize
     print("this test sometimes fails depending on initialization.")
     print("test with deterministic initialization is coming.")
     assert RMSD < 0.15
@@ -101,14 +102,9 @@ def test_RNA():
     sup = Superimposer()
     sup.set_structures(refStructure, ds)
 
-    # from Bio.PDB.PDBIO import PDBIO
-    # io = PDBIO()
-    # io.set_structure(ds)
-    # io.save("test.pdb")
-
     RMSD = sup.rms
 
-    # TODO
+    # TODO deterministic initialize
     print("this test sometimes fails depending on initialization.")
     print("test with deterministic initialization is coming.")
     assert RMSD < 6.
