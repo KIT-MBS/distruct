@@ -33,6 +33,10 @@ cdef extern from "DuckingWrapper.h":
             ) except +
     pass
 
+# cdef extern from "BioMaxentStress.h":
+#     cdef cppclass _BioMaxentStress "diSTrcut::BioMaxentStress" (_GraphLayoutAlgorithm[double]):
+#         _BioMaxentStress(_Graph, )
+
 # #cdef doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_t solves=300, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] distances=[], vector[double] probabilites=[]):
 # def doublyWrappedMaxent(uint64_t numNodes, double alpha=1., double q=0., uint64_t solves=300, vector[pair[uint64_t, uint64_t]] edges=[], vector[double] distances=[], vector[double] probabilites=[]):
 # 
@@ -276,7 +280,6 @@ class Distructure(Structure):
             self._serial_set = True
             pass
         self.graph = Graph(atomCounter, True, False)
-        self.graph.setName(id)
         self._primaryContacts = list()
         self._secondaryContacts = list()
         self._tertiaryContacts = list()
@@ -564,9 +567,10 @@ class Distructure(Structure):
 
         # TODO move all the checks from the wrapper here
         # TODO work on graph directly
-        edges = self.graph.edges()
-        distances = [self.distDict[e] for e in edges]
-        weights = [self.graph.weight(u, v) for (u, v) in edges]
+        edges = [(u, v) for (u, v) in self.graph.iterEdges()]
+        print(edges)
+        distances = [self.distDict[(v, u)] for (u, v) in self.graph.iterEdges()]
+        weights = [w for (u, v, w) in self.graph.iterEdgesWeights()]
 
         # NOTE connectivity check
 
