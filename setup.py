@@ -9,7 +9,7 @@
 #
 # Creation Date : Thu 28 Jun 2018 12:50:34 PM CEST
 #
-# Last Modified : Mon 16 Dec 2019 02:27:16 PM CET
+# Last Modified : Fri 13 Mar 2020 05:53:38 PM CET
 #
 #####################################
 
@@ -80,7 +80,7 @@ with open("README.md", 'r') as f:
 
 setup(
         name = "distruct",
-        version = "1.0.0",
+        version = "1.0.2",
         ext_modules = extensions,
         author = "Oskar Taubert",
         author_email = "oskar.taubert@kit.edu",

@@ -26,9 +26,6 @@ Install *diSTruct* with
 
 pip install distruct
 
-To run *diSTruct* it may be necessary to set your LD_LIBRARY_PATH to find the NetworKit extension.
-*diSTruct* gives further instructions on importing.
-
 ## Publications
 Please cite 
 
@@ -47,4 +44,4 @@ Please cite
     }
 
 ## Tests
-To run the python tests run "make test".
+To run the python tests install pytest an run python -m pytest in /path/to/distruct/tests
