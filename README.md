@@ -11,7 +11,7 @@ The actual structure generation in diSTruct is build on the MaxEnt-stress graph 
 
 It aims to conveniently combine this with the PDB module in [Biopython](https://biopython.org).
 
-It also depends on *lxml* and requires *cython*.
+It also depends on *lxml* and requires *Cython*.
 
 ## Installation Instructions
 
@@ -21,7 +21,7 @@ import networkit
 without error. Sometimes there are issues with automatically installing all dependenicies.
 Simply install missing packages manually.
 
-Install cython, Biopython and lxml.
+Install Cython, Biopython and lxml.
 Install *diSTruct* with
 
 pip install distruct
