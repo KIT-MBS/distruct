@@ -26,7 +26,7 @@ fext = '.pyx' if USE_CYTHON else '.cpp'
 def networkit_get_include(dir):
     import subprocess as sp
     nwkurl = "https://github.com/kit-parco/networkit.git"
-    sp.call(['git', 'clone', '--branch', '6.0', '--depth=1', nwkurl, dir])
+    sp.call(['git', 'clone', '--branch', '7.0', '--depth=1', nwkurl, dir])
     return
 
 def tlx_get_include(dir):
