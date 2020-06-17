@@ -65,7 +65,7 @@ namespace diSTruct {
         /////////////////////////
         std::cout << "initializing coordinates" << std::endl;
         /////////////////////////
-        std::vector<NetworKit::Vector> oldCoordinates(dim, NetworKit::Vector(this->G.upperNodeIdBound()));
+        std::vector<NetworKit::Vector> oldCoordinates(dim, NetworKit::Vector(this->G->upperNodeIdBound()));
 
         // NOTE init coordinate vectors
 #pragma omp parallel for
@@ -84,7 +84,7 @@ namespace diSTruct {
         double currentAlpha = alpha;
         bool converged = false;
 
-        std::vector<NetworKit::Vector> repulsiveForces(dim, NetworKit::Vector(this->G.numberOfNodes(), 0)); // Vector that stores the repulsive forces (entropy term)
+        std::vector<NetworKit::Vector> repulsiveForces(dim, NetworKit::Vector(this->G->numberOfNodes(), 0)); // Vector that stores the repulsive forces (entropy term)
         uint64_t currentLowerBound = 0;
         uint64_t newLowerBound = 0;
         while (!converged) { // Run until converged (usually when currentAlpha == finalAlpha)
@@ -95,7 +95,7 @@ namespace diSTruct {
 
                 for(uint64_t d=0; d<dim; ++d)
                 {
-                    for(uint64_t i=0; i<G.numberOfNodes(); ++i)
+                    for(uint64_t i=0; i<G->numberOfNodes(); ++i)
                     {
                         if(std::isnan(oldCoordinates[d][i]))  // this needs C++11
                         {
@@ -106,7 +106,7 @@ namespace diSTruct {
                 /////////////////////////
                 //std::cout << "numSolves: "<< numSolves << std::endl;
                 //std::cout << currentAlpha << std::endl;
-                //for(uint64_t i=0; i<G.numberOfNodes(); ++i)
+                //for(uint64_t i=0; i<G->numberOfNodes(); ++i)
                 //{
                 //    for(uint64_t d=0; d<dim; ++d)
                 //    {
@@ -119,7 +119,7 @@ namespace diSTruct {
                 t.start();
                 newLowerBound = floor(5 * std::log(numSolves));
                 if (newLowerBound != currentLowerBound) { // Lazy approximation of entropy terms, if bounds are different we trigger a recomputation
-                    repulsiveForces = std::vector<NetworKit::Vector>(dim, NetworKit::Vector(G.numberOfNodes(), 0));
+                    repulsiveForces = std::vector<NetworKit::Vector>(dim, NetworKit::Vector(G->numberOfNodes(), 0));
                     NetworKit::Octree<double> octree(oldCoordinates); // initialize the octree
                     approxRepulsiveForces(oldCoordinates, octree, 0.6, repulsiveForces); // Barnes-Hut-Approximation using the octree
                     currentLowerBound = newLowerBound;
@@ -128,7 +128,7 @@ namespace diSTruct {
                 approxTime += t.elapsedMicroseconds();
 
                 t.start();
-                std::vector<NetworKit::Vector> rhs(dim, NetworKit::Vector(this->G.numberOfNodes()));
+                std::vector<NetworKit::Vector> rhs(dim, NetworKit::Vector(this->G->numberOfNodes()));
                 computeCoordinateLaplacianTerm(oldCoordinates, rhs); // compute L_{w,d}*x and store it in rhs vector
                 t.stop();
                 rhsTime += t.elapsedMicroseconds();
@@ -146,14 +146,14 @@ namespace diSTruct {
                 // correcting rhs to be zero-sum (since it is an approximation)
                 NetworKit::Point<double> sum(dim);
                 for (uint64_t d = 0; d < dim; ++d) {
-                    for (uint64_t i = 0; i < G.numberOfNodes(); ++i) {
+                    for (uint64_t i = 0; i < G->numberOfNodes(); ++i) {
                         sum[d] += rhs[d][i];
                     }
-                    sum[d] /= G.numberOfNodes();
+                    sum[d] /= G->numberOfNodes();
                 }
 
 #pragma omp parallel for
-                for (uint64_t i = 0; i < G.numberOfNodes(); ++i) {
+                for (uint64_t i = 0; i < G->numberOfNodes(); ++i) {
                     for (uint64_t d = 0; d < dim; ++d) {
                         rhs[d][i] -= sum[d];
                     }
@@ -182,7 +182,7 @@ namespace diSTruct {
 
         // write coordinates to vertexCoordinates vector
 #pragma omp parallel for
-        for (uint64_t i = 0; i < this->G.upperNodeIdBound(); ++i) {
+        for (uint64_t i = 0; i < this->G->upperNodeIdBound(); ++i) {
             for (uint64_t d = 0; d < dim; ++d) {
                 this->vertexCoordinates[i][d] = newCoordinates[d][i];
             }
@@ -218,15 +218,15 @@ namespace diSTruct {
 
 
     void BioMaxentStress::setupWeightedLaplacianMatrix() {
-        uint64_t n = this->G.numberOfNodes();
+        uint64_t n = this->G->numberOfNodes();
         std::vector<uint64_t> rowIdx(n+1, 0);
-        std::vector<uint64_t> columnIdx(n + G.upperEdgeIdBound()*2, 0); // currently only supports simple graphs
+        std::vector<uint64_t> columnIdx(n + G->upperEdgeIdBound()*2, 0); // currently only supports simple graphs
         std::vector<double> nonzeros(columnIdx.size());
 
         uint64_t idx = 0;
-        G.forNodes([&](uint64_t u) {
+        G->forNodes([&](uint64_t u) {
                 double weightedDegree = 0.0;
-                G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeId) {
+                G->forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeId) {
                         //double weightFactor = weightingFactor(weight, edgeId);
                         double weightFactor = probability[edgeId];
                         columnIdx[idx] = v;
@@ -240,7 +240,7 @@ namespace diSTruct {
                 nonzeros[idx] = weightedDegree;
                 idx++;
 
-                rowIdx[u+1] = G.degree(u)+1; // +1 for diagonal
+                rowIdx[u+1] = G->degree(u)+1; // +1 for diagonal
                 });
 
         // compute correct rowIdx offsets
@@ -254,9 +254,9 @@ namespace diSTruct {
 
 
     void BioMaxentStress::computeCoordinateLaplacianTerm(const std::vector<NetworKit::Vector>& coordinates, std::vector<NetworKit::Vector>& rhs) {
-        G.parallelForNodes([&](uint64_t u) {
+        G->parallelForNodes([&](uint64_t u) {
                 double weightedDegree = 0.0;
-                G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeId) {
+                G->forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t edgeId) {
                         double dist = std::max(distance(coordinates, u, v), 1e-5);
                         double w = probability[edgeId] * weight / dist; // w_{ij} * d_{i,j} / ||x_i - x_j|| NOTE: The last term is multiplied in the paper of Gansner et al. which is wrong!
                         for (uint64_t d = 0; d < dim; ++d) {
@@ -272,18 +272,18 @@ namespace diSTruct {
     }
 
     std::vector<NetworKit::Vector> BioMaxentStress::computeRepulsiveForces(const std::vector<NetworKit::Vector>& coordinates, std::vector<NetworKit::Vector> &b) const {
-        uint64_t n = this->G.numberOfNodes();
+        uint64_t n = this->G->numberOfNodes();
         double qSign = sign(this->q);
         double q2 = (q+2)/2;
 
 
-        G.parallelForNodes([&](uint64_t u) {
+        G->parallelForNodes([&](uint64_t u) {
                 std::vector<bool> knownDist(n, false);
-                G.forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t egdeId) {
+                G->forNeighborsOf(u, [&](uint64_t u, uint64_t v, double weight, uint64_t egdeId) {
                         knownDist[v] = true;
                         });
 
-                G.forNodes([&](uint64_t v) {
+                G->forNodes([&](uint64_t v) {
                         if (!knownDist[v] && u != v) {
                         double sqDist = std::max(squaredDistance(coordinates, u, v), 1e-3); // ||x_i - x_j||
                         double factor = qSign * 1.0/std::pow(sqDist, q2);
@@ -306,7 +306,7 @@ namespace diSTruct {
         double qSign = sign(q);
         double q2 = (q+2)/2;
 
-        G.parallelForNodes([&](uint64_t u) {
+        G->parallelForNodes([&](uint64_t u) {
                 NetworKit::Point<double> posU = getPoint(coordinates, u);
                 auto approximateNeighbor = [&](const uint64_t numNodes, const NetworKit::Point<double>& centerOfMass, const double sqDist) {
                 if (sqDist < 1e-5) return;
