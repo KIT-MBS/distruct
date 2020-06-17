@@ -19,6 +19,7 @@
 #include <iostream>
 #include <networkit/viz/GraphLayoutAlgorithm.hpp>
 #include <networkit/numerics/LinearSolver.hpp>
+#include <networkit/algebraic/Vector.hpp>
 #include <networkit/algebraic/CSRMatrix.hpp>
 #include <networkit/viz/Octree.hpp>
 
