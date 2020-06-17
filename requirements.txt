@@ -1,4 +1,4 @@
 numpy
 biopython
-networkit==5.0
+networkit==7.0
 lxml
